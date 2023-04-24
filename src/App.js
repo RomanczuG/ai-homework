@@ -147,7 +147,7 @@ function App() {
             </p>
             <div className="mt-8 flex flex-col space-y-4 md:space-y-0 md:flex-row md:justify-center md:space-x-4">
               <a
-                href="https://twitter.com/your_username"
+                href="https://twitter.com/bettermateusz"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-black px-6 py-2 bg-white text-252D62 font-semibold rounded-lg"
