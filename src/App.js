@@ -147,15 +147,15 @@ function App() {
         <h2 className="text-4xl font-semibold text-center mb-12">Features</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Feature 1 */}
-          <div className="flex flex-col-reverse md:flex-row items-center md:space-x-8">
-            <div className="md:w-1/2 mb-6 md:mb-0">
-            <img
+          <div className="flex flex-col md:flex-row justify-center items-center">
+            {/* <div className="md:w-1/2 mb-6 md:mb-0"> */}
+            {/* <img
   src={feature_1}
   alt="Download Your Notes"
   className="w-full h-auto mb-6 md:mb-0 rounded-lg"
   style={{ maxWidth: "100%", maxHeight: "100%" }}
-/>
-            </div>
+/> */}
+            {/* </div> */}
             <div className="md:w-1/2">
               <h3 className="text-2xl font-semibold">Get Started</h3>
               <p className="mt-4">
@@ -166,15 +166,15 @@ function App() {
             </div>
           </div>
           {/* Feature 2 */}
-          <div className="flex flex-col md:flex-row items-center md:space-x-8">
-            <div className="md:w-1/2 md:mb-2">
-            <img
+          <div className="flex flex-col md:flex-row justify-center items-center ">
+            {/* <div className="md:w-1/2 md:mb-2"> */}
+            {/* <img
   src={feature_2}
   alt="Download Your Notes"
   className="w-full h-auto mb-6 md:mb-0 rounded-lg"
   style={{ maxWidth: "100%", maxHeight: "100%" }}
-/>
-            </div>
+/> */}
+            {/* </div> */}
             <div className="md:w-1/2">
               <h3 className="text-2xl font-semibold">Download Your Notes</h3>
               <p className="mt-4">
