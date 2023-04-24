@@ -129,7 +129,7 @@ function App() {
                 </div>
               </form>
             ) : (
-              <div className="text-gray-700">Thank you for signing up .</div>
+              <div className="text-white">Thank you for signing up.</div>
             )}
           </div>
         </div>
@@ -186,9 +186,11 @@ function App() {
         </div>
         {/* Demo Button */}
         <div className="text-center mt-12 ">
+          <a href="https://twitter.com/betterMateusz">
           <button className="text-black mt-4 w-full md:w-auto px-6 py-2 bg-white text-252D62 font-semibold rounded-lg">
             Check out my demo
           </button>
+          </a>
         </div>
       </section>
 
