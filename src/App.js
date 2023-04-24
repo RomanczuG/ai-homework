@@ -2,8 +2,52 @@ import React from "react";
 import logo from "./hero.svg";
 import feature_1 from "./feature_1.svg";
 import feature_2 from "./feature_2.svg";
+import { ClipLoader } from "react-spinners";
+import { useState } from "react";
 
 function App() {
+  const [waitlistData, setWaitlistData] = useState();
+  const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
+
+  function validateEmail(email) {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  function submitWaitlist(data) {
+    if (!data.email) {
+      setError("Please enter your email");
+      return;
+    }
+    if (validateEmail(data.email) === false) {
+      setError("Please enter a valid email");
+      return;
+    }
+
+    setLoading(true);
+
+    data.waitlist_id = 6443;
+    data.referral_link = document.URL;
+
+    fetch("https://api.getwaitlist.com/api/v1/waiter", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setWaitlistData(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+      });
+  }
   return (
     <div className="bg-[#252D62] min-h-screen">
       {/* Navbar */}
@@ -44,15 +88,50 @@ function App() {
             easy-to-understand study notes tailored to help you learn and excel.
           </p>
           <div className="mt-4 w-full md:w-auto">
-            <input
-              type="email"
-              className="w-full px-3 py-2 md:w-60 bg-white text-252D62 rounded-lg"
-              placeholder="Your Email"
-            />
+            {!waitlistData ? (
+              <form className="w-full">
+                <div className="flex flex-col space-y-4">
+                  <div className="flex flex-col space-y-2">
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      placeholder="Please enter your email"
+                      autoComplete="email"
+                      onChange={(e) => e.stopPropagation()}
+                      required
+                      className="rounded-md border border-gray-200 text-base p-2 text-gray-700"
+                    />
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <button
+                    type="button"
+                    disabled={loading}
+                    onClick={() => {
+                      submitWaitlist({
+                        email: document.getElementById("email").value,
+                      });
+                    }}
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-md px-3 py-2 w-full transition duration-300"
+                  >
+                    {loading ? (
+                      <ClipLoader size={25} color={"#ffffff"} loading={true} />
+                    ) : (
+                      "Join the Waitlist"
+                    )}
+                  </button>
+                  {error && (
+                    <div className="text-center mt-2 text-xs text-red-500 px-6">
+                      {error}
+                    </div>
+                  )}
+                </div>
+              </form>
+            ) : (
+              <div className="text-gray-700">Thank you for signing up .</div>
+            )}
           </div>
-          <button className="mt-4 w-full md:w-auto px-6 py-2 bg-white text-252D62 font-semibold rounded-lg">
-            Join the Waitlist
-          </button>
         </div>
         <div className="mt-8 md:mt-0 md:w-1/2">
           <img src={logo} alt="Logo" className="w-full h-auto" />
