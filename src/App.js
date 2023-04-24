@@ -149,11 +149,12 @@ function App() {
           {/* Feature 1 */}
           <div className="flex flex-col-reverse md:flex-row items-center md:space-x-8">
             <div className="md:w-1/2 mb-6 md:mb-0">
-              <img
-                src={feature_1}
-                alt="Get Started"
-                className="w-full h-auto rounded-lg"
-              />
+            <img
+  src={feature_1}
+  alt="Download Your Notes"
+  className="w-full h-auto mb-6 md:mb-0 rounded-lg"
+  style={{ maxWidth: "100%", maxHeight: "100%" }}
+/>
             </div>
             <div className="md:w-1/2">
               <h3 className="text-2xl font-semibold">Get Started</h3>
@@ -167,11 +168,12 @@ function App() {
           {/* Feature 2 */}
           <div className="flex flex-col md:flex-row items-center md:space-x-8">
             <div className="md:w-1/2 md:mb-2">
-              <img
-                src={feature_2}
-                alt="Download Your Notes"
-                className="w-full h-auto mb-6 md:mb-0 rounded-lg"
-              />
+            <img
+  src={feature_2}
+  alt="Download Your Notes"
+  className="w-full h-auto mb-6 md:mb-0 rounded-lg"
+  style={{ maxWidth: "100%", maxHeight: "100%" }}
+/>
             </div>
             <div className="md:w-1/2">
               <h3 className="text-2xl font-semibold">Download Your Notes</h3>
@@ -194,7 +196,6 @@ function App() {
         </div>
       </section>
 
-      {/* About the Author Section */}
       {/* About the Author Section */}
       <section
         id="about-author"
