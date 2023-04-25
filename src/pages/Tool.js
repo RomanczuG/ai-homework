@@ -5,14 +5,10 @@ import CryptoJS from 'crypto-js';
 
 const Tool = () => {
   const sampleData = [
-    {
-      question: "Question 1",
-      analysis: "This is the analysis for Question 1.",
-    },
-    {
-      question: "Question 2",
-      analysis: "This is the analysis for Question 2.",
-    },
+    // {
+    //   question: "Upload PDF to get started",
+    //   analysis: "Here you will see the analysis of your PDF",
+    // },
     // Add more questions and analyses as needed
   ];
   const client = axios.create({
@@ -20,7 +16,7 @@ const Tool = () => {
     // timeout: 5000, // Add a 5 seconds timeout
   });
   const [file, setFile] = useState(null);
-  const [output, setOutput] = useState({ test: "test" });
+  const [output, setOutput] = useState(sampleData);
   const [pdfSrc, setPdfSrc] = useState(null);
 
   // ! FILE UPLOAD
@@ -80,13 +76,14 @@ const Tool = () => {
       }
       console.log('Generating help...');
       const response = await client.get(`/api/generate/${uploadedFilename}`);
-      console.log('Generated help:', response.data.generated_help);
-      const formattedData = response.data.map((question, help) => {
-        return {
-          question: question,
-          analysis: help,
-        };
-      });
+      console.log('Generated help:', response.data);
+      // const formattedData = response.data.map((question, help) => {
+      //   return {
+      //     question: question,
+      //     analysis: help,
+      //   };
+      // });
+      const formattedData = response.data;
       setOutput(formattedData);
       console.log("Formatted data:", formattedData);
       console.log("Output:", output);
@@ -147,20 +144,36 @@ const Tool = () => {
         </div>
 
         <div className="mt-8">
-          <h2 className="text-2xl font-semibold text-white mb-4">
+
+        
+          {output !== sampleData && (
+            <h2 className="text-2xl font-semibold text-white mb-4">
             Questions & Analysis
           </h2>
+          )
+          }
+          
           <div className="w-full space-y-4">
-            {sampleData.map((item, index) => (
+            {output.map((item, index) => (
               <Disclosure key={index}>
                 {({ open }) => (
                   <>
                     <Disclosure.Button className="flex justify-between w-full px-4 py-2 text-sm font-semibold text-left text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg focus:outline-none">
-                      <span>{item.question}</span>
+                      <p>
+                      {item.question.split('\n').map((line, index) => {
+                        return <div key={index}>{line}</div>
+                      })}
+                      {/* <span>{item.question}</span> */}
+                      </p>
                       <span>{open ? "-" : "+"}</span>
                     </Disclosure.Button>
                     <Disclosure.Panel className="px-4 pt-4 pb-2 text-white bg-gray-800 rounded-b-lg">
-                      {item.analysis}
+                      <p>
+                      {/* {item.analysis} */}
+                      {item.analysis.split('\n').map((line, index) => {
+                        return <div key={index}>{line}</div>
+                      })}
+                      </p>
                     </Disclosure.Panel>
                   </>
                 )}
