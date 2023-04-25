@@ -4,6 +4,8 @@ import feature_1 from "./feature_1.svg";
 import feature_2 from "./feature_2.svg";
 import { ClipLoader } from "react-spinners";
 import { useState } from "react";
+import { Link } from 'react-router-dom';
+
 
 function App() {
   const [waitlistData, setWaitlistData] = useState();
