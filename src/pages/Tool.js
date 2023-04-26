@@ -42,6 +42,9 @@ const Tool = () => {
       return;
     }
 
+    // const data = await client.post("/api", { "data": "lmao" });
+    // console.log("Data:", data);
+
     // Create FormData object
     const formData = new FormData();
     const hashedFilename = hashFilename(file.name);
