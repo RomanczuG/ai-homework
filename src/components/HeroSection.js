@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../hero.svg";
+// import logo from "../hero.svg";
 import { ClipLoader } from "react-spinners";
 export const HeroSection = ({
   waitlistData,
@@ -64,7 +64,9 @@ export const HeroSection = ({
           </div>
         </div>
         <div className="mt-8 md:mt-0 md:w-1/2">
-          <img src={logo} alt="Logo" className="w-full h-auto" />
+          {/* <img src={logo} alt="Logo" className="w-full h-auto" /> */}
+          <img src="/hero.svg" alt="Logo" className="w-full h-auto" />
+
         </div>
       </header>
   );
