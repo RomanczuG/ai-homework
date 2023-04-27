@@ -102,26 +102,19 @@ const Tool = () => {
   return (
     <div className="bg-[#252D62] min-h-screen">
       <div className="container mx-auto px-4 py-20">
-        <h1 className="text-4xl font-semibold text-white mb-8">
-          Homework & Exam Assistant
-        </h1>
-        <p className="text-xl text-yellow-400 mb-4">
-          Note: This tool is in early beta. It may sometimes keep unnecessary
-          text.
-        </p>
-        <p className="text-xl text-white mb-4">
-          The Homework Helper scans homework or exam PDF files, removing
-          unnecessary information like instructions, page numbers, etc., and
-          extracting separate questions for easier analysis.
-        </p>
-        <p className="text-xl text-white mb-4">
-          The goal of this tool is to provide quick and efficient homework help
-          by analyzing your uploaded PDF files.
-        </p>
-        <p className="text-lg text-white mb-4">
-          Select a PDF file, upload it, and then click on Generate to receive
-          help.
-        </p>
+      <h1 className="text-4xl font-semibold text-white mb-8">
+  Homework & Exam Assistant
+</h1>
+<p className="text-xl text-yellow-400 mb-4">
+  Note: Early beta, may retain some unnecessary text.
+</p>
+<p className="text-xl text-white mb-4">
+  This tool scans PDF files, extracts questions, and removes extra information like instructions and page numbers for easier analysis.
+</p>
+<p className="text-xl text-white mb-4">
+  Upload a PDF, click Generate, and receive quick, efficient homework help.
+</p>
+
         <div className="flex flex-col space-y-4 items-center">
           <label className="bg-white flex justify-center text-black py-2 px-4 border border-gray-200 rounded-md cursor-pointer hover:bg-gray-100 transition duration-300">
             {pdfSrc && (
