@@ -1,4 +1,4 @@
-import React, {useState, useMemo } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 
 
 import { Navbar } from "./components/Navbar";
@@ -16,7 +16,7 @@ function App() {
     return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email);
   };
 
-  function submitWaitlist(data) {
+  const submitWaitlist = useCallback((data) => {
     if (!data.email) {
       setError("Please enter your email");
       return;
@@ -46,7 +46,7 @@ function App() {
       .catch((error) => {
         setLoading(false);
       });
-  }
+  } ,[]);
   const appContent = useMemo(
     () => (
       <div className="bg-[#252D62] min-h-screen">
