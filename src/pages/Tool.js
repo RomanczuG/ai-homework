@@ -1,10 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Disclosure } from "@headlessui/react";
 import CryptoJS from "crypto-js";
 import { ClipLoader } from "react-spinners";
 
+
 const Tool = () => {
+  const [processingStage, setProcessingStage] = useState(0);
+  const simulateProgress = async () => {
+    // Update the stage every 50 seconds
+    for (let i = 1; i <= 4; i++) {
+      await new Promise((resolve) => setTimeout(resolve, 50000)); // 50 seconds
+      setProcessingStage(i);
+    }
+  };
+  useEffect(() => {
+    simulateProgress();
+  }, []);
+  
+  
   const sampleData = [
     // {
     //   question: "Upload PDF to get started",
@@ -195,6 +209,24 @@ const Tool = () => {
               Upload PDF File
             </button>
           )}
+          {processingStage > 0 && (
+  <div>
+    <progress value={processingStage} max="4" className="w-full h-2"></progress>
+    <div className="flex justify-between">
+      <span>Loading PDF</span>
+      <span>Cleaning text</span>
+      <span>Parsing questions</span>
+      <span>Creating assistance</span>
+    </div>
+    <div className="flex justify-between text-xs">
+      {Array.from({ length: 4 }).map((_, index) => (
+        <span key={index} className={index < processingStage ? "text-green-600" : ""}>
+          {index < processingStage ? "✓" : "•"}
+        </span>
+      ))}
+    </div>
+  </div>
+)}
 
           <div className="mt-8">
             {uploaded && (
