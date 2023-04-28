@@ -24,7 +24,7 @@ const Tool = () => {
   // ! FILE DOWNLOAD
   const handleDownloadDocument = async () => {
     try {
-      const response = await client.get(`/api/download`, {
+      const response = await client.post(`/api/download`, output, {
         responseType: "blob",
       });
 
@@ -44,6 +44,8 @@ const Tool = () => {
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
     setPdfSrc(URL.createObjectURL(e.target.files[0]));
+    setUploaded(false);
+    setGenerated(false);
   };
   const hashFilename = (filename) => {
     const timestamp = new Date().getTime();
