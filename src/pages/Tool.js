@@ -27,7 +27,7 @@ const Tool = () => {
   // ! FILE DOWNLOAD
   const handleDownloadDocument = async () => {
     try {
-      const response = await client.post(`/api/download`, output, {
+      const response = await client.get(`/api/download`, {
         responseType: "blob",
       });
 
