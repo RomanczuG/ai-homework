@@ -13,13 +13,32 @@ const Tool = () => {
   ];
   const client = axios.create({
     // baseURL: "http://127.0.0.1:5000",
-    baseURL: "https://studyboost.uc.r.appspot.com"
+    baseURL: "https://studyboost.uc.r.appspot.com",
     // timeout: 5000, // Add a 5 seconds timeout
   });
   const [file, setFile] = useState(null);
   const [output, setOutput] = useState(sampleData);
   const [pdfSrc, setPdfSrc] = useState(null);
   const [uploaded, setUploaded] = useState(false);
+  const [generated, setGenerated] = useState(false);
+  // ! FILE DOWNLOAD
+  const handleDownloadDocument = async () => {
+    try {
+      const response = await client.get(`/api/download`, {
+        responseType: 'blob',
+      });
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'document.docx');
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+    } catch (error) {
+      console.error('Error downloading the Word file:', error);
+    }
+  };
 
   // ! FILE UPLOAD
   const handleFileChange = (e) => {
@@ -93,6 +112,7 @@ const Tool = () => {
       setOutput(formattedData);
       console.log("Formatted data:", formattedData);
       console.log("Output:", output);
+      setGenerated(true);
       // Ignore the first empty element
     } catch (error) {
       console.error("Error generating help:", error);
@@ -102,18 +122,20 @@ const Tool = () => {
   return (
     <div className="bg-[#252D62] min-h-screen">
       <div className="container mx-auto px-4 py-20">
-      <h1 className="text-4xl font-semibold text-white mb-8">
-  Homework & Exam Assistant
-</h1>
-<p className="text-xl text-yellow-400 mb-4">
-  Note: Early beta, may retain some unnecessary text.
-</p>
-<p className="text-xl text-white mb-4">
-  This tool scans PDF files, extracts questions, and removes extra information like instructions and page numbers for easier analysis.
-</p>
-<p className="text-xl text-white mb-4">
-  Upload a PDF, click Generate, and receive quick, efficient homework help.
-</p>
+        <h1 className="text-4xl font-semibold text-white mb-8">
+          Homework & Exam Assistant
+        </h1>
+        <p className="text-xl text-yellow-400 mb-4">
+          Note: Early beta, may retain some unnecessary text.
+        </p>
+        <p className="text-xl text-white mb-4">
+          This tool scans PDF files, extracts questions, and removes extra
+          information like instructions and page numbers for easier analysis.
+        </p>
+        <p className="text-xl text-white mb-4">
+          Upload a PDF, click Generate, and receive quick, efficient homework
+          help.
+        </p>
 
         <div className="flex flex-col space-y-4 items-center">
           <label className="bg-white flex justify-center text-black py-2 px-4 border border-gray-200 rounded-md cursor-pointer hover:bg-gray-100 transition duration-300">
@@ -179,6 +201,28 @@ const Tool = () => {
                   <path d="M5 13l4 4L19 7" />
                 </svg> */}
                 Generate Help
+              </button>
+            )}
+          </div>
+          <p> Now you can see the help below or download it on your computer</p>
+          <div className="mt-8">
+            {generated && (
+              <button
+                onClick={handleDownloadDocument}
+                className="flex bg-indigo-600 hover:bg-indigo-700 w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
+              >
+                {/* <svg
+                  className="w-6 h-6 text-white"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M5 13l4 4L19 7" />
+                </svg> */}
+                Download Help
               </button>
             )}
           </div>
