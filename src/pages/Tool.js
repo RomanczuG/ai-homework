@@ -83,7 +83,7 @@ const Tool = () => {
       console.log("File upload response:", response);
 
       if (response.status === 200) {
-        alert("File uploaded successfully");
+        // alert("File uploaded successfully");
         console.log("File uploaded successfully");
         setUploadedFilename(response.data.filename); // Store the filename in the state
         setUploaded(true);
@@ -198,20 +198,7 @@ const Tool = () => {
 
           <div className="mt-8">
             {uploaded && (
-              <>
-              {generated && (
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path d="M5 13l4 4L19 7" />
-                </svg>
-              )}
+
 
               <button
                 onClick={handleGenerate}
@@ -236,7 +223,6 @@ const Tool = () => {
                 
                 Generate Help
               </button>
-              </>
             )}
           </div>
           <div className="mt-8 ">
