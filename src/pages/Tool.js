@@ -5,21 +5,21 @@ import CryptoJS from "crypto-js";
 import { ClipLoader, BarLoader } from "react-spinners";
 
 const Tool = () => {
-  const [startProcessing, setStartProcessing] = useState(false);
-  const [processingStage, setProcessingStage] = useState(0);
+  // const [startProcessing, setStartProcessing] = useState(false);
+  // const [processingStage, setProcessingStage] = useState(0);
 
-  useEffect(() => {
-    if (startProcessing) {
-      simulateProgress();
-    }
-  }, [startProcessing]);
-  const simulateProgress = async () => {
-    // Update the stage every 50 seconds
-    for (let i = 1; i <= 4; i++) {
-      await new Promise((resolve) => setTimeout(resolve, 50000)); // 50 seconds
-      setProcessingStage(i);
-    }
-  };
+  // useEffect(() => {
+  //   if (startProcessing) {
+  //     simulateProgress();
+  //   }
+  // }, [startProcessing]);
+  // const simulateProgress = async () => {
+  //   // Update the stage every 50 seconds
+  //   for (let i = 1; i <= 4; i++) {
+  //     await new Promise((resolve) => setTimeout(resolve, 50000)); // 50 seconds
+  //     setProcessingStage(i);
+  //   }
+  // };
 
   const sampleData = [
     // {
@@ -116,7 +116,7 @@ const Tool = () => {
   // ! GENERATE HELP
 
   const handleGenerate = async () => {
-    setStartProcessing(true);
+    // setStartProcessing(true);
     setOutputLoading(true);
     try {
       if (!uploadedFilename) {
@@ -248,7 +248,7 @@ const Tool = () => {
               </button>
             )}
           </div>
-          {startProcessing && processingStage > 0 && (
+          {/* {startProcessing && processingStage > 0 && (
             <div className="mt-4">
               <BarLoader
                 width={"100%"}
@@ -264,7 +264,7 @@ const Tool = () => {
                 <span>Creating assistance</span>
               </div>
             </div>
-          )}
+          )} */}
 
           <div className="mt-8 ">
             {generated && (
