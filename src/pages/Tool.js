@@ -241,7 +241,7 @@ const Tool = () => {
           </div>
           <div className="mt-8 ">
             {generated && (
-              <div className="flex flex-col">
+              <div className="flex flex-col items-center">
                 <p className="text-xl text-white mb-4">
                   Now you can see the help below or download it on your computer
                 </p>
