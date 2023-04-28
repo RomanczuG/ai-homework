@@ -2,11 +2,17 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Disclosure } from "@headlessui/react";
 import CryptoJS from "crypto-js";
-import { ClipLoader } from "react-spinners";
-
+import { ClipLoader, BarLoader } from "react-spinners";
 
 const Tool = () => {
+  const [startProcessing, setStartProcessing] = useState(false);
   const [processingStage, setProcessingStage] = useState(0);
+
+  useEffect(() => {
+    if (startProcessing) {
+      simulateProgress();
+    }
+  }, [startProcessing]);
   const simulateProgress = async () => {
     // Update the stage every 50 seconds
     for (let i = 1; i <= 4; i++) {
@@ -14,11 +20,7 @@ const Tool = () => {
       setProcessingStage(i);
     }
   };
-  useEffect(() => {
-    simulateProgress();
-  }, []);
-  
-  
+
   const sampleData = [
     // {
     //   question: "Upload PDF to get started",
@@ -114,6 +116,7 @@ const Tool = () => {
   // ! GENERATE HELP
 
   const handleGenerate = async () => {
+    setStartProcessing(true);
     setOutputLoading(true);
     try {
       if (!uploadedFilename) {
@@ -203,60 +206,66 @@ const Tool = () => {
                 </svg>
               )}
               {uploadedLoading && (
-              <ClipLoader className="mr-1" size={25} color={"#ffffff"} loading={true} />)  
-              }
-              
+                <ClipLoader
+                  className="mr-1"
+                  size={25}
+                  color={"#ffffff"}
+                  loading={true}
+                />
+              )}
               Upload PDF File
             </button>
           )}
-          {processingStage > 0 && (
-  <div>
-    <progress value={processingStage} max="4" className="w-full h-2"></progress>
-    <div className="flex justify-between">
-      <span>Loading PDF</span>
-      <span>Cleaning text</span>
-      <span>Parsing questions</span>
-      <span>Creating assistance</span>
-    </div>
-    <div className="flex justify-between text-xs">
-      {Array.from({ length: 4 }).map((_, index) => (
-        <span key={index} className={index < processingStage ? "text-green-600" : ""}>
-          {index < processingStage ? "✓" : "•"}
-        </span>
-      ))}
-    </div>
-  </div>
-)}
 
           <div className="mt-8">
             {uploaded && (
-
-
               <button
                 onClick={handleGenerate}
                 className="flex bg-indigo-600 hover:bg-indigo-700 w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
               >
                 {outputLoading && (
-                <ClipLoader className="mr-1" size={25} color={"#ffffff"} loading={true} />)  
-                }
-                {generated &&
-                <svg
-                className="w-6 h-6 text-white"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path d="M5 13l4 4L19 7" />
-              </svg>
-                }
-                
+                  <ClipLoader
+                    className="mr-1"
+                    size={25}
+                    color={"#ffffff"}
+                    loading={true}
+                  />
+                )}
+                {generated && (
+                  <svg
+                    className="w-6 h-6 text-white"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path d="M5 13l4 4L19 7" />
+                  </svg>
+                )}
                 Generate Help
               </button>
             )}
           </div>
+          {startProcessing && processingStage > 0 && (
+            <div className="mt-4">
+              <BarLoader
+                width={"100%"}
+                height={4}
+                color={"#4C1D95"}
+                loading={true}
+                progress={(processingStage / 4) * 100}
+              />
+              <div className="flex justify-between mt-2">
+                <span>Loading PDF</span>
+                <span>Cleaning text</span>
+                <span>Parsing questions</span>
+                <span>Creating assistance</span>
+              </div>
+            </div>
+          )}
+
           <div className="mt-8 ">
             {generated && (
               <div className="flex flex-col items-center">
@@ -269,10 +278,9 @@ const Tool = () => {
                 >
                   Download Help
                 </button>
-                </div>
+              </div>
             )}
           </div>
-          
         </div>
 
         <div className="mt-8">
