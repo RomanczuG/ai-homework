@@ -199,14 +199,8 @@ const Tool = () => {
           <div className="mt-8">
             {uploaded && (
               <>
-              {outputLoading && (
-                <ClipLoader className="mr-1" size={25} color={"#ffffff"} loading={true} />)  
-                }
-              <button
-                onClick={handleGenerate}
-                className="flex bg-indigo-600 hover:bg-indigo-700 w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
-              >
-                {/* <svg
+              {generated && (
+                <svg
                   className="w-6 h-6 text-white"
                   fill="none"
                   strokeLinecap="round"
@@ -216,14 +210,37 @@ const Tool = () => {
                   stroke="currentColor"
                 >
                   <path d="M5 13l4 4L19 7" />
-                </svg> */}
+                </svg>
+              )}
+
+              <button
+                onClick={handleGenerate}
+                className="flex bg-indigo-600 hover:bg-indigo-700 w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
+              >
+                {outputLoading && (
+                <ClipLoader className="mr-1" size={25} color={"#ffffff"} loading={true} />)  
+                }
+                {generated &&
+                <svg
+                className="w-6 h-6 text-white"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path d="M5 13l4 4L19 7" />
+              </svg>
+                }
+                
                 Generate Help
               </button>
               </>
             )}
           </div>
-          <div className="mt-8">
-            {generated && (
+          <div className="mt-8 ">
+            {true && (
               <>
                 <p className="text-xl text-white mb-4">
                   Now you can see the help below or download it on your computer
@@ -232,22 +249,12 @@ const Tool = () => {
                   onClick={handleDownloadDocument}
                   className="flex bg-indigo-600 hover:bg-indigo-700 w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
                 >
-                  {/* <svg
-                  className="w-6 h-6 text-white"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path d="M5 13l4 4L19 7" />
-                </svg> */}
                   Download Help
                 </button>
               </>
             )}
           </div>
+          
         </div>
 
         <div className="mt-8">
