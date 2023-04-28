@@ -25,18 +25,18 @@ const Tool = () => {
   const handleDownloadDocument = async () => {
     try {
       const response = await client.get(`/api/download`, {
-        responseType: 'blob',
+        responseType: "blob",
       });
 
       const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = url;
-      link.setAttribute('download', 'document.docx');
+      link.setAttribute("download", "document.docx");
       document.body.appendChild(link);
       link.click();
       link.parentNode.removeChild(link);
     } catch (error) {
-      console.error('Error downloading the Word file:', error);
+      console.error("Error downloading the Word file:", error);
     }
   };
 
@@ -204,14 +204,17 @@ const Tool = () => {
               </button>
             )}
           </div>
-          <p> Now you can see the help below or download it on your computer</p>
           <div className="mt-8">
             {generated && (
-              <button
-                onClick={handleDownloadDocument}
-                className="flex bg-indigo-600 hover:bg-indigo-700 w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
-              >
-                {/* <svg
+              <>
+                <p className="text-xl text-white mb-4">
+                  Now you can see the help below or download it on your computer
+                </p>
+                <button
+                  onClick={handleDownloadDocument}
+                  className="flex bg-indigo-600 hover:bg-indigo-700 w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
+                >
+                  {/* <svg
                   className="w-6 h-6 text-white"
                   fill="none"
                   strokeLinecap="round"
@@ -222,8 +225,9 @@ const Tool = () => {
                 >
                   <path d="M5 13l4 4L19 7" />
                 </svg> */}
-                Download Help
-              </button>
+                  Download Help
+                </button>
+              </>
             )}
           </div>
         </div>
