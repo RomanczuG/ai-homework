@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Disclosure } from "@headlessui/react";
 import CryptoJS from "crypto-js";
+import { ClipLoader } from "react-spinners";
 
 const Tool = () => {
   const sampleData = [
@@ -18,8 +19,10 @@ const Tool = () => {
   });
   const [file, setFile] = useState(null);
   const [output, setOutput] = useState(sampleData);
+  const [outputLoading, setOutputLoading] = useState(false);
   const [pdfSrc, setPdfSrc] = useState(null);
   const [uploaded, setUploaded] = useState(false);
+  const [uploadedLoading, setUploadedLoading] = useState(false);
   const [generated, setGenerated] = useState(false);
   // ! FILE DOWNLOAD
   const handleDownloadDocument = async () => {
@@ -62,6 +65,7 @@ const Tool = () => {
       alert("Please select a file to upload");
       return;
     }
+    setUploadedLoading(true);
 
     // const data = await client.post("/api", { "data": "lmao" });
     // console.log("Data:", data);
@@ -90,11 +94,13 @@ const Tool = () => {
     } catch (error) {
       console.error("Error during file upload:", error);
     }
+    setUploadedLoading(false);
   };
 
   // ! GENERATE HELP
 
   const handleGenerate = async () => {
+    setOutputLoading(true);
     try {
       if (!uploadedFilename) {
         console.error("No file uploaded");
@@ -119,6 +125,7 @@ const Tool = () => {
     } catch (error) {
       console.error("Error generating help:", error);
     }
+    setOutputLoading(false);
   };
 
   return (
@@ -181,12 +188,20 @@ const Tool = () => {
                   <path d="M5 13l4 4L19 7" />
                 </svg>
               )}
+              {uploadedLoading && (
+              <ClipLoader className="mr-1" size={25} color={"#ffffff"} loading={true} />)  
+              }
+              
               Upload PDF File
             </button>
           )}
 
           <div className="mt-8">
             {uploaded && (
+              <>
+              {outputLoading && (
+                <ClipLoader className="mr-1" size={25} color={"#ffffff"} loading={true} />)  
+                }
               <button
                 onClick={handleGenerate}
                 className="flex bg-indigo-600 hover:bg-indigo-700 w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
@@ -204,6 +219,7 @@ const Tool = () => {
                 </svg> */}
                 Generate Help
               </button>
+              </>
             )}
           </div>
           <div className="mt-8">
@@ -235,7 +251,7 @@ const Tool = () => {
         </div>
 
         <div className="mt-8">
-          {output !== sampleData && (
+          {generated && (
             <h2 className="text-2xl font-semibold text-white mb-4">
               Questions & Analysis
             </h2>
