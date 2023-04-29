@@ -220,7 +220,7 @@ const Tool = () => {
           <div className="mt-8">
           <div className="flex flex-col items-center">
                 <p className="text-md text-white mb-4">
-                It may take up to 40 seconds per question for the help to be generated. Please be patient.
+                It may take up to 20 seconds per question for the help to be generated. Please be patient.
                 </p>
             {uploaded && (
               <button
