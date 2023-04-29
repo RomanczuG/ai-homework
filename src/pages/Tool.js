@@ -5,21 +5,38 @@ import CryptoJS from "crypto-js";
 import { ClipLoader, BarLoader } from "react-spinners";
 
 const Tool = () => {
-  // const [startProcessing, setStartProcessing] = useState(false);
-  // const [processingStage, setProcessingStage] = useState(0);
-
-  // useEffect(() => {
-  //   if (startProcessing) {
-  //     simulateProgress();
-  //   }
-  // }, [startProcessing]);
-  // const simulateProgress = async () => {
-  //   // Update the stage every 50 seconds
-  //   for (let i = 1; i <= 4; i++) {
-  //     await new Promise((resolve) => setTimeout(resolve, 50000)); // 50 seconds
-  //     setProcessingStage(i);
-  //   }
-  // };
+  const stageNames = [
+    "Scanning text",
+    "Cleaning text",
+    "Extracting questions",
+    "Generating help",
+  ];
+  const handleStages = async () => {
+    setOutputLoading(true);
+  
+    // Create an array of Promises for the first three stages
+    const stagePromises = Array.from({ length: 3 }, (_, i) =>
+      new Promise((resolve) => setTimeout(resolve, 40000))
+    );
+  
+    // Add the handleGenerate function as the fourth promise
+    stagePromises.push(handleGenerate());
+  
+    // Run all promises in parallel and update the stage when each promise is resolved
+    await Promise.all(
+      stagePromises.map((promise, index) =>
+        promise.then(() => {
+          setStage((prevStage) => Math.max(prevStage, index + 1));
+        })
+      )
+    );
+  
+    setStage(5);
+    setOutputLoading(false);
+  };
+  
+  
+  
 
   const sampleData = [
     // {
@@ -127,12 +144,6 @@ const Tool = () => {
       console.log("Generating help...");
       const response = await client.get(`/api/generate/${uploadedFilename}`);
       console.log("Generated help:", response.data);
-      // const formattedData = response.data.map((question, help) => {
-      //   return {
-      //     question: question,
-      //     analysis: help,
-      //   };
-      // });
       const formattedData = response.data;
       setOutput(formattedData);
       console.log("Formatted data:", formattedData);
@@ -229,7 +240,8 @@ const Tool = () => {
                 
             {uploaded && (
               <button
-                onClick={handleGenerate}
+                // onClick={handleGenerate}
+                onClick={handleStages}
                 className="flex bg-indigo-600 hover:bg-indigo-700 w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
               >
                 {outputLoading && (
@@ -255,26 +267,21 @@ const Tool = () => {
                 )}
                 Generate Help
               </button>
+              
+            )}
+            {outputLoading && (
+              <ul>
+              {stageNames.map((stageName, i) => (
+                <li key={i} className={stage > i ? "text-green-500" : ""}>
+                  {stage > i && <span className="mr-2">✓</span>}
+                  {stageName}
+                </li>
+              ))}
+            </ul>
+            
             )}
             </div>
           </div>
-          {/* {startProcessing && processingStage > 0 && (
-            <div className="mt-4">
-              <BarLoader
-                width={"100%"}
-                height={4}
-                color={"#4C1D95"}
-                loading={true}
-                progress={(processingStage / 4) * 100}
-              />
-              <div className="flex justify-between mt-2">
-                <span>Loading PDF</span>
-                <span>Cleaning text</span>
-                <span>Parsing questions</span>
-                <span>Creating assistance</span>
-              </div>
-            </div>
-          )} */}
 
           <div className="mt-8 ">
             {generated && (
