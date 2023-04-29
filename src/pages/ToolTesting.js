@@ -2,8 +2,28 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Disclosure } from "@headlessui/react";
 import CryptoJS from "crypto-js";
-import { ClipLoader, BarLoader } from "react-spinners";
+import { ClipLoader, BarLoader} from "react-spinners";
+import { FaCheck } from "react-icons/fa";
 
+const Stage = ({ stageNumber, currentStage, stageName }) => {
+    return (
+      <div className="flex items-center space-x-2">
+        {currentStage > stageNumber && (
+          <FaCheck className="text-green-500" size={20} />
+        )}
+        {currentStage === stageNumber && (
+          <BarLoader width={20} height={4} color={"#3f51b5"} loading={true} />
+        )}
+        <span
+          className={`text-sm ${
+            currentStage >= stageNumber ? "font-bold" : "font-normal"
+          }`}
+        >
+          {stageName}
+        </span>
+      </div>
+    );
+  };
 
 const ToolTesting = () => {
     const [stage, setStage] = useState(0);
@@ -263,10 +283,19 @@ const [progress, setProgress] = useState(0);
               </button>
             )}
             <div className="w-full h-2 bg-gray-200">
-  <div
+  {/* <div
     className="h-2 bg-indigo-600 transition-all duration-300"
     style={{ width: `${progress}%` }}
-  ></div>
+  ></div> */}
+
+<div className="flex space-x-4 mb-4">
+  <Stage stageNumber={1} currentStage={stage} stageName="Scanning Text" />
+  <Stage stageNumber={2} currentStage={stage} stageName="Cleaning Text" />
+  <Stage stageNumber={3} currentStage={stage} stageName="Extracting Questions" />
+  <Stage stageNumber={4} currentStage={stage} stageName="Generating Help" />
+</div>
+
+
 </div>
             </div>
           </div>
