@@ -12,10 +12,10 @@ const Stage = ({ stageNumber, currentStage, stageName }) => {
           <FaCheck className="text-green-500" size={20} />
         )}
         {currentStage === stageNumber && (
-          <BarLoader width={20} height={4} color={"#3f51b5"} loading={true} />
+          <BarLoader width={20} height={4} color={"#FFFFFF"} loading={true} />
         )}
         <span
-          className={`text-sm ${
+          className={`text-md text-white ${
             currentStage >= stageNumber ? "font-bold" : "font-normal"
           }`}
         >
@@ -253,19 +253,19 @@ const [progress, setProgress] = useState(0);
             )} */}
                 
                 
-            {uploaded && (
+            {uploaded && !outputLoading  && (
               <button
                 onClick={handleStages}
                 className="flex bg-indigo-600 hover:bg-indigo-700 w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
               >
-                {outputLoading && (
+                {/* {outputLoading && (
                   <ClipLoader
                     className="mr-1"
                     size={25}
                     color={"#ffffff"}
                     loading={true}
                   />
-                )}
+                )} */}
                 {generated && (
                   <svg
                     className="w-6 h-6 text-white"
@@ -282,18 +282,17 @@ const [progress, setProgress] = useState(0);
                 Generate Help
               </button>
             )}
-            <div className="w-full h-2 bg-gray-200">
-  {/* <div
-    className="h-2 bg-indigo-600 transition-all duration-300"
-    style={{ width: `${progress}%` }}
-  ></div> */}
+            <div className="w-full h-2 ">
+                {outputLoading && (
+                    <div className="flex space-x-4 mb-4">
+                    <Stage stageNumber={1} currentStage={stage} stageName="Scanning Text" />
+                    <Stage stageNumber={2} currentStage={stage} stageName="Cleaning Text" />
+                    <Stage stageNumber={3} currentStage={stage} stageName="Extracting Questions" />
+                    <Stage stageNumber={4} currentStage={stage} stageName="Generating Help" />
+                  </div>
+                )}
 
-<div className="flex space-x-4 mb-4">
-  <Stage stageNumber={1} currentStage={stage} stageName="Scanning Text" />
-  <Stage stageNumber={2} currentStage={stage} stageName="Cleaning Text" />
-  <Stage stageNumber={3} currentStage={stage} stageName="Extracting Questions" />
-  <Stage stageNumber={4} currentStage={stage} stageName="Generating Help" />
-</div>
+
 
 
 </div>
