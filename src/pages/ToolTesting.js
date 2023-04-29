@@ -38,18 +38,15 @@ const ToolTesting = () => {
     // Create an array of Promises for the first three stages
     const stagePromises = Array.from({ length: 3 }, (_, i) =>
       new Promise((resolve) => setTimeout(resolve, 40000)).then(() => {
-        setStage((prevStage) => prevStage + 1);
+        setStage((prevStage) => Math.max(prevStage, i + 1));
       })
     );
   
-    // Run the first three promises sequentially
-    const stagePromiseChain = stagePromises.reduce(
-      (acc, currPromise) => acc.then(() => currPromise),
-      Promise.resolve()
-    );
+    // Run the first three promises concurrently
+    const stagePromisesComplete = Promise.all(stagePromises);
   
     // Wait for both the stage updates and handleGenerate to complete
-    await Promise.all([stagePromiseChain, handleGeneratePromise]);
+    await Promise.all([stagePromisesComplete, handleGeneratePromise]);
   
     // Start loading the fourth stage
     setStage(4);
@@ -58,6 +55,7 @@ const ToolTesting = () => {
     setStage(5);
     setOutputLoading(false);
   };
+  
   
 
   const sampleData = [
