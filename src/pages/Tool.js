@@ -3,11 +3,59 @@ import axios from "axios";
 import { Disclosure } from "@headlessui/react";
 import CryptoJS from "crypto-js";
 import { ClipLoader, BarLoader } from "react-spinners";
+import { FaCheck } from "react-icons/fa";
+
+const Stage = ({ stageNumber, currentStage, stageName, isLoading }) => {
+  return (
+    <div className="flex items-center space-x-2">
+      {currentStage > stageNumber && (
+        <FaCheck className="text-green-500" size={20} />
+      )}
+      {isLoading && (
+        <BarLoader width={20} height={4} color={"#3f51b5"} loading={true} />
+      )}
+      <span
+        className={`text-md text-white ${
+          currentStage >= stageNumber ? "font-bold" : "font-normal"
+        }`}
+      >
+        {stageName}
+      </span>
+    </div>
+  );
+};
 
 const Tool = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [stage, setStage] = useState(0);
-const [progress, setProgress] = useState(0);
 
+  const handleStages = async () => {
+    setOutputLoading(true);
+  
+    // Start handleGenerate function concurrently
+    const handleGeneratePromise = handleGenerate();
+  
+    // Create an array of Promises for the first three stages
+    const stagePromises = Array.from({ length: 3 }, (_, i) =>
+  new Promise((resolve) => setTimeout(resolve, i * 25000)).then(() => {
+    setStage((prevStage) => Math.max(prevStage, i + 1));
+  })
+);
+
+  
+    // Wait for both the stage updates and handleGenerate to complete
+    await Promise.all([...stagePromises, handleGeneratePromise]);
+  
+    // Start loading the fourth stage
+    setStage(4);
+  
+    // Update the last stage and progress once handleGenerate completes
+    setStage(5);
+    setOutputLoading(false);
+  };
+  
+  
+  
 
   const sampleData = [
     // {
@@ -200,69 +248,82 @@ const [progress, setProgress] = useState(0);
           )}
 
           <div className="mt-8">
-          <div className="flex flex-col items-center">
-            {outputLoading && ( 
+            <div className="flex flex-col items-center">
+              {/* {outputLoading && ( 
 
               <p className="text-md text-white mb-4">
                 It may take up to 20 seconds per question for the help to be generated. Please be patient.
                 </p>
-            )}
-                
-                
-            {uploaded && (
-              <button
-                onClick={handleGenerate}
-                className="flex bg-indigo-600 hover:bg-indigo-700 w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
-              >
-                {outputLoading && (
+            )} */}
+
+              {uploaded && !outputLoading && (
+                <button
+                  onClick={handleStages}
+                  className="flex bg-indigo-600 hover:bg-indigo-700 w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
+                >
+                  {/* {outputLoading && (
                   <ClipLoader
                     className="mr-1"
                     size={25}
                     color={"#ffffff"}
                     loading={true}
                   />
+                )} */}
+                  {generated && (
+                    <svg
+                      className="w-6 h-6 text-white"
+                      fill="none"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path d="M5 13l4 4L19 7" />
+                    </svg>
+                  )}
+                  Generate Help
+                </button>
+              )}
+              <div className="w-full h-2 ">
+                {outputLoading && (
+                  <div className="flex space-x-4 mb-4">
+                    <Stage
+                      stageNumber={1}
+                      currentStage={stage}
+                      stageName="Scanning Text"
+                      isLoading={stage === 1}
+                    />
+                    <Stage
+                      stageNumber={2}
+                      currentStage={stage}
+                      stageName="Cleaning Text"
+                      isLoading={stage === 2}
+                    />
+                    <Stage
+                      stageNumber={3}
+                      currentStage={stage}
+                      stageName="Extracting Questions"
+                      isLoading={stage === 3}
+                    />
+                    <Stage
+                      stageNumber={4}
+                      currentStage={stage}
+                      stageName="Generating Help"
+                      isLoading={isLoading && stage === 4}
+                    />
+                  </div>
                 )}
-                {generated && (
-                  <svg
-                    className="w-6 h-6 text-white"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path d="M5 13l4 4L19 7" />
-                  </svg>
-                )}
-                Generate Help
-              </button>
-            )}
-            </div>
-          </div>
-          {/* {startProcessing && processingStage > 0 && (
-            <div className="mt-4">
-              <BarLoader
-                width={"100%"}
-                height={4}
-                color={"#4C1D95"}
-                loading={true}
-                progress={(processingStage / 4) * 100}
-              />
-              <div className="flex justify-between mt-2">
-                <span>Loading PDF</span>
-                <span>Cleaning text</span>
-                <span>Parsing questions</span>
-                <span>Creating assistance</span>
               </div>
             </div>
-          )} */}
+          </div>
 
           <div className="mt-8 ">
             {generated && (
               <div className="flex flex-col items-center">
                 <p className="text-xl text-white mb-4">
-                  Now you can see the help below or download it on your computer
+                  Soon you will be able to to download your help on your
+                  computer
                 </p>
                 <button
                   onClick={handleDownloadDocument}

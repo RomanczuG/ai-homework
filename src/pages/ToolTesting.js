@@ -37,7 +37,7 @@ const ToolTesting = () => {
   
     // Create an array of Promises for the first three stages
     const stagePromises = Array.from({ length: 3 }, (_, i) =>
-  new Promise((resolve) => setTimeout(resolve, i * 40000)).then(() => {
+  new Promise((resolve) => setTimeout(resolve, i * 25000)).then(() => {
     setStage((prevStage) => Math.max(prevStage, i + 1));
   })
 );
