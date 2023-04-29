@@ -5,6 +5,8 @@ import CryptoJS from "crypto-js";
 import { ClipLoader, BarLoader } from "react-spinners";
 
 const Tool = () => {
+  const [stage, setStage] = useState(0);
+const [progress, setProgress] = useState(0);
 
 
   const sampleData = [

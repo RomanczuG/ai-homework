@@ -3,11 +3,11 @@ import axios from "axios";
 import { Disclosure } from "@headlessui/react";
 import CryptoJS from "crypto-js";
 import { ClipLoader, BarLoader } from "react-spinners";
-const [stage, setStage] = useState(0);
-const [progress, setProgress] = useState(0);
+
 
 const ToolTesting = () => {
-
+    const [stage, setStage] = useState(0);
+const [progress, setProgress] = useState(0);
     const handleStages = async () => {
         setOutputLoading(true);
       
