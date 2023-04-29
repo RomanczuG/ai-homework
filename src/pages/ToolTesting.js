@@ -26,30 +26,38 @@ const Stage = ({ stageNumber, currentStage, stageName, isLoading }) => {
 };
 
 const ToolTesting = () => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [stage, setStage] = useState(0);
-    const [progress, setProgress] = useState(0);
-    
-    const handleStages = async () => {
-      setIsLoading(true);
-      const handleGeneratePromise = handleGenerate();
-    
-      const stagePromises = Array.from({ length: 3 }, (_, i) =>
-        new Promise((resolve) => setTimeout(resolve, 40000)).then(() => {
-          setStage((prevStage) => Math.max(prevStage, i + 1));
-          setProgress(((i + 1) / 4) * 100);
-        })
-      );
-    
-      await Promise.all([...stagePromises, handleGeneratePromise]);
-    
-      setStage(4);
-      setProgress(100);
-      setIsLoading(false);
-    };
-    
+  const [isLoading, setIsLoading] = useState(false);
+  const [stage, setStage] = useState(0);
+
+  const handleStages = async () => {
+    setOutputLoading(true);
   
+    // Start handleGenerate function concurrently
+    const handleGeneratePromise = handleGenerate();
   
+    // Create an array of Promises for the first three stages
+    const stagePromises = Array.from({ length: 3 }, (_, i) =>
+      new Promise((resolve) => setTimeout(resolve, 40000)).then(() => {
+        setStage((prevStage) => prevStage + 1);
+      })
+    );
+  
+    // Run the first three promises sequentially
+    const stagePromiseChain = stagePromises.reduce(
+      (acc, currPromise) => acc.then(() => currPromise),
+      Promise.resolve()
+    );
+  
+    // Wait for both the stage updates and handleGenerate to complete
+    await Promise.all([stagePromiseChain, handleGeneratePromise]);
+  
+    // Start loading the fourth stage
+    setStage(4);
+  
+    // Update the last stage and progress once handleGenerate completes
+    setStage(5);
+    setOutputLoading(false);
+  };
   
 
   const sampleData = [
@@ -283,32 +291,31 @@ const ToolTesting = () => {
               <div className="w-full h-2 ">
                 {outputLoading && (
                   <div className="flex space-x-4 mb-4">
-                  <Stage
-                    stageNumber={1}
-                    currentStage={stage}
-                    stageName="Scanning Text"
-                    isLoading={stage === 1}
-                  />
-                  <Stage
-                    stageNumber={2}
-                    currentStage={stage}
-                    stageName="Cleaning Text"
-                    isLoading={stage === 2}
-                  />
-                  <Stage
-                    stageNumber={3}
-                    currentStage={stage}
-                    stageName="Extracting Questions"
-                    isLoading={stage === 3}
-                  />
-                  <Stage
-                    stageNumber={4}
-                    currentStage={stage}
-                    stageName="Generating Help"
-                    isLoading={isLoading && stage === 4}
-                  />
-                </div>
-                
+                    <Stage
+                      stageNumber={1}
+                      currentStage={stage}
+                      stageName="Scanning Text"
+                      isLoading={stage === 1}
+                    />
+                    <Stage
+                      stageNumber={2}
+                      currentStage={stage}
+                      stageName="Cleaning Text"
+                      isLoading={stage === 2}
+                    />
+                    <Stage
+                      stageNumber={3}
+                      currentStage={stage}
+                      stageName="Extracting Questions"
+                      isLoading={stage === 3}
+                    />
+                    <Stage
+                      stageNumber={4}
+                      currentStage={stage}
+                      stageName="Generating Help"
+                      isLoading={isLoading && stage === 4}
+                    />
+                  </div>
                 )}
               </div>
             </div>
@@ -318,7 +325,8 @@ const ToolTesting = () => {
             {generated && (
               <div className="flex flex-col items-center">
                 <p className="text-xl text-white mb-4">
-                  Soon you will be able to to download your help on your computer
+                  Soon you will be able to to download your help on your
+                  computer
                 </p>
                 <button
                   onClick={handleDownloadDocument}
