@@ -220,7 +220,7 @@ const Tool = () => {
           <div className="mt-8">
           <div className="flex flex-col items-center">
                 <p className="text-md text-white mb-4">
-                  It can take up to 5 minutes to generate help. Please be patient.
+                It may take up to 5 minutes for the help to be generated. Please be patient.
                 </p>
             {uploaded && (
               <button
