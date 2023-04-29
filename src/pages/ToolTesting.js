@@ -41,29 +41,27 @@ const ToolTesting = () => {
     setOutputLoading(true);
   
     // Create an array of Promises for the first three stages
-    const stagePromises = Array.from({ length: 3 }, (_, i) => {
-      setStage((prevStage) => Math.max(prevStage, i + 1));
-      setProgress(((i + 1) / 4) * 100);
-  
-      return new Promise((resolve) => setTimeout(resolve, 40000)).then(() => {
+    const stagePromises = Array.from({ length: 3 }, (_, i) =>
+      new Promise((resolve) => setTimeout(resolve, 40000)).then(() => {
         setStage((prevStage) => Math.max(prevStage, i + 1));
         setProgress(((i + 1) / 4) * 100);
-      });
-    });
-  
-    // Add the handleGenerate function as the fourth promise
-    stagePromises.push(
-      handleGenerate().then(() => {
-        setStage(5);
-        setProgress(100);
       })
     );
   
-    // Run all promises in parallel
-    await Promise.all(stagePromises);
+    // Run the first three promises sequentially
+    const stagePromiseChain = stagePromises.reduce(
+      (acc, currPromise) => acc.then(() => currPromise),
+      Promise.resolve()
+    );
   
+    // Run the handleGenerate function concurrently with the first three stages
+    await Promise.all([stagePromiseChain, handleGenerate()]);
+  
+    setStage(4);
+    setProgress(100);
     setOutputLoading(false);
   };
+  
   
 
   const sampleData = [
