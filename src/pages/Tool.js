@@ -36,7 +36,7 @@ const Tool = () => {
     const handleGeneratePromise = handleGenerate();
   
     // Create an array of Promises for the first three stages
-    const stagePromises = Array.from({ length: 3 }, (_, i) =>
+    const stagePromises = Array.from({ length: 4 }, (_, i) =>
   new Promise((resolve) => setTimeout(resolve, i * 25000)).then(() => {
     setStage((prevStage) => Math.max(prevStage, i + 1));
   })
@@ -47,7 +47,7 @@ const Tool = () => {
     await Promise.all([...stagePromises, handleGeneratePromise]);
   
     // Start loading the fourth stage
-    setStage(4);
+    // setStage(4);
   
     // Update the last stage and progress once handleGenerate completes
     setStage(5);
