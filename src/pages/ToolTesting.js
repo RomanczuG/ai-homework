@@ -2,57 +2,66 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Disclosure } from "@headlessui/react";
 import CryptoJS from "crypto-js";
-import { ClipLoader, BarLoader} from "react-spinners";
+import { ClipLoader, BarLoader } from "react-spinners";
 import { FaCheck } from "react-icons/fa";
 
-const Stage = ({ stageNumber, currentStage, stageName }) => {
-    return (
-      <div className="flex items-center space-x-2">
-        {currentStage > stageNumber && (
-          <FaCheck className="text-green-500" size={20} />
-        )}
-        {currentStage === stageNumber && (
-          <BarLoader width={20} height={4} color={"#FFFFFF"} loading={true} />
-        )}
-        <span
-          className={`text-md text-white ${
-            currentStage >= stageNumber ? "font-bold" : "font-normal"
-          }`}
-        >
-          {stageName}
-        </span>
-      </div>
-    );
-  };
+const Stage = ({ stageNumber, currentStage, stageName, isLoading }) => {
+  return (
+    <div className="flex items-center space-x-2">
+      {currentStage > stageNumber && (
+        <FaCheck className="text-green-500" size={20} />
+      )}
+      {isLoading && (
+        <BarLoader width={20} height={4} color={"#3f51b5"} loading={true} />
+      )}
+      <span
+        className={`text-md text-white ${
+          currentStage >= stageNumber ? "font-bold" : "font-normal"
+        }`}
+      >
+        {stageName}
+      </span>
+    </div>
+  );
+};
 
 const ToolTesting = () => {
-    const [stage, setStage] = useState(0);
-const [progress, setProgress] = useState(0);
-    const handleStages = async () => {
-        setOutputLoading(true);
-      
-        // Create an array of Promises for the first three stages
-        const stagePromises = Array.from({ length: 3 }, (_, i) =>
-          new Promise((resolve) => setTimeout(resolve, 40000)).then(() => {
-            setStage((prevStage) => Math.max(prevStage, i + 1));
-            setProgress(((i + 1) / 4) * 100);
-          })
-        );
-      
-        // Add the handleGenerate function as the fourth promise
-        stagePromises.push(
-          handleGenerate().then(() => {
-            setStage(5);
-            setProgress(100);
-          })
-        );
-      
-        // Run all promises in parallel
-        await Promise.all(stagePromises);
-      
-        setOutputLoading(false);
-      };
-      
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (stage > 0 && stage <= 3) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  }, [stage]);
+  const [stage, setStage] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const handleStages = async () => {
+    setOutputLoading(true);
+
+    // Create an array of Promises for the first three stages
+    const stagePromises = Array.from({ length: 3 }, (_, i) =>
+      new Promise((resolve) => setTimeout(resolve, 40000)).then(() => {
+        setStage((prevStage) => Math.max(prevStage, i + 1));
+        setProgress(((i + 1) / 4) * 100);
+      })
+    );
+
+    // Add the handleGenerate function as the fourth promise
+    stagePromises.push(
+      handleGenerate().then(() => {
+        setStage(5);
+        setProgress(100);
+      })
+    );
+
+    // Run all promises in parallel
+    await Promise.all(stagePromises);
+
+    setOutputLoading(false);
+  };
+
   const sampleData = [
     // {
     //   question: "Upload PDF to get started",
@@ -244,21 +253,20 @@ const [progress, setProgress] = useState(0);
           )}
 
           <div className="mt-8">
-          <div className="flex flex-col items-center">
-            {/* {outputLoading && ( 
+            <div className="flex flex-col items-center">
+              {/* {outputLoading && ( 
 
               <p className="text-md text-white mb-4">
                 It may take up to 20 seconds per question for the help to be generated. Please be patient.
                 </p>
             )} */}
-                
-                
-            {uploaded && !outputLoading  && (
-              <button
-                onClick={handleStages}
-                className="flex bg-indigo-600 hover:bg-indigo-700 w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
-              >
-                {/* {outputLoading && (
+
+              {uploaded && !outputLoading && (
+                <button
+                  onClick={handleStages}
+                  className="flex bg-indigo-600 hover:bg-indigo-700 w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
+                >
+                  {/* {outputLoading && (
                   <ClipLoader
                     className="mr-1"
                     size={25}
@@ -266,36 +274,53 @@ const [progress, setProgress] = useState(0);
                     loading={true}
                   />
                 )} */}
-                {generated && (
-                  <svg
-                    className="w-6 h-6 text-white"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path d="M5 13l4 4L19 7" />
-                  </svg>
-                )}
-                Generate Help
-              </button>
-            )}
-            <div className="w-full h-2 ">
+                  {generated && (
+                    <svg
+                      className="w-6 h-6 text-white"
+                      fill="none"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path d="M5 13l4 4L19 7" />
+                    </svg>
+                  )}
+                  Generate Help
+                </button>
+              )}
+              <div className="w-full h-2 ">
                 {outputLoading && (
-                    <div className="flex space-x-4 mb-4">
-                    <Stage stageNumber={1} currentStage={stage} stageName="Scanning Text" />
-                    <Stage stageNumber={2} currentStage={stage} stageName="Cleaning Text" />
-                    <Stage stageNumber={3} currentStage={stage} stageName="Extracting Questions" />
-                    <Stage stageNumber={4} currentStage={stage} stageName="Generating Help" />
-                  </div>
+                  <div className="flex space-x-4 mb-4">
+                  <Stage
+                    stageNumber={1}
+                    currentStage={stage}
+                    stageName="Scanning Text"
+                    isLoading={stage === 1}
+                  />
+                  <Stage
+                    stageNumber={2}
+                    currentStage={stage}
+                    stageName="Cleaning Text"
+                    isLoading={stage === 2}
+                  />
+                  <Stage
+                    stageNumber={3}
+                    currentStage={stage}
+                    stageName="Extracting Questions"
+                    isLoading={stage === 3}
+                  />
+                  <Stage
+                    stageNumber={4}
+                    currentStage={stage}
+                    stageName="Generating Help"
+                    isLoading={isLoading && stage === 4}
+                  />
+                </div>
+                
                 )}
-
-
-
-
-</div>
+              </div>
             </div>
           </div>
           {/* {startProcessing && processingStage > 0 && (
