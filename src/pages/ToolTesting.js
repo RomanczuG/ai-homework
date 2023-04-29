@@ -39,15 +39,18 @@ const ToolTesting = () => {
   const [progress, setProgress] = useState(0);
   const handleStages = async () => {
     setOutputLoading(true);
-
+  
     // Create an array of Promises for the first three stages
-    const stagePromises = Array.from({ length: 3 }, (_, i) =>
-      new Promise((resolve) => setTimeout(resolve, 40000)).then(() => {
+    const stagePromises = Array.from({ length: 3 }, (_, i) => {
+      setStage((prevStage) => Math.max(prevStage, i + 1));
+      setProgress(((i + 1) / 4) * 100);
+  
+      return new Promise((resolve) => setTimeout(resolve, 40000)).then(() => {
         setStage((prevStage) => Math.max(prevStage, i + 1));
         setProgress(((i + 1) / 4) * 100);
-      })
-    );
-
+      });
+    });
+  
     // Add the handleGenerate function as the fourth promise
     stagePromises.push(
       handleGenerate().then(() => {
@@ -55,12 +58,13 @@ const ToolTesting = () => {
         setProgress(100);
       })
     );
-
+  
     // Run all promises in parallel
     await Promise.all(stagePromises);
-
+  
     setOutputLoading(false);
   };
+  
 
   const sampleData = [
     // {
@@ -323,29 +327,12 @@ const ToolTesting = () => {
               </div>
             </div>
           </div>
-          {/* {startProcessing && processingStage > 0 && (
-            <div className="mt-4">
-              <BarLoader
-                width={"100%"}
-                height={4}
-                color={"#4C1D95"}
-                loading={true}
-                progress={(processingStage / 4) * 100}
-              />
-              <div className="flex justify-between mt-2">
-                <span>Loading PDF</span>
-                <span>Cleaning text</span>
-                <span>Parsing questions</span>
-                <span>Creating assistance</span>
-              </div>
-            </div>
-          )} */}
 
           <div className="mt-8 ">
             {generated && (
               <div className="flex flex-col items-center">
                 <p className="text-xl text-white mb-4">
-                  Now you can see the help below or download it on your computer
+                  Soon you will be able to to download your help on your computer
                 </p>
                 <button
                   onClick={handleDownloadDocument}
