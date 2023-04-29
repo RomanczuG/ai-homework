@@ -218,6 +218,10 @@ const Tool = () => {
           )}
 
           <div className="mt-8">
+          <div className="flex flex-col items-center">
+                <p className="text-md text-white mb-4">
+                  It can take up to 5 minutes to generate help. Please be patient.
+                </p>
             {uploaded && (
               <button
                 onClick={handleGenerate}
@@ -247,6 +251,7 @@ const Tool = () => {
                 Generate Help
               </button>
             )}
+            </div>
           </div>
           {/* {startProcessing && processingStage > 0 && (
             <div className="mt-4">
