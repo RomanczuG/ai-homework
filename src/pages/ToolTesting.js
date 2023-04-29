@@ -4,9 +4,33 @@ import { Disclosure } from "@headlessui/react";
 import CryptoJS from "crypto-js";
 import { ClipLoader, BarLoader } from "react-spinners";
 
-const Tool = () => {
+const ToolTesting = () => {
 
-
+    const handleStages = async () => {
+        setOutputLoading(true);
+      
+        // Create an array of Promises for the first three stages
+        const stagePromises = Array.from({ length: 3 }, (_, i) =>
+          new Promise((resolve) => setTimeout(resolve, 40000)).then(() => {
+            setStage((prevStage) => Math.max(prevStage, i + 1));
+            setProgress(((i + 1) / 4) * 100);
+          })
+        );
+      
+        // Add the handleGenerate function as the fourth promise
+        stagePromises.push(
+          handleGenerate().then(() => {
+            setStage(5);
+            setProgress(100);
+          })
+        );
+      
+        // Run all promises in parallel
+        await Promise.all(stagePromises);
+      
+        setOutputLoading(false);
+      };
+      
   const sampleData = [
     // {
     //   question: "Upload PDF to get started",
@@ -199,17 +223,17 @@ const Tool = () => {
 
           <div className="mt-8">
           <div className="flex flex-col items-center">
-            {outputLoading && ( 
+            {/* {outputLoading && ( 
 
               <p className="text-md text-white mb-4">
                 It may take up to 20 seconds per question for the help to be generated. Please be patient.
                 </p>
-            )}
+            )} */}
                 
                 
             {uploaded && (
               <button
-                onClick={handleGenerate}
+                onClick={handleStages}
                 className="flex bg-indigo-600 hover:bg-indigo-700 w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
               >
                 {outputLoading && (
@@ -236,6 +260,12 @@ const Tool = () => {
                 Generate Help
               </button>
             )}
+            <div className="w-full h-2 bg-gray-200">
+  <div
+    className="h-2 bg-indigo-600 transition-all duration-300"
+    style={{ width: `${progress}%` }}
+  ></div>
+</div>
             </div>
           </div>
           {/* {startProcessing && processingStage > 0 && (
@@ -326,4 +356,4 @@ const Tool = () => {
   );
 };
 
-export default Tool;
+export default ToolTesting;
