@@ -40,6 +40,9 @@ const ToolTesting = () => {
   const handleStages = async () => {
     setOutputLoading(true);
   
+    // Start handleGenerate function concurrently
+    const handleGeneratePromise = handleGenerate();
+  
     // Create an array of Promises for the first three stages
     const stagePromises = Array.from({ length: 3 }, (_, i) =>
       new Promise((resolve) => setTimeout(resolve, 40000)).then(() => {
@@ -54,13 +57,15 @@ const ToolTesting = () => {
       Promise.resolve()
     );
   
-    // Run the handleGenerate function concurrently with the first three stages
-    await Promise.all([stagePromiseChain, handleGenerate()]);
+    // Wait for both the stage updates and handleGenerate to complete
+    await Promise.all([stagePromiseChain, handleGeneratePromise]);
   
+    // Update the last stage and progress once handleGenerate completes
     setStage(4);
     setProgress(100);
     setOutputLoading(false);
   };
+  
   
   
 
