@@ -26,45 +26,28 @@ const Stage = ({ stageNumber, currentStage, stageName, isLoading }) => {
 };
 
 const ToolTesting = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    if (stage > 0 && stage <= 3) {
+    const [isLoading, setIsLoading] = useState(false);
+    const [stage, setStage] = useState(0);
+    const [progress, setProgress] = useState(0);
+    
+    const handleStages = async () => {
       setIsLoading(true);
-    } else {
+      const handleGeneratePromise = handleGenerate();
+    
+      const stagePromises = Array.from({ length: 3 }, (_, i) =>
+        new Promise((resolve) => setTimeout(resolve, 40000)).then(() => {
+          setStage((prevStage) => Math.max(prevStage, i + 1));
+          setProgress(((i + 1) / 4) * 100);
+        })
+      );
+    
+      await Promise.all([...stagePromises, handleGeneratePromise]);
+    
+      setStage(4);
+      setProgress(100);
       setIsLoading(false);
-    }
-  }, [stage]);
-  const [stage, setStage] = useState(0);
-  const [progress, setProgress] = useState(0);
-  const handleStages = async () => {
-    setOutputLoading(true);
-  
-    // Start handleGenerate function concurrently
-    const handleGeneratePromise = handleGenerate();
-  
-    // Create an array of Promises for the first three stages
-    const stagePromises = Array.from({ length: 3 }, (_, i) =>
-      new Promise((resolve) => setTimeout(resolve, 40000)).then(() => {
-        setStage((prevStage) => Math.max(prevStage, i + 1));
-        setProgress(((i + 1) / 4) * 100);
-      })
-    );
-  
-    // Run the first three promises sequentially
-    const stagePromiseChain = stagePromises.reduce(
-      (acc, currPromise) => acc.then(() => currPromise),
-      Promise.resolve()
-    );
-  
-    // Wait for both the stage updates and handleGenerate to complete
-    await Promise.all([stagePromiseChain, handleGeneratePromise]);
-  
-    // Update the last stage and progress once handleGenerate completes
-    setStage(4);
-    setProgress(100);
-    setOutputLoading(false);
-  };
+    };
+    
   
   
   
