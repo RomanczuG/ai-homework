@@ -28,7 +28,6 @@ const Stage = ({ stageNumber, currentStage, stageName, isLoading }) => {
 const Tool = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [stage, setStage] = useState(0);
-
   const handleStages = async () => {
     setOutputLoading(true);
   

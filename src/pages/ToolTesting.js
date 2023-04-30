@@ -26,6 +26,25 @@ const Stage = ({ stageNumber, currentStage, stageName, isLoading }) => {
 };
 
 const ToolTesting = () => {
+  const sampleDatatest = [
+    {
+      question: "Upload PDF to get started",
+      analysis: "Here you will see the analysis of your PDF",
+    },
+  ];
+  const testdownload = () => {
+    
+    client
+      .post("/api/testdownload", {
+        sampleDatatest,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const [isLoading, setIsLoading] = useState(false);
   const [stage, setStage] = useState(0);
 
@@ -178,6 +197,9 @@ const ToolTesting = () => {
   return (
     <div className="bg-[#252D62] min-h-screen">
       <div className="container mx-auto px-4 py-20">
+        <button onClick={testdownload}>
+Test download
+        </button>
         <h1 className="text-4xl font-semibold text-white mb-8">
           Homework & Exam Assistant
         </h1>
