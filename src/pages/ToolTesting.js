@@ -35,22 +35,24 @@ const ToolTesting = () => {
   const handleDownloadDocument = () => {
     
     client
-      .post("/api/testdownload", {
-        sampleDatatest: sampleDatatest,
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
+    .post("/api/testdownload", {
+      sampleDatatest: sampleDatatest,
+    }, {
+      responseType: 'blob', // Add this line to handle file downloads
+    }).then((response) => {
+      console.log(res);
+      // Create a link to download the file
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+      const link = document.createElement('a');
       link.href = url;
-      link.setAttribute("download", "document.docx");
+      link.setAttribute('download', 'document.docx');
       document.body.appendChild(link);
       link.click();
-      link.parentNode.removeChild(link);
+      document.body.removeChild(link);
+    }).catch((err) => {
+      alert("Error in downloading file")
+      console.log(err);
+    });
   };
   const [isLoading, setIsLoading] = useState(false);
   const [stage, setStage] = useState(0);
