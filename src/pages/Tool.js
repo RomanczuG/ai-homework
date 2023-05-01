@@ -37,14 +37,10 @@ const Tool = () => {
     setStage((prevStage) => Math.max(prevStage, i + 1));
   })
 );
-
     await Promise.all([...stagePromises, handleGeneratePromise]);
-
     setStage(5);
     setOutputLoading(false);
   };
-  
-  
   
 
   const sampleData = [
@@ -67,6 +63,10 @@ const Tool = () => {
   const [generated, setGenerated] = useState(false);
   // ! FILE DOWNLOAD
   const handleDownloadDocument = () => {
+    // Inside each function
+    const currentDate = new Date().toISOString();
+    window.sa_event("Download Doc file", { date: currentDate });
+
     
     client
     .post("/api/testdownload", {
@@ -84,6 +84,7 @@ const Tool = () => {
       link.click();
       document.body.removeChild(link);
     }).catch((err) => {
+      window.sa_event("Download Doc Error", { error: error.message });
       alert("Error in downloading file")
       console.log(err);
     });
@@ -111,6 +112,7 @@ const Tool = () => {
       alert("Please select a file to upload");
       return;
     }
+    window.sa_event("Upload file", { date: currentDate });
     setUploadedLoading(true);
 
     const formData = new FormData();
@@ -118,6 +120,10 @@ const Tool = () => {
     const newFile = new File([file], hashedFilename, { type: file.type });
     formData.append("file", newFile);
     console.log("Form data:", formData);
+    // Inside handleUpload function
+    const fileSize = file.size; // In bytes
+    window.sa_event("PDF Upload", { filename: file.name, fileSize });
+
     // Send a POST request with the file to the Flask server
     try {
       console.log("Uploading file...");
@@ -133,6 +139,7 @@ const Tool = () => {
         console.error("File upload failed");
       }
     } catch (error) {
+      window.sa_event("Uploading FIle Error", { error: error.message });
       console.error("Error during file upload:", error);
     }
     setUploadedLoading(false);
@@ -141,6 +148,13 @@ const Tool = () => {
   // ! GENERATE HELP
 
   const handleGenerate = async () => {
+    window.sa_event("Generate help", { date: currentDate });
+    // At the beginning of the function
+    const startTime = new Date().getTime();
+
+    // After the operation is complete
+    
+
     setOutputLoading(true);
     try {
       if (!uploadedFilename) {
@@ -156,7 +170,13 @@ const Tool = () => {
       console.log("Formatted data:", formattedData);
       console.log("Output:", output);
       setGenerated(true);
+      const endTime = new Date().getTime();
+      const timeTaken = (endTime - startTime) / 1000; // In seconds
+      window.sa_event("Generating Help", { timeTaken });
     } catch (error) {
+      // Inside the catch block
+      window.sa_event("Generating Help Error", { error: error.message });
+
       alert("PDF file is too long, please try to use shorter pdf files.");
       console.error("Error generating help:", error);
     }
