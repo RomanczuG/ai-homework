@@ -204,7 +204,7 @@ const ToolTesting = () => {
   return (
     <div className="bg-[#252D62] min-h-screen">
       <div className="container mx-auto px-4 py-20">
-        <button onClick={testdownload}>
+        <button onClick={handleDownloadDocument}>
 Test download
         </button>
         <h1 className="text-4xl font-semibold text-white mb-8">
