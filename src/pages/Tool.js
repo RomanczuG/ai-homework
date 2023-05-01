@@ -76,22 +76,27 @@ const Tool = () => {
   const [uploadedLoading, setUploadedLoading] = useState(false);
   const [generated, setGenerated] = useState(false);
   // ! FILE DOWNLOAD
-  const handleDownloadDocument = async () => {
-    try {
-      const response = await client.get(`/api/download`, {
-        responseType: "blob",
-      });
-
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
+  const handleDownloadDocument = () => {
+    
+    client
+    .post("/api/testdownload", {
+      sampleDatatest: output,
+    }, {
+      responseType: 'blob', // Add this line to handle file downloads
+    }).then((res) => {
+      console.log(res);
+      // Create a link to download the file
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+      const link = document.createElement('a');
       link.href = url;
-      link.setAttribute("download", "document.docx");
+      link.setAttribute('download', 'document.docx');
       document.body.appendChild(link);
       link.click();
-      link.parentNode.removeChild(link);
-    } catch (error) {
-      console.error("Error downloading the Word file:", error);
-    }
+      document.body.removeChild(link);
+    }).catch((err) => {
+      alert("Error in downloading file")
+      console.log(err);
+    });
   };
 
   // ! FILE UPLOAD
@@ -322,8 +327,7 @@ const Tool = () => {
             {generated && (
               <div className="flex flex-col items-center">
                 <p className="text-xl text-white mb-4">
-                  Soon you will be able to to download your help on your
-                  computer
+                  Download the generated help as a word document.
                 </p>
                 <button
                   onClick={handleDownloadDocument}
