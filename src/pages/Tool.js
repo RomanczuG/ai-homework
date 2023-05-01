@@ -169,6 +169,7 @@ const Tool = () => {
       setGenerated(true);
       // Ignore the first empty element
     } catch (error) {
+      alert("PDF file is too long, please try to use shorter pdf files.");
       console.error("Error generating help:", error);
     }
     setOutputLoading(false);
