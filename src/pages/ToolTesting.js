@@ -39,7 +39,7 @@ const ToolTesting = () => {
       sampleDatatest: sampleDatatest,
     }, {
       responseType: 'blob', // Add this line to handle file downloads
-    }).then((response) => {
+    }).then((res) => {
       console.log(res);
       // Create a link to download the file
       const url = window.URL.createObjectURL(new Blob([res.data]));
