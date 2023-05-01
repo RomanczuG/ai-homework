@@ -26,58 +26,20 @@ const Stage = ({ stageNumber, currentStage, stageName, isLoading }) => {
 };
 
 const ToolTesting = () => {
-  const sampleDatatest = [
-    {
-      question: "Upload PDF to get started",
-      analysis: "Here you will see the analysis of your PDF",
-    },
-  ];
-  const handleDownloadDocument = () => {
-    
-    client
-    .post("/api/testdownload", {
-      sampleDatatest: output,
-    }, {
-      responseType: 'blob', // Add this line to handle file downloads
-    }).then((res) => {
-      console.log(res);
-      // Create a link to download the file
-      const url = window.URL.createObjectURL(new Blob([res.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'document.docx');
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }).catch((err) => {
-      alert("Error in downloading file")
-      console.log(err);
-    });
-  };
   const [isLoading, setIsLoading] = useState(false);
   const [stage, setStage] = useState(0);
-
   const handleStages = async () => {
     setOutputLoading(true);
-  
-    // Start handleGenerate function concurrently
+
     const handleGeneratePromise = handleGenerate();
-  
-    // Create an array of Promises for the first three stages
-    const stagePromises = Array.from({ length: 3 }, (_, i) =>
+    const stagePromises = Array.from({ length: 4 }, (_, i) =>
   new Promise((resolve) => setTimeout(resolve, i * 25000)).then(() => {
     setStage((prevStage) => Math.max(prevStage, i + 1));
   })
 );
 
-  
-    // Wait for both the stage updates and handleGenerate to complete
     await Promise.all([...stagePromises, handleGeneratePromise]);
-  
-    // Start loading the fourth stage
-    setStage(4);
-  
-    // Update the last stage and progress once handleGenerate completes
+
     setStage(5);
     setOutputLoading(false);
   };
@@ -95,7 +57,6 @@ const ToolTesting = () => {
   const client = axios.create({
     // baseURL: "http://127.0.0.1:5000",
     baseURL: "https://studyboost.uc.r.appspot.com",
-    // timeout: 5000, // Add a 5 seconds timeout
   });
   const [file, setFile] = useState(null);
   const [output, setOutput] = useState(sampleData);
@@ -105,23 +66,28 @@ const ToolTesting = () => {
   const [uploadedLoading, setUploadedLoading] = useState(false);
   const [generated, setGenerated] = useState(false);
   // ! FILE DOWNLOAD
-  // const handleDownloadDocument = async () => {
-  //   try {
-  //     const response = await client.get(`/api/download`, {
-  //       responseType: "blob",
-  //     });
-
-  //     const url = window.URL.createObjectURL(new Blob([response.data]));
-  //     const link = document.createElement("a");
-  //     link.href = url;
-  //     link.setAttribute("download", "document.docx");
-  //     document.body.appendChild(link);
-  //     link.click();
-  //     link.parentNode.removeChild(link);
-  //   } catch (error) {
-  //     console.error("Error downloading the Word file:", error);
-  //   }
-  // };
+  const handleDownloadDocument = () => {
+    
+    client
+    .post("/api/testdownload", {
+      sampleDatatest: output,
+    }, {
+      responseType: 'blob', // Add this line to handle file downloads
+    }).then((res) => {
+      console.log(res);
+      // Create a link to download the file
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'assistance.docx');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }).catch((err) => {
+      alert("Error in downloading file")
+      console.log(err);
+    });
+  };
 
   // ! FILE UPLOAD
   const handleFileChange = (e) => {
@@ -147,10 +113,6 @@ const ToolTesting = () => {
     }
     setUploadedLoading(true);
 
-    // const data = await client.post("/api", { "data": "lmao" });
-    // console.log("Data:", data);
-
-    // Create FormData object
     const formData = new FormData();
     const hashedFilename = hashFilename(file.name);
     const newFile = new File([file], hashedFilename, { type: file.type });
@@ -163,7 +125,6 @@ const ToolTesting = () => {
       console.log("File upload response:", response);
 
       if (response.status === 200) {
-        // alert("File uploaded successfully");
         console.log("File uploaded successfully");
         setUploadedFilename(response.data.filename); // Store the filename in the state
         setUploaded(true);
@@ -180,7 +141,6 @@ const ToolTesting = () => {
   // ! GENERATE HELP
 
   const handleGenerate = async () => {
-    // setStartProcessing(true);
     setOutputLoading(true);
     try {
       if (!uploadedFilename) {
@@ -196,8 +156,8 @@ const ToolTesting = () => {
       console.log("Formatted data:", formattedData);
       console.log("Output:", output);
       setGenerated(true);
-      // Ignore the first empty element
     } catch (error) {
+      alert("PDF file is too long, please try to use shorter pdf files.");
       console.error("Error generating help:", error);
     }
     setOutputLoading(false);
@@ -206,9 +166,6 @@ const ToolTesting = () => {
   return (
     <div className="bg-[#252D62] min-h-screen">
       <div className="container mx-auto px-4 py-20">
-        <button onClick={handleDownloadDocument}>
-Test download
-        </button>
         <h1 className="text-4xl font-semibold text-white mb-8">
           Homework & Exam Assistant
         </h1>
@@ -280,26 +237,12 @@ Test download
 
           <div className="mt-8">
             <div className="flex flex-col items-center">
-              {/* {outputLoading && ( 
-
-              <p className="text-md text-white mb-4">
-                It may take up to 20 seconds per question for the help to be generated. Please be patient.
-                </p>
-            )} */}
 
               {uploaded && !outputLoading && (
                 <button
                   onClick={handleStages}
                   className="flex bg-indigo-600 hover:bg-indigo-700 w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
                 >
-                  {/* {outputLoading && (
-                  <ClipLoader
-                    className="mr-1"
-                    size={25}
-                    color={"#ffffff"}
-                    loading={true}
-                  />
-                )} */}
                   {generated && (
                     <svg
                       className="w-6 h-6 text-white"
@@ -353,8 +296,7 @@ Test download
             {generated && (
               <div className="flex flex-col items-center">
                 <p className="text-xl text-white mb-4">
-                  Soon you will be able to to download your help on your
-                  computer
+                  Download the generated help as a word document.
                 </p>
                 <button
                   onClick={handleDownloadDocument}

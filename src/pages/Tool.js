@@ -30,25 +30,16 @@ const Tool = () => {
   const [stage, setStage] = useState(0);
   const handleStages = async () => {
     setOutputLoading(true);
-  
-    // Start handleGenerate function concurrently
+
     const handleGeneratePromise = handleGenerate();
-  
-    // Create an array of Promises for the first three stages
     const stagePromises = Array.from({ length: 4 }, (_, i) =>
   new Promise((resolve) => setTimeout(resolve, i * 25000)).then(() => {
     setStage((prevStage) => Math.max(prevStage, i + 1));
   })
 );
 
-  
-    // Wait for both the stage updates and handleGenerate to complete
     await Promise.all([...stagePromises, handleGeneratePromise]);
-  
-    // Start loading the fourth stage
-    // setStage(4);
-  
-    // Update the last stage and progress once handleGenerate completes
+
     setStage(5);
     setOutputLoading(false);
   };
@@ -66,7 +57,6 @@ const Tool = () => {
   const client = axios.create({
     // baseURL: "http://127.0.0.1:5000",
     baseURL: "https://studyboost.uc.r.appspot.com",
-    // timeout: 5000, // Add a 5 seconds timeout
   });
   const [file, setFile] = useState(null);
   const [output, setOutput] = useState(sampleData);
@@ -89,7 +79,7 @@ const Tool = () => {
       const url = window.URL.createObjectURL(new Blob([res.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'document.docx');
+      link.setAttribute('download', 'assistance.docx');
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -123,10 +113,6 @@ const Tool = () => {
     }
     setUploadedLoading(true);
 
-    // const data = await client.post("/api", { "data": "lmao" });
-    // console.log("Data:", data);
-
-    // Create FormData object
     const formData = new FormData();
     const hashedFilename = hashFilename(file.name);
     const newFile = new File([file], hashedFilename, { type: file.type });
@@ -139,7 +125,6 @@ const Tool = () => {
       console.log("File upload response:", response);
 
       if (response.status === 200) {
-        // alert("File uploaded successfully");
         console.log("File uploaded successfully");
         setUploadedFilename(response.data.filename); // Store the filename in the state
         setUploaded(true);
@@ -156,7 +141,6 @@ const Tool = () => {
   // ! GENERATE HELP
 
   const handleGenerate = async () => {
-    // setStartProcessing(true);
     setOutputLoading(true);
     try {
       if (!uploadedFilename) {
@@ -172,7 +156,6 @@ const Tool = () => {
       console.log("Formatted data:", formattedData);
       console.log("Output:", output);
       setGenerated(true);
-      // Ignore the first empty element
     } catch (error) {
       alert("PDF file is too long, please try to use shorter pdf files.");
       console.error("Error generating help:", error);
@@ -254,26 +237,12 @@ const Tool = () => {
 
           <div className="mt-8">
             <div className="flex flex-col items-center">
-              {/* {outputLoading && ( 
-
-              <p className="text-md text-white mb-4">
-                It may take up to 20 seconds per question for the help to be generated. Please be patient.
-                </p>
-            )} */}
 
               {uploaded && !outputLoading && (
                 <button
                   onClick={handleStages}
                   className="flex bg-indigo-600 hover:bg-indigo-700 w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
                 >
-                  {/* {outputLoading && (
-                  <ClipLoader
-                    className="mr-1"
-                    size={25}
-                    color={"#ffffff"}
-                    loading={true}
-                  />
-                )} */}
                   {generated && (
                     <svg
                       className="w-6 h-6 text-white"
