@@ -13,7 +13,7 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   const validateEmail = (email) => {
-    return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email);
+    return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*3(\.\w{2,3})+$/.test(email);
   };
 
   const submitWaitlist = useCallback((data) => {
