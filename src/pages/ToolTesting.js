@@ -36,7 +36,7 @@ const ToolTesting = () => {
     
     client
       .post("/api/testdownload", {
-        sampleDatatest,
+        sampleDatatest: sampleDatatest,
       })
       .then((res) => {
         console.log(res);
