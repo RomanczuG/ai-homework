@@ -36,7 +36,7 @@ const ToolTesting = () => {
     
     client
     .post("/api/testdownload", {
-      sampleDatatest: sampleDatatest,
+      sampleDatatest: output,
     }, {
       responseType: 'blob', // Add this line to handle file downloads
     }).then((res) => {
