@@ -32,7 +32,7 @@ const ToolTesting = () => {
       analysis: "Here you will see the analysis of your PDF",
     },
   ];
-  const testdownload = () => {
+  const handleDownloadDocument = () => {
     
     client
       .post("/api/testdownload", {
@@ -44,6 +44,13 @@ const ToolTesting = () => {
       .catch((err) => {
         console.log(err);
       });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "document.docx");
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
   };
   const [isLoading, setIsLoading] = useState(false);
   const [stage, setStage] = useState(0);
@@ -96,23 +103,23 @@ const ToolTesting = () => {
   const [uploadedLoading, setUploadedLoading] = useState(false);
   const [generated, setGenerated] = useState(false);
   // ! FILE DOWNLOAD
-  const handleDownloadDocument = async () => {
-    try {
-      const response = await client.get(`/api/download`, {
-        responseType: "blob",
-      });
+  // const handleDownloadDocument = async () => {
+  //   try {
+  //     const response = await client.get(`/api/download`, {
+  //       responseType: "blob",
+  //     });
 
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "document.docx");
-      document.body.appendChild(link);
-      link.click();
-      link.parentNode.removeChild(link);
-    } catch (error) {
-      console.error("Error downloading the Word file:", error);
-    }
-  };
+  //     const url = window.URL.createObjectURL(new Blob([response.data]));
+  //     const link = document.createElement("a");
+  //     link.href = url;
+  //     link.setAttribute("download", "document.docx");
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     link.parentNode.removeChild(link);
+  //   } catch (error) {
+  //     console.error("Error downloading the Word file:", error);
+  //   }
+  // };
 
   // ! FILE UPLOAD
   const handleFileChange = (e) => {
