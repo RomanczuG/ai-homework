@@ -84,7 +84,7 @@ const Tool = () => {
       link.click();
       document.body.removeChild(link);
     }).catch((err) => {
-      window.sa_event("Download Doc Error", { error: error.message });
+      window.sa_event("Download Doc Error", { error: err.message });
       alert("Error in downloading file")
       console.log(err);
     });
@@ -112,6 +112,7 @@ const Tool = () => {
       alert("Please select a file to upload");
       return;
     }
+    const currentDate = new Date().toISOString();
     window.sa_event("Upload file", { date: currentDate });
     setUploadedLoading(true);
 
@@ -148,6 +149,7 @@ const Tool = () => {
   // ! GENERATE HELP
 
   const handleGenerate = async () => {
+    const currentDate = new Date().toISOString();
     window.sa_event("Generate help", { date: currentDate });
     // At the beginning of the function
     const startTime = new Date().getTime();
