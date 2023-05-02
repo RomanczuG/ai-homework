@@ -1,13 +1,16 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router';
+
 import supabase from '../supabaseClient';
 
-const AuthenticatedPage = () => {
-  const history = useHistory();
+export const AuthenticatedPage = () => {
+    const navigate = useNavigate();
+
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    history.push('/login');
+    navigate('/');
+
   };
 
   return (
@@ -18,4 +21,4 @@ const AuthenticatedPage = () => {
   );
 };
 
-export default AuthenticatedPage;
+

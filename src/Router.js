@@ -9,7 +9,7 @@ import { HowItWorks } from "./pages/HowItWorks";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { TermsOfService } from "./pages/TermsOfService";
 import { Footer } from './components/Footer';
-import { LoginPage } from './pages/LoginPage';
+import { LoginPage } from './pages/LoginPage'
 import { AuthenticatedPage } from './pages/AuthenticatedPage';
 
 const Router = () => (

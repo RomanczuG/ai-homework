@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { supabase } from '../supabaseClient';
+import { useNavigate } from 'react-router';
 
-const LoginPage = () => {
+import supabase from '../supabaseClient';
+
+
+export const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const history = useHistory();
+  const navigate = useNavigate();
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -19,7 +22,8 @@ const LoginPage = () => {
     if (error) {
       setError(error.message);
     } else if (user) {
-      history.push('/');
+        navigate('/');
+
     }
 
     setLoading(false);
@@ -52,4 +56,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+
