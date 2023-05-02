@@ -2,6 +2,7 @@ import React from "react";
 
 export const Navbar = () => {
   return (
+    <div className="bg-[#252D62] sticky top-0 z-10">
     <nav className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between">
           <div className="text-white font-semibold text-lg">
@@ -26,5 +27,6 @@ export const Navbar = () => {
           </div>
         </div>
       </nav>
+      </div>
   );
 };
