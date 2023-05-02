@@ -9,6 +9,8 @@ import { HowItWorks } from "./pages/HowItWorks";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { TermsOfService } from "./pages/TermsOfService";
 import { Footer } from './components/Footer';
+import { LoginPage } from './pages/LoginPage';
+import { AuthenticatedPage } from './pages/AuthenticatedPage';
 
 const Router = () => (
   <BrowserRouter>
@@ -23,6 +25,8 @@ const Router = () => (
       <Route path="/how-it-works" element={<HowItWorks />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/terms-of-service" element={<TermsOfService />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/authenticated" element={<AuthenticatedPage />} />
     </Routes>
     <Footer />
   </BrowserRouter>
