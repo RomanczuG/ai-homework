@@ -11,6 +11,7 @@ import { TermsOfService } from "./pages/TermsOfService";
 import { Footer } from './components/Footer';
 import { LoginPage } from './pages/LoginPage'
 import { AuthenticatedPage } from './pages/AuthenticatedPage';
+import { RegisterPage } from './pages/RegisterPage';
 
 const Router = () => (
   <BrowserRouter>
@@ -26,6 +27,7 @@ const Router = () => (
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/terms-of-service" element={<TermsOfService />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
       <Route path="/authenticated" element={<AuthenticatedPage />} />
     </Routes>
     <Footer />

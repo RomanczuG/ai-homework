@@ -3,24 +3,24 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import { ClipLoader } from 'react-spinners';
 
-export const LoginPage = () => {
+export const RegisterPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
-    const { user, error } = await supabase.auth.signInWithPassword({ email, password });
+    const { user, error } = await supabase.auth.signUp({ email:email, password:password });
 
     if (error) {
       setError(error.message);
     } else if (user) {
-      navigate('/');
+      navigate('/login');
     }
 
     setLoading(false);
@@ -28,9 +28,9 @@ export const LoginPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-4xl font-bold mb-8">Join us</h1>
-      <p className="text-lg mb-8">Discover the world of opportunities</p>
-      <form onSubmit={handleLogin} className="w-full max-w-md">
+      <h1 className="text-4xl font-bold mb-8">Create your account</h1>
+      <p className="text-lg mb-8">Join our amazing community</p>
+      <form onSubmit={handleRegister} className="w-full max-w-md">
         <input
           type="email"
           placeholder="Email"
@@ -53,7 +53,7 @@ export const LoginPage = () => {
             disabled={loading}
             className="inline-flex items-center px-6 py-3 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
           >
-            {loading ? <ClipLoader size={20} color={'white'} /> : 'Login'}
+            {loading ? <ClipLoader size={20} color={'white'} /> : 'Register'}
           </button>
         </div>
       </form>
