@@ -1,26 +1,29 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-
-
+import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 
-
 export const AuthenticatedPage = () => {
-    const navigate = useNavigate();
+  const [message, setMessage] = useState('');
 
+  useEffect(() => {
+    const fetchProtectedData = async () => {
+      const { data, error } = await supabase
+        .from('your-protected-flask-route')
+        .select('*');
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate('/');
+      if (error) {
+        console.error('Error fetching protected data:', error);
+      } else {
+        setMessage(data);
+      }
+    };
 
-  };
+    fetchProtectedData();
+  }, []);
 
   return (
     <div>
-      <h1>Authenticated User Page</h1>
-      <button onClick={handleLogout}>Logout</button>
+      <h1>Authenticated Page</h1>
+      <p>{message}</p>
     </div>
   );
 };
-
-
