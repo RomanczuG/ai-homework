@@ -9,10 +9,10 @@ import { HowItWorks } from "./pages/HowItWorks";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { TermsOfService } from "./pages/TermsOfService";
 import { Footer } from './components/Footer';
-import { LoginPage } from './pages/LoginPage'
-import { AuthenticatedPage } from './pages/AuthenticatedPage';
-import { RegisterPage } from './pages/RegisterPage';
-import PrivateRoute from './components/PrivateRoute';
+// import { LoginPage } from './pages/LoginPage'
+// import { AuthenticatedPage } from './pages/AuthenticatedPage';
+// import { RegisterPage } from './pages/RegisterPage';
+// import PrivateRoute from './components/PrivateRoute';
 
 const Router = () => (
   <BrowserRouter>
@@ -27,9 +27,9 @@ const Router = () => (
       <Route path="/how-it-works" element={<HowItWorks />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/terms-of-service" element={<TermsOfService />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
-      <PrivateRoute path="/authenticated" element={<AuthenticatedPage />} />
+      {/* <Route path="/login" element={<LoginPage />} /> */}
+      {/* <Route path="/register" element={<RegisterPage />} /> */}
+      {/* <PrivateRoute path="/authenticated" element={<AuthenticatedPage />} /> */}
     </Routes>
     <Footer />
   </BrowserRouter>
