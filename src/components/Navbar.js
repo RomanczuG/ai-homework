@@ -31,7 +31,7 @@ export const Navbar = () => {
         <div className="flex items-center justify-between">
           <div className="text-white font-semibold text-lg">
             <Link to="/" className="hover:text-gray-300">
-              StudyBoost.app
+              Study Smarter Now!
             </Link>
           </div>
           <div>

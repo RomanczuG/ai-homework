@@ -1,4 +1,4 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Disallow: /tool-testing
-Sitemap: https://studyboost.app/sitemap.xml
+Sitemap: https://studysmarternow.com/sitemap.xml
