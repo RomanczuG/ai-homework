@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
 export const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const scrollToSection = (sectionId) => {
     const sectionElement = document.getElementById(sectionId);
@@ -26,17 +27,27 @@ export const Navbar = () => {
     scrollToSection("about-author");
   };
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
     <div className="bg-[#F0FFE0] sticky top-0 z-10">
-      <nav className="mx-auto px-20 py-6">
+      <nav className="mx-auto px-6 md:px-20 py-6">
         <div className="flex items-center justify-between">
           <div className="text-[#252D62] font-semibold text-lg">
             <Link to="/" className="hover:text-[#FF6E00]">
               Study Smarter Now!
             </Link>
           </div>
-          <div className="flex items-center justify-center space-x-6">
-            <ul className="hidden md:flex items-center space-x-6">
+          <button
+            className="md:hidden text-[#252D62] focus:outline-none"
+            onClick={toggleMobileMenu}
+          >
+            <i className="fas fa-bars"></i>
+          </button>
+          <div className={`flex items-center justify-center space-x-6 ${mobileMenuOpen ? '' : 'hidden'} md:flex`}>
+            <ul className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
               <li>
                 <span
                   onClick={handleFeaturesClick}
@@ -79,8 +90,15 @@ export const Navbar = () => {
               </Link>
             </div>
           </div>
-        </div>
+       
+          </div>
       </nav>
+      {mobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black opacity-25 z-0"
+          onClick={toggleMobileMenu}
+        ></div>
+      )}
     </div>
   );
 };
