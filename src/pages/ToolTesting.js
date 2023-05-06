@@ -15,7 +15,7 @@ const Stage = ({ stageNumber, currentStage, stageName, isLoading }) => {
         <BarLoader width={20} height={4} color={"#3f51b5"} loading={true} />
       )}
       <span
-        className={`text-md text-white ${
+        className={`text-md text-black ${
           currentStage >= stageNumber ? "font-bold" : "font-normal"
         }`}
       >
@@ -164,26 +164,53 @@ const ToolTesting = () => {
   };
 
   return (
-    <div className="bg-[#252D62] min-h-screen">
-      <div className="container mx-auto px-4 py-20">
-        <h1 className="text-4xl font-semibold text-white mb-8">
-          Homework & Exam Assistant
-        </h1>
-        <p className="text-xl text-yellow-400 mb-4">
-          Note: Early beta, may retain some unnecessary text.
-        </p>
-        <p className="text-xl text-white mb-4">
-          This tool scans PDF files, extracts questions, and removes extra
-          information like instructions and page numbers for easier analysis.
-        </p>
-        <p className="text-xl text-white mb-4">
-          Upload a PDF, click Generate, and receive quick, efficient homework
-          help.
-        </p>
+    <div className="bg-[#F0FFE0] min-h-screen">
+    <div className="container mx-auto px-4 py-20">
+    <h1 className="text-4xl font-semibold text-black mb-8">
+        Homework & Exam Assistant
+      </h1>
+      <p className="text-xl text-black mb-4">
+        Note: Early beta, may retain some unnecessary text.
+      </p>
+      <p className="text-xl text-black mb-4">
+        This tool scans PDF files, extracts questions, and removes extra
+        information like instructions and page numbers for easier analysis.
+      </p>
+      <p className="text-xl text-black mb-4">
+        Upload a PDF, click Generate, and receive quick, efficient homework
+        help.
+      </p>
 
-        <div className="flex flex-col space-y-4 items-center">
-          <label className="bg-white flex justify-center text-black py-2 px-4 border border-gray-200 rounded-md cursor-pointer hover:bg-gray-100 transition duration-300">
-            {pdfSrc && (
+      <div className="flex flex-col space-y-4 items-center">
+        <label className="bg-[#FFC700] flex justify-center text-black py-2 px-4 border border-gray-200 rounded-md cursor-pointer hover:bg-[#FF6E00] hover:text-[#F0FFE0] transition duration-300">
+          {pdfSrc && (
+            <svg
+              className="w-6 h-6 text-black"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path d="M5 13l4 4L19 7" />
+            </svg>
+          )}
+
+{file ? file.name : "Choose File"}
+          <input
+            type="file"
+            accept=".pdf"
+            onChange={handleFileChange}
+            className="hidden"
+          />
+          </label>
+          {pdfSrc && (
+          <button
+            onClick={handleUpload}
+            className="bg-[#FFC700] flex hover:bg-[#FF6E00] hover:text-black w-48 justify-center text-black rounded-md px-3 py-2 transition duration-300"
+          >
+            {uploaded && (
               <svg
                 className="w-6 h-6 text-black"
                 fill="none"
@@ -196,44 +223,17 @@ const ToolTesting = () => {
                 <path d="M5 13l4 4L19 7" />
               </svg>
             )}
-
-            {file ? file.name : "Choose File"}
-            <input
-              type="file"
-              accept=".pdf"
-              onChange={handleFileChange}
-              className="hidden"
-            />
-          </label>
-          {pdfSrc && (
-            <button
-              onClick={handleUpload}
-              className="bg-indigo-600 flex hover:bg-indigo-700 w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
-            >
-              {uploaded && (
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path d="M5 13l4 4L19 7" />
-                </svg>
-              )}
-              {uploadedLoading && (
-                <ClipLoader
-                  className="mr-1"
-                  size={25}
-                  color={"#ffffff"}
-                  loading={true}
-                />
-              )}
-              Upload PDF File
-            </button>
-          )}
+            {uploadedLoading && (
+              <ClipLoader
+                className="mr-1"
+                size={25}
+                color={"#F0FFE0"}
+                loading={true}
+              />
+            )}
+            Upload PDF File
+          </button>
+        )}
 
           <div className="mt-8">
             <div className="flex flex-col items-center">
@@ -241,11 +241,11 @@ const ToolTesting = () => {
               {uploaded && !outputLoading && (
                 <button
                   onClick={handleStages}
-                  className="flex bg-indigo-600 hover:bg-indigo-700 w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
+                  className="flex bg-[#FFC700] hover:bg-[#FF6E00] w-48 justify-center text-black rounded-md px-3 py-2 transition duration-300"
                 >
                   {generated && (
                     <svg
-                      className="w-6 h-6 text-white"
+                      className="w-6 h-6 text-black"
                       fill="none"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -346,7 +346,7 @@ const ToolTesting = () => {
         </div>
         {pdfSrc && (
           <div className="mt-8">
-            <h2 className="text-2xl font-semibold text-white mb-4">
+            <h2 className="text-2xl font-semibold text-black mb-4">
               Uploaded PDF
             </h2>
             <embed
