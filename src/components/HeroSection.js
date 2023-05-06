@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 export const HeroSection = () => {
   return (
-    <section className="relative flex flex-col md:flex-row items-center justify-center px-6 md:px-20 py-16 bg-[#F0FFE0]">
+    <section className="relative flex flex-col md:flex-row items-center justify-around px-6 md:px-20 py-16 bg-[#F0FFE0]">
       <div className="text-black mb-8 md:mb-0 md:w-1/2">
         <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
