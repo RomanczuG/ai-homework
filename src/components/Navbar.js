@@ -34,7 +34,7 @@ export const Navbar = () => {
   return (
     <div className="bg-[#F0FFE0] sticky top-0 z-10">
       <nav className="mx-auto px-6 md:px-20 py-6">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-around">
           <div className="text-[#252D62] font-semibold text-lg">
             <Link to="/" className="hover:text-[#FF6E00]">
               Study Smarter Now!
@@ -81,7 +81,9 @@ export const Navbar = () => {
                 </Link>
               </li>
             </ul>
-            <div>
+            
+          </div>
+          <div>
               <Link
                 to="/tool"
                 className="text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4 py-2 border border-[#FFC700] rounded-md transition-all duration-200"
@@ -89,7 +91,6 @@ export const Navbar = () => {
                 Start Using the Tool
               </Link>
             </div>
-          </div>
        
           </div>
       </nav>
