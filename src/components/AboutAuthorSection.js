@@ -4,15 +4,15 @@ export const AboutAuthorSection = () => {
   return (
     <section
       id="about-author"
-      className="container mx-auto px-4 py-20 text-black bg-[#F0FFE0]"
+      className="container mx-auto px-6 md:px-20 py-20 text-black bg-[#F0FFE0]"
     >
-      <h2 className="text-4xl font-semibold text-center mb-12">
+      <h2 className="text-3xl md:text-4xl font-semibold text-center mb-12">
         About the Author
       </h2>
       <div className="flex flex-col items-center">
         {/* Author Bio */}
         <div className="w-full md:w-2/3 text-center">
-          <h3 className="text-2xl font-semibold mb-4">Mateusz Romaniuk</h3>
+          <h3 className="text-xl md:text-2xl font-semibold mb-4">Mateusz Romaniuk</h3>
           <p>
             I am a student, and this is one of my side projects. If you love
             coding like me, please consider using another free tool that I
