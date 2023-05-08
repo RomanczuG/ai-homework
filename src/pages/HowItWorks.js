@@ -2,7 +2,7 @@ import React from 'react';
 
 export const HowItWorks = () => {
   return (
-    <div className="bg-[#252D62] min-h-screen text-white">
+    <div className="bg-[#F0FFE0] min-h-screen text-black">
     <div className="container mx-auto px-4 py-6">
       <h1 className="text-3xl font-bold mb-4">How StudyBoost.app Works</h1>
       <p className="mb-4">

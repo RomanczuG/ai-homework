@@ -186,19 +186,19 @@ const Tool = () => {
   };
 
   return (
-    <div className="bg-[#252D62] min-h-screen">
+    <div className="bg-[#F0FFE0] min-h-screen">
       <div className="container mx-auto px-4 py-20">
-        <h1 className="text-4xl font-semibold text-white mb-8">
+        <h1 className="text-4xl font-semibold text-black mb-8">
           Homework & Exam Assistant
         </h1>
-        <p className="text-xl text-yellow-400 mb-4">
+        <p className="text-xl text-red-500 mb-4">
           Note: Early beta, may retain some unnecessary text.
         </p>
-        <p className="text-xl text-white mb-4">
+        <p className="text-xl text-black mb-4">
           This tool scans PDF files, extracts questions, and removes extra
           information like instructions and page numbers for easier analysis.
         </p>
-        <p className="text-xl text-white mb-4">
+        <p className="text-xl text-black mb-4">
           Upload a PDF, click Generate, and receive quick, efficient homework
           help.
         </p>
@@ -230,7 +230,7 @@ const Tool = () => {
           {pdfSrc && (
             <button
               onClick={handleUpload}
-              className="bg-indigo-600 flex hover:bg-indigo-700 w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
+              className="bg-[#FFC700] flex hover:bg-[#FF6E00] w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
             >
               {uploaded && (
                 <svg
@@ -263,7 +263,7 @@ const Tool = () => {
               {uploaded && !outputLoading && (
                 <button
                   onClick={handleStages}
-                  className="flex bg-indigo-600 hover:bg-indigo-700 w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
+                  className="bg-[#FFC700] flex hover:bg-[#FF6E00] w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
                 >
                   {generated && (
                     <svg
@@ -322,7 +322,7 @@ const Tool = () => {
                 </p>
                 <button
                   onClick={handleDownloadDocument}
-                  className="flex bg-indigo-600 hover:bg-indigo-700 w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
+                  className="bg-[#FFC700] flex hover:bg-[#FF6E00] w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
                 >
                   Download Help
                 </button>
@@ -333,7 +333,7 @@ const Tool = () => {
 
         <div className="mt-8">
           {generated && (
-            <h2 className="text-2xl font-semibold text-white mb-4">
+            <h2 className="text-2xl font-semibold text-black mb-4">
               Questions & Analysis
             </h2>
           )}
