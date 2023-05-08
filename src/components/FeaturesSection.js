@@ -10,7 +10,7 @@ export const FeaturesSection = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Feature 1 */}
         <div className="flex flex-col items-center text-center border-r-2 border-gray-200 md:border-none">
-          <i className="fas fa-brain text-6xl mb-4"></i>
+          {/* <i className="fas fa-brain text-6xl mb-4"></i> */}
           <h3 className="text-xl md:text-2xl font-semibold">AI-Powered Study Strategies</h3>
           <p className="mt-4">
             Enhance your learning experience with our AI-generated study
@@ -21,7 +21,7 @@ export const FeaturesSection = () => {
         </div>
         {/* Feature 2 */}
         <div className="flex flex-col items-center text-center border-r-2 border-gray-200 md:border-none">
-          <i className="fas fa-upload text-6xl mb-4"></i>
+          {/* <i className="fas fa-upload text-6xl mb-4"></i> */}
           <h3 className="text-xl md:text-2xl font-semibold">Easy Homework and Test Upload</h3>
           <p className="mt-4">
             Upload your homework or test PDF with a simple drag-and-drop or
@@ -31,7 +31,7 @@ export const FeaturesSection = () => {
         </div>
         {/* Feature 3 */}
         <div className="flex flex-col items-center text-center border-r-2 border-gray-200 md:border-none">
-          <i className="fas fa-file-alt text-6xl mb-4"></i>
+          {/* <i className="fas fa-file-alt text-6xl mb-4"></i> */}
           <h3 className="text-xl md:text-2xl font-semibold">Comprehensive Study Notes</h3>
           <p className="mt-4">
             Get access to detailed, AI-generated study notes that cover all the
@@ -42,7 +42,7 @@ export const FeaturesSection = () => {
         </div>
         {/* Feature 4 */}
         <div className="flex flex-col items-center text-center">
-          <i className="fas fa-check-double text-6xl mb-4"></i>
+          {/* <i className="fas fa-check-double text-6xl mb-4"></i> */}
           <h3 className="text-xl md:text-2xl font-semibold">Improved Test-Taking Skills</h3>
           <p className="mt-4">
             Learn effective test-taking strategies and boost your confidence

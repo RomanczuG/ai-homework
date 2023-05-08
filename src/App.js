@@ -20,7 +20,7 @@ function App() {
         />
       </Helmet>
       <div className="bg-[#F0FFE0] min-h-screen">
-        {/* <Navbar /> */}
+        
         <HeroSection/>
         <FeaturesSection />
         <AboutAuthorSection />

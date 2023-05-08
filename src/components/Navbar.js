@@ -4,7 +4,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 export const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const scrollToSection = (sectionId) => {
     const sectionElement = document.getElementById(sectionId);
@@ -27,27 +27,29 @@ export const Navbar = () => {
     scrollToSection("about-author");
   };
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
+
 
   return (
     <div className="bg-[#F0FFE0] sticky top-0 z-10">
       <nav className="mx-auto px-6 md:px-20 py-6">
-        <div className="flex items-center justify-around">
-          <div className="text-[#252D62] font-semibold text-lg">
+        <div className="flex items-center justify-between">
+          <div className= {`${isMenuOpen ? "hidden" : "block"} text-[#252D62] font-semibold text-lg`}>
             <Link to="/" className="hover:text-[#FF6E00]">
               Study Smarter Now!
             </Link>
           </div>
-          <button
-            className="md:hidden text-[#252D62] focus:outline-none"
-            onClick={toggleMobileMenu}
+          
+          <div
+            className={`${
+              isMenuOpen ? "block" : "hidden"
+            } md:flex items-center justify-center space-x-6 nav-menu`}
           >
-            <i className="fas fa-bars"></i>
-          </button>
-          <div className={`flex items-center justify-center space-x-6 ${mobileMenuOpen ? '' : 'hidden'} md:flex`}>
-            <ul className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
+            <ul
+              className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6"
+            >
               <li>
                 <span
                   onClick={handleFeaturesClick}
@@ -80,26 +82,39 @@ export const Navbar = () => {
                   How It Works
                 </Link>
               </li>
-            </ul>
-            
-          </div>
-          <div>
+              <li>
               <Link
                 to="/tool"
-                className="text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4 py-2 border border-[#FFC700] rounded-md transition-all duration-200"
+                className={`text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4 py-2 border text-md border-[#FFC700] rounded-md transition-all duration-200`}
               >
                 Start Using the Tool
               </Link>
-            </div>
-       
+            </li>
+            </ul>
+            {/* <div className={`md:block`}> */}
+             
+            {/* </div>/ */}
           </div>
+          <div className="md:hidden">
+            <button onClick={toggleMenu}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                width="24"
+                height="24"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M18 10a1 1 0 0 1 0 2H2a1 1 0 1 1 0-2h16zM3 5a1 1 0 1 0 0-2h12a1 1 0 1 0 0 2H3zm0 14a1 1 0 1 0 0-2h12a1 1 0 1 0 0 2H3z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        
       </nav>
-      {mobileMenuOpen && (
-        <div
-          className="fixed inset-0 bg-black opacity-25 z-0"
-          onClick={toggleMobileMenu}
-        ></div>
-      )}
     </div>
   );
 };

@@ -4,7 +4,7 @@ import './index.css';
 import Router from './Router';
 import reportWebVitals from './reportWebVitals';
 import { sendToVercelAnalytics } from './vitals';
-
+import 'font-awesome/css/font-awesome.min.css';
 ReactDOM.render(
   <React.StrictMode>
     <Router />
