@@ -1,17 +1,16 @@
 import React, { useState, useMemo, useCallback } from "react";
 
-
 // import { Navbar } from "./components/Navbar";
 import { HeroSection } from "./components/HeroSection";
 import { FeaturesSection } from "./components/FeaturesSection";
 import { AboutAuthorSection } from "./components/AboutAuthorSection";
 import { Helmet } from "react-helmet";
+import ToolBlock from "./components/ToolBlock";
 
 function App() {
-  
-  const appContent = useMemo(
-    () => (
-      <>
+  const [showToolBlock, setShowToolBlock] = useState(false);
+  const appContent = useMemo(() => (
+    <>
       <Helmet>
         <title>StudyBoost: AI-Powered Homework Help</title>
         <meta
@@ -20,14 +19,24 @@ function App() {
         />
       </Helmet>
       <div className="bg-[#F0FFE0] min-h-screen">
-        
-        <HeroSection/>
+        <HeroSection />
+        <h2 className="text-3xl md:text-4xl font-semibold text-center">
+          Try it for {" "}
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
+            FREE
+          </span>{" "}
+          now!
+        </h2>
+        <p className="mt-4 text-center">
+          Simply upload your PDF hw or exam file below to see how to get better
+          grades and study better.
+        </p>
+        <ToolBlock />
         <FeaturesSection />
         <AboutAuthorSection />
       </div>
-      </>
-    ),
-  );
+    </>
+  ));
 
   return appContent;
 }

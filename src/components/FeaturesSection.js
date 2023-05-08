@@ -4,7 +4,7 @@ export const FeaturesSection = () => {
   return (
     <section
       id="features"
-      className="mx-auto px-6 md:px-20 py-20 text-black bg-[#F0FFE0]"
+      className="mx-auto px-6 md:px-20  text-black bg-[#F0FFE0]"
     >
       <h2 className="text-3xl md:text-4xl font-semibold text-center mb-12">Features</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
