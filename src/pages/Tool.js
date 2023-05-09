@@ -15,7 +15,7 @@ const Stage = ({ stageNumber, currentStage, stageName, isLoading }) => {
         <BarLoader width={20} height={4} color={"#3f51b5"} loading={true} />
       )}
       <span
-        className={`text-md text-white ${
+        className={`text-md text-black ${
           currentStage >= stageNumber ? "font-bold" : "font-normal"
         }`}
       >
