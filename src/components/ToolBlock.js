@@ -141,10 +141,12 @@ const ToolBlock = () => {
         setUploaded(true);
       } else {
         alert("File upload failed");
-        console.error("File upload failed. Check internet connection and try again.");
+        console.error(
+          "File upload failed. Check internet connection and try again."
+        );
       }
     } catch (error) {
-        alert("File upload failed. Check internet connection and try again.");
+      alert("File upload failed. Check internet connection and try again.");
       window.sa_event("Uploading FIle Error", { error: error.message });
       console.error("Error during file upload:", error);
     }
@@ -270,32 +272,38 @@ const ToolBlock = () => {
             )}
             <div className="w-full h-2 ">
               {outputLoading && (
-                <div className="flex space-x-4 mb-4">
-                  <Stage
-                    stageNumber={1}
-                    currentStage={stage}
-                    stageName="Scanning Text"
-                    isLoading={stage === 1}
-                  />
-                  <Stage
-                    stageNumber={2}
-                    currentStage={stage}
-                    stageName="Cleaning Text"
-                    isLoading={stage === 2}
-                  />
-                  <Stage
-                    stageNumber={3}
-                    currentStage={stage}
-                    stageName="Extracting Questions"
-                    isLoading={stage === 3}
-                  />
-                  <Stage
-                    stageNumber={4}
-                    currentStage={stage}
-                    stageName="Generating Help"
-                    isLoading={isLoading && stage === 4}
-                  />
-                </div>
+                <>
+                  <p className="text-xl text-black mb-4">
+                    Note: It can take up to 20/30 seconds per question to
+                    generate an analysis.
+                  </p>
+                  <div className="flex space-x-4 mb-4">
+                    <Stage
+                      stageNumber={1}
+                      currentStage={stage}
+                      stageName="Scanning Text"
+                      isLoading={stage === 1}
+                    />
+                    <Stage
+                      stageNumber={2}
+                      currentStage={stage}
+                      stageName="Cleaning Text"
+                      isLoading={stage === 2}
+                    />
+                    <Stage
+                      stageNumber={3}
+                      currentStage={stage}
+                      stageName="Extracting Questions"
+                      isLoading={stage === 3}
+                    />
+                    <Stage
+                      stageNumber={4}
+                      currentStage={stage}
+                      stageName="Generating Help"
+                      isLoading={isLoading && stage === 4}
+                    />
+                  </div>
+                </>
               )}
             </div>
           </div>
