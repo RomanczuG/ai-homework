@@ -37,7 +37,7 @@ const Tool = () => {
     setStage((prevStage) => Math.max(prevStage, i + 1));
   })
 );
-    setStage(4);
+    // setStage(4);
     await Promise.all([...stagePromises, handleGeneratePromise]);
     setStage(5);
     setOutputLoading(false);
