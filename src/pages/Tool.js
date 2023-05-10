@@ -39,7 +39,7 @@ const Tool = () => {
 );
     // setStage(4);
     await Promise.all([...stagePromises, handleGeneratePromise]);
-    setStage(5);
+    setStage(4);
     setOutputLoading(false);
   };
   
@@ -184,6 +184,7 @@ const Tool = () => {
       console.error("Error generating help:", error);
     }
     setOutputLoading(false);
+    setStage(0);
   };
 
   return (

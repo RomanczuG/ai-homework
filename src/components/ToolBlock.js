@@ -39,7 +39,7 @@ const ToolBlock = () => {
     );
     // setStage(4);
     await Promise.all([...stagePromises, handleGeneratePromise]);
-    setStage(5);
+    setStage(4);
     setOutputLoading(false);
   };
 
