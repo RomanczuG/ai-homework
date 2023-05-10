@@ -21,7 +21,7 @@ export const HeroSection = () => {
           smarter, achieve academic success, and master learning strategies
           with ease.
         </p>
-        <h2 className="text-lg md:text-xl font-bold mb-2"> &#11088;&#11088;&#11088;&#11088;&#11088; rates and hundredths happy students</h2>
+        <h2 className="text-lg md:text-xl font-bold mb-2"> &#11088;&#11088;&#11088;&#11088;&#11088; rates and hundreds of happy students</h2>
       </div>
       <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96">
         <img
