@@ -313,7 +313,7 @@ const ToolBlock = () => {
         <div className="mt-8 ">
           {generated && (
             <div className="flex flex-col items-center">
-              <p className="text-xl text-white mb-4">
+              <p className="text-xl text-black mb-4">
                 Download the generated help as a word document.
               </p>
               <button
