@@ -32,11 +32,12 @@ const Tool = () => {
     setOutputLoading(true);
 
     const handleGeneratePromise = handleGenerate();
-    const stagePromises = Array.from({ length: 4 }, (_, i) =>
+    const stagePromises = Array.from({ length: 3 }, (_, i) =>
   new Promise((resolve) => setTimeout(resolve, i * 25000)).then(() => {
     setStage((prevStage) => Math.max(prevStage, i + 1));
   })
 );
+    setStage(4);
     await Promise.all([...stagePromises, handleGeneratePromise]);
     setStage(5);
     setOutputLoading(false);
@@ -317,7 +318,7 @@ const Tool = () => {
           <div className="mt-8 ">
             {generated && (
               <div className="flex flex-col items-center">
-                <p className="text-xl text-white mb-4">
+                <p className="text-xl text-black mb-4">
                   Download the generated help as a word document.
                 </p>
                 <button
