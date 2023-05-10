@@ -147,7 +147,7 @@ const ToolBlock = () => {
       }
     } catch (error) {
       alert("File upload failed. Check internet connection and try again.");
-      window.sa_event("Uploading FIle Error", { error: error.message });
+      window.sa_event("Uploading File Error", { error: error.message });
       console.error("Error during file upload:", error);
     }
     setUploadedLoading(false);
