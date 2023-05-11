@@ -23,7 +23,7 @@ export const HowItWorks = () => {
         </li> */}
       </ol>
       <p>
-        Join StudyBoost.app today and unlock the full potential of AI-powered academic support!
+        Join StudyBetterNow.com today and unlock the full potential of AI-powered academic support!
       </p>
     </div>
     </div>
