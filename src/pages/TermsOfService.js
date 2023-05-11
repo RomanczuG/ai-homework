@@ -6,7 +6,7 @@ export const TermsOfService = () => {
       <div className="container mx-auto px-4 py-6">
         <h1 className="text-3xl font-bold mb-4">Terms of Service</h1>
         <p className="mb-4">
-          By using our website, StudyBoost.app, you agree to be bound by these Terms of Service and to use the website in accordance with these Terms of Service, our Privacy Policy, and any additional terms and conditions that may apply to specific sections of the website or to products and services available through the website.
+          By using our website, StudySmarterNow.com, you agree to be bound by these Terms of Service and to use the website in accordance with these Terms of Service, our Privacy Policy, and any additional terms and conditions that may apply to specific sections of the website or to products and services available through the website.
         </p>
         <p className="mb-4">
           Accessing the website, in any manner, whether automated or otherwise, constitutes use of the website and your agreement to be bound by these Terms of Service.

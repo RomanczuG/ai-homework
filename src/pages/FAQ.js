@@ -6,16 +6,16 @@ export const FAQ = () => {
     <div className="container mx-auto px-4 py-6">
       <h1 className="text-3xl font-bold mb-4">Frequently Asked Questions</h1>
       <h2 className="text-2xl font-semibold mb-2">
-        How does StudyBoost.app help with academic success?
+        How does StudySmarterNow.com help with academic success?
       </h2>
       <p className="mb-4">
-        StudyBoost.app uses AI-powered tools to provide homework help and improve learning strategies for college students. Our platform offers effective study tips, test-taking strategies, and personalized recommendations to help you achieve academic success.
+      StudySmarterNow.com uses AI-powered tools to provide homework help and improve learning strategies for college students. Our platform offers effective study tips, test-taking strategies, and personalized recommendations to help you achieve academic success.
       </p>
       <h2 className="text-2xl font-semibold mb-2">
-        What makes StudyBoost.app different from other homework help websites?
+        What makes StudySmarterNow.com different from other homework help websites?
       </h2>
       <p className="mb-4">
-        Unlike other homework help websites, StudyBoost.app harnesses the power of artificial intelligence to analyze your study materials and provide tailored study tips and learning strategies. Our platform helps you optimize your study time and achieve better results in your college courses.
+        Unlike other homework help websites, StudySmarterNow.com harnesses the power of artificial intelligence to analyze your study materials and provide tailored study tips and learning strategies. Our platform helps you optimize your study time and achieve better results in your college courses.
       </p>
       {/* Add more questions and answers as needed */}
     </div>
