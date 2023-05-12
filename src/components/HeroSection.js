@@ -26,7 +26,7 @@ export const HeroSection = () => {
       <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96">
         <img
           className="w-full h-full object-cover rounded-lg shadow-md"
-          src="/hero.png" // Replace with your preferred image URL
+          src="/hero.webp" // Replace with your preferred image URL
           alt="Hero Image"
         />
       </div>
