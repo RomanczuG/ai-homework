@@ -21,7 +21,7 @@ export const AboutAuthorSection = () => {
               href="https://codescribe.app"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#FF6E00] hover:text-[#FFC700]"
+              className="text-[#FF6E00] hover:text-black"
             >
               codescribe.app
             </a>

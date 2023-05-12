@@ -96,7 +96,7 @@ export const Navbar = () => {
             {/* </div>/ */}
           </div>
           <div className="md:hidden">
-            <button onClick={toggleMenu}>
+            <button aria-label="buy product" onClick={toggleMenu}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
