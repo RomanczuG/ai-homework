@@ -1,6 +1,6 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-
+import React from "react";
+// import { motion } from 'framer-motion';
+import YouTubeVideo from "./YouTubeVideo";
 export const HeroSection = () => {
   return (
     <section className="relative flex flex-col md:flex-row items-center justify-around px-6 md:px-20 py-16 min-h-[55vh] bg-[#F0FFE0]">
@@ -17,12 +17,22 @@ export const HeroSection = () => {
         <p className="text-base md:text-lg xl:text-xl mb-6">
           Upload your homework or test PDF and let our AI generate
           comprehensive, easy-to-understand study notes tailored to help you
-          learn and excel. Improve your test-taking strategies, study
-          smarter, achieve academic success, and master learning strategies
-          with ease.
+          learn and excel. Improve your test-taking strategies, study smarter,
+          achieve academic success, and master learning strategies with ease.
         </p>
-        <h2 className="text-lg md:text-xl font-bold mb-2"> &#11088;&#11088;&#11088;&#11088;&#11088; rates and hundreds of happy students</h2>
+        <h2 className="text-lg md:text-xl font-bold mb-4">
+          {" "}
+          &#11088;&#11088;&#11088;&#11088;&#11088; rates and hundreds of happy
+          students
+        </h2>
+        <a
+          href="#features"
+          className="py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
+        >
+          Learn more
+        </a>
       </div>
+
       <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96">
         <img
           className="w-full h-full object-cover rounded-lg shadow-md"

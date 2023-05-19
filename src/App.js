@@ -6,6 +6,7 @@ import { FeaturesSection } from "./components/FeaturesSection";
 import { AboutAuthorSection } from "./components/AboutAuthorSection";
 import { Helmet } from "react-helmet";
 import ToolBlock from "./components/ToolBlock";
+import YouTubeVideo from "./components/YouTubeVideo";
 
 function App() {
   const [showToolBlock, setShowToolBlock] = useState(false);
@@ -20,6 +21,7 @@ function App() {
       </Helmet>
       <div className="bg-[#F0FFE0] min-h-screen">
         <HeroSection />
+        
         <h2 className="text-3xl md:text-4xl font-semibold text-center">
           Try it for {" "}
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
@@ -32,6 +34,18 @@ function App() {
           grades and study better.
         </p>
         <ToolBlock />
+        <div>
+          <h2 className="text-3xl md:text-4xl font-semibold text-center">
+            This is a {" "}
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
+              revolution
+            </span>{" "}
+            for students!
+          </h2>
+          <div className="flex text-center justify-center mt-4">
+          <YouTubeVideo embedId="1EKv4aLhygw" />
+          </div>
+        </div>
         <FeaturesSection />
         <AboutAuthorSection />
       </div>
