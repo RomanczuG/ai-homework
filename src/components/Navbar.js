@@ -50,7 +50,7 @@ export const Navbar = () => {
             <ul
               className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6"
             >
-              <li>
+              {/* <li>
                 <span
                   onClick={handleFeaturesClick}
                   className="text-[#252D62] hover:text-[#FF6E00] cursor-pointer transition-all duration-200"
@@ -65,7 +65,7 @@ export const Navbar = () => {
                 >
                   About the Author
                 </span>
-              </li>
+              </li> */}
               <li>
                 <Link
                   to="/faq"
