@@ -38,7 +38,7 @@ function App() {
           <h2 className="text-3xl md:text-4xl font-semibold text-center">
             This is a {" "}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
-              revolution
+              REVOLUTION
             </span>{" "}
             for students!
           </h2>
