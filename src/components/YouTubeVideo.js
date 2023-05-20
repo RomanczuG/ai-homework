@@ -1,17 +1,28 @@
 import React from 'react';
+import ReactPlayer from 'react-player'
 
 const YouTubeVideo = ({ embedId }) => (
   <div className="video-responsive">
-    <iframe
-      width="853"
-      height="480"
-      src={`https://www.youtube.com/embed/${embedId}?autoplay=1&mute=1`}
-    //   frameBorder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-      title="Embedded youtube"
+    <ReactPlayer
+      url={`https://www.youtube.com/watch?v=${embedId}`}
+      playing
+      muted
+      controls
+      width="853px"
+      height="480px"
+      config={{
+        youtube: {
+          playerVars: { 
+            showinfo: 1, 
+            controls: 1,
+            modestbranding: 1, 
+            rel: 0
+          }
+        },
+      }}
     />
   </div>
 );
 
 export default YouTubeVideo;
+
