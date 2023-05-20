@@ -42,7 +42,7 @@ function App() {
             </span>{" "}
             for students!
           </h2>
-          <div className="flex text-center justify-center mt-4">
+          <div className="flex text-center justify-center mt-4 ">
           <YouTubeVideo embedId="1EKv4aLhygw" />
           </div>
         </div>
