@@ -64,8 +64,7 @@ const ToolBlock = () => {
   // ! FILE DOWNLOAD
   const handleDownloadDocument = () => {
     // Inside each function
-    const currentDate = new Date().toISOString();
-    window.sa_event("Download Doc file", { date: currentDate });
+    window.sa_event("Download Doc file");
 
     client
       .post(
@@ -117,8 +116,6 @@ const ToolBlock = () => {
       alert("Please select a file to upload");
       return;
     }
-    const currentDate = new Date().toISOString();
-    window.sa_event("Upload file", { date: currentDate });
     setUploadedLoading(true);
 
     const formData = new FormData();
@@ -128,7 +125,7 @@ const ToolBlock = () => {
     console.log("Form data:", formData);
     // Inside handleUpload function
     const fileSize = file.size; // In bytes
-    window.sa_event("PDF Upload", { filename: file.name, fileSize });
+    
 
     // Send a POST request with the file to the Flask server
     try {
@@ -137,7 +134,8 @@ const ToolBlock = () => {
       console.log("File upload response:", response);
 
       if (response.status === 200) {
-        console.log("File uploaded successfully");
+        window.sa_event("PDF successfull upload", { filename: file.name, fileSize });
+        console.log("File uploaded ");
         setUploadedFilename(response.data.filename); // Store the filename in the state
         setUploaded(true);
       } else {
@@ -148,7 +146,7 @@ const ToolBlock = () => {
       }
     } catch (error) {
       alert("File upload failed. Check internet connection and try again.");
-      window.sa_event("Uploading File Error", { error: error.message });
+      window.sa_event("PDF failed upload", { error: error.message });
       console.error("Error during file upload:", error);
     }
     setUploadedLoading(false);
@@ -157,8 +155,7 @@ const ToolBlock = () => {
   // ! GENERATE HELP
 
   const handleGenerate = async () => {
-    const currentDate = new Date().toISOString();
-    window.sa_event("Generate help", { date: currentDate });
+    window.sa_event("Generate help - Started");
     // At the beginning of the function
     const startTime = new Date().getTime();
 
@@ -181,10 +178,10 @@ const ToolBlock = () => {
       setGenerated(true);
       const endTime = new Date().getTime();
       const timeTaken = (endTime - startTime) / 1000; // In seconds
-      window.sa_event("Generating Help", { timeTaken });
+      window.sa_event("Generate Help - Time", { timeTaken });
     } catch (error) {
       // Inside the catch block
-      window.sa_event("Generating Help Error", { error: error.message });
+      window.sa_event("Generate Help - Error", { error: error.message });
 
       alert("PDF file is too long, please try to use shorter pdf files.");
       console.error("Error generating help:", error);
