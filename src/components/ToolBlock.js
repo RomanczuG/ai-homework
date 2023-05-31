@@ -70,8 +70,8 @@ const ToolBlock = () => {
         </Button>
         )}
 
-        <div className="mt-8">
-          <div className="flex flex-col items-center">
+        {/* <div className="mt-8">
+          <div className="flex flex-col items-center"> */}
             {uploaded && !outputLoading && (
               <Button 
                 onClick={() =>
@@ -127,8 +127,8 @@ const ToolBlock = () => {
                 </>
               )}
             </div>
-          </div>
-        </div>
+          {/* </div>
+        </div> */}
 
         <div className="mt-8 ">
           {generated && (
