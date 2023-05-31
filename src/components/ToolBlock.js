@@ -10,6 +10,7 @@ import {
   Button,
   CheckIcon,
   Stage,
+  ActionButtons
 } from "../utils/ToolUtils";
 
 const ToolBlock = () => {
@@ -71,22 +72,27 @@ const ToolBlock = () => {
         )}
 
         {uploaded && !outputLoading && (
-          <Button
-            onClick={() =>
-              handleStages(
-                setOutputLoading,
-                uploadedFilename,
-                client,
-                setOutput,
-                output,
-                setGenerated,
-                setStage
-              )
-            }
+          // <Button
+          //   onClick={() =>
+          //     handleStages(
+          //       setOutputLoading,
+          //       uploadedFilename,
+          //       client,
+          //       setOutput,
+          //       output,
+          //       setGenerated,
+          //       setStage
+          //     )
+          //   }
+          // >
+          //   {generated && <CheckIcon />}
+          //   Generate Help
+          // </Button>
+          <ActionButtons handleStudyNotes={handleStages(setOutputLoading, uploadedFilename, client, setOutput, output, setGenerated, setStage)} handleChatbot={() => console.log("chatbot")}
+
           >
-            {generated && <CheckIcon />}
-            Generate Help
-          </Button>
+          
+          </ActionButtons>
         )}
         <div className="mt-8">
           <div className="w-full h-2 flex flex-col items-center">

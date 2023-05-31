@@ -1,6 +1,7 @@
 import CryptoJS from "crypto-js";
 import { FaCheck } from "react-icons/fa";
 import { BarLoader } from "react-spinners";
+import { useState } from "react";
 export const hashFilename = (filename) => {
   const timestamp = new Date().getTime();
   const uniqueFilename = `${timestamp}-${filename}`;
@@ -228,3 +229,37 @@ export const CheckIcon = () => (
     <path d="M5 13l4 4L19 7" />
   </svg>
 );
+
+
+export const ActionButtons = ({ handleStudyNotes, handleChatBot }) => {
+  const [selectedAction, setSelectedAction] = useState(null);
+
+  const selectAction = (action) => {
+    setSelectedAction(action);
+
+    if (action === 'notes') {
+      handleStudyNotes();
+      console.log('notes');
+    } else if (action === 'chat') {
+      handleChatBot();
+        // console.log('chat');
+    }
+  }
+
+  return (
+    <div className="flex">
+      <button
+        onClick={() => selectAction('notes')}
+        className={`flex-1 m-1 py-2 px-4 rounded-md text-center cursor-pointer ${selectedAction === 'notes' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-700'}`}
+      >
+        Generate Study Notes
+      </button>
+      <button
+        onClick={() => selectAction('chat')}
+        className={`flex-1 m-1 py-2 px-4 rounded-md text-center cursor-pointer ${selectedAction === 'chat' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-700'}`}
+      >
+        Talk with Chat Bot
+      </button>
+    </div>
+  );
+}
