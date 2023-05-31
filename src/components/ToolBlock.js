@@ -29,6 +29,8 @@ const ToolBlock = () => {
   const [uploadedLoading, setUploadedLoading] = useState(false);
   const [generated, setGenerated] = useState(false);
   const [uploadedFilename, setUploadedFilename] = useState(null);
+  const [actionType, setActionType] = useState('study-notes'); // default value
+
   // Some random dict in sampleData
 
 
@@ -72,27 +74,29 @@ const ToolBlock = () => {
         )}
 
         {uploaded && !outputLoading && (
-          // <Button
-          //   onClick={() =>
-          //     handleStages(
-          //       setOutputLoading,
-          //       uploadedFilename,
-          //       client,
-          //       setOutput,
-          //       output,
-          //       setGenerated,
-          //       setStage
-          //     )
-          //   }
-          // >
-          //   {generated && <CheckIcon />}
-          //   Generate Help
-          // </Button>
-          <ActionButtons handleStudyNotes={() => handleStages(setOutputLoading, uploadedFilename, client, setOutput, output, setGenerated, setStage)} handleChatbot={() => console.log("chatbot")}
+          <>
+          <ActionButtons handleStudyNotes={() => setActionType('study-notes')} handleChatBot={() => setActionType('chat-bot')}>
 
-          >
-          
+
           </ActionButtons>
+          <Button
+            onClick={() =>
+              handleStages(
+                setOutputLoading,
+                uploadedFilename,
+                client,
+                setOutput,
+                output,
+                setGenerated,
+                setStage
+              )
+            }
+          >
+            
+            {generated && <CheckIcon />}
+            Start
+          </Button>
+          </>
         )}
         <div className="mt-8">
           <div className="w-full h-2 flex flex-col items-center">

@@ -239,10 +239,8 @@ export const ActionButtons = ({ handleStudyNotes, handleChatBot }) => {
 
     if (action === 'notes') {
       handleStudyNotes();
-      console.log('notes');
     } else if (action === 'chat') {
       handleChatBot();
-        // console.log('chat');
     }
   }
 
