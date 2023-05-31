@@ -61,8 +61,10 @@ const ToolBlock = () => {
             className="hidden"
           />
         </label>
-        <h2 className="text-xl text-black mb-4">Step 2: Upload your PDF file</h2>
+        
         {pdfSrc && (
+          <>
+          <h2 className="text-xl text-black mb-4">Step 2: Upload your PDF file</h2>
           <Button
             onClick={() =>
               handleUpload(
@@ -85,10 +87,13 @@ const ToolBlock = () => {
             )}
             Upload PDF File
           </Button>
+          </>
         )}
-        <h2 className="text-xl text-black mb-4">Step 3: Choose an action</h2>
+        
         {uploaded && !outputLoading && (
           <>
+          <h2 className="text-xl text-black mb-4">Step 3: Choose an action</h2>
+
             <ActionButtons
               handleStudyNotes={() => setActionType("study-notes")}
               handleChatBot={() => setActionType("chat-bot")}
@@ -100,9 +105,11 @@ const ToolBlock = () => {
           </>
         )}
         <div className="mt-8">
-          <h2 className="text-xl text-black mb-4">Step 4: Generating analysis...</h2>
+          
           {outputLoading && (
+
             <>
+            <h2 className="text-xl text-black mb-4">Step 4: Generating analysis...</h2>
               <p className="text-md text-black mb-4">
                 It can take up to 20/30 seconds per question to generate an
                 analysis. Get a coffee or tea and relax &#x2615;
@@ -136,8 +143,11 @@ const ToolBlock = () => {
             )}
           </div>
           <div className="mt-8">
-            <h2 className="text-xl text-black mb-4">Step 5: Download the result</h2>
+            
             {generated && (
+              <>
+              <h2 className="text-xl text-black mb-4">Step 5: Download the result</h2>
+              
               <div className="flex flex-col items-center">
                 <p className="text-md text-black mb-4">
                   Download the generated help as a word document.
@@ -146,6 +156,7 @@ const ToolBlock = () => {
                   Download Help
                 </Button>
               </div>
+              </>
             )}
           </div>
         </div>
