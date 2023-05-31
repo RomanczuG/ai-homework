@@ -88,7 +88,7 @@ const ToolBlock = () => {
           //   {generated && <CheckIcon />}
           //   Generate Help
           // </Button>
-          <ActionButtons handleStudyNotes={handleStages(setOutputLoading, uploadedFilename, client, setOutput, output, setGenerated, setStage)} handleChatbot={() => console.log("chatbot")}
+          <ActionButtons handleStudyNotes={() => handleStages(setOutputLoading, uploadedFilename, client, setOutput, output, setGenerated, setStage)} handleChatbot={() => console.log("chatbot")}
 
           >
           
