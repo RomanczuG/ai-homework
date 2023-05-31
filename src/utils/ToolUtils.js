@@ -232,7 +232,7 @@ export const CheckIcon = () => (
 
 
 export const ActionButtons = ({ handleStudyNotes, handleChatBot }) => {
-  const [selectedAction, setSelectedAction] = useState(null);
+  const [selectedAction, setSelectedAction] = useState('notes');
 
   const selectAction = (action) => {
     setSelectedAction(action);

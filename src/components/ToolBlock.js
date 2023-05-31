@@ -18,7 +18,6 @@ const ToolBlock = () => {
     // baseURL: "http://127.0.0.1:5000",
     baseURL: "https://studyboost.uc.r.appspot.com",
   });
-  const [isLoading] = useState(false);
   const [stage, setStage] = useState(0);
   const [file, setFile] = useState(null);
   const sampleData = [];
@@ -45,13 +44,12 @@ const ToolBlock = () => {
     } else if (actionType === "chat-bot") {
       console.log("chat bot");
     }
-  }; // default value
-
-  // Some random dict in sampleData
+  };
 
   return (
     <section className="container mx-auto px-4 py-4">
       <div className="bg-[#F0FFE0] flex flex-col space-y-4 items-center">
+        <h2 className="text-xl text-black mb-4">Step 1: Choose your PDF file</h2>
         <label className="bg-white flex justify-center text-black py-2 px-4 border border-gray-200 rounded-md cursor-pointer hover:bg-gray-100 transition duration-300">
           {file ? file.name : "Choose File"}
           <input
@@ -63,6 +61,7 @@ const ToolBlock = () => {
             className="hidden"
           />
         </label>
+        <h2 className="text-xl text-black mb-4">Step 2: Upload your PDF file</h2>
         {pdfSrc && (
           <Button
             onClick={() =>
@@ -87,48 +86,44 @@ const ToolBlock = () => {
             Upload PDF File
           </Button>
         )}
-
+        <h2 className="text-xl text-black mb-4">Step 3: Choose an action</h2>
         {uploaded && !outputLoading && (
           <>
-          <p className="text-xl text-black mb-4">
-                  Choose what you want to do with the uploaded file.
-                </p>
             <ActionButtons
               handleStudyNotes={() => setActionType("study-notes")}
               handleChatBot={() => setActionType("chat-bot")}
             ></ActionButtons>
-            <Button onClick={handleStart}>
+            <Button onClick={handleStart} disabled={!actionType}>
               {generated && <CheckIcon />}
               Start
             </Button>
           </>
         )}
         <div className="mt-8">
-          <div className="w-full flex flex-col items-center">
-            {outputLoading && (
-              <>
-                <p className="text-xl text-black mb-4">
-                  It can take up to 20/30 seconds per question to generate an
-                  analysis. Get a coffe or tea and relax &#x2615;
-                </p>
-                <div className="flex space-x-4 mb-4">
-                  <Stage
-                    stageNumber={1}
-                    currentStage={stage}
-                    stageName="Scanning Text"
-                    isLoading={stage === 1}
-                  />
-                  <Stage
-                    stageNumber={2}
-                    currentStage={stage}
-                    stageName="Cleaning Text"
-                    isLoading={stage === 2}
-                  />
-                  <Stage
-                    stageNumber={3}
-                    currentStage={stage}
-                    stageName="Extracting Questions"
-                    isLoading={stage === 3}
+          <h2 className="text-xl text-black mb-4">Step 4: Generating analysis...</h2>
+          {outputLoading && (
+            <>
+              <p className="text-md text-black mb-4">
+                It can take up to 20/30 seconds per question to generate an
+                analysis. Get a coffee or tea and relax &#x2615;
+              </p>
+              <div className="flex space-x-4 mb-4">
+                <Stage
+                  stageNumber={1}
+                  currentStage={stage}
+                  stageName="Scanning Text"
+                  isLoading={stage === 1}
+                />
+                <Stage
+                  stageNumber={2}
+                  currentStage={stage}
+                  stageName="Cleaning Text"
+                  isLoading={stage === 2}
+                />
+                <Stage
+                  stageNumber={3}
+                  currentStage={stage}
+                  stageName="Extracting Questions"
                   />
                   <Stage
                     stageNumber={4}
@@ -140,23 +135,23 @@ const ToolBlock = () => {
               </>
             )}
           </div>
+          <div className="mt-8">
+            <h2 className="text-xl text-black mb-4">Step 5: Download the result</h2>
+            {generated && (
+              <div className="flex flex-col items-center">
+                <p className="text-md text-black mb-4">
+                  Download the generated help as a word document.
+                </p>
+                <Button onClick={() => handleDownloadDocument(client, output)}>
+                  Download Help
+                </Button>
+              </div>
+            )}
+          </div>
         </div>
-
-        <div className="mt-8 ">
-          {generated && (
-            <div className="flex flex-col items-center">
-              <p className="text-xl text-black mb-4">
-                Download the generated help as a word document.
-              </p>
-              <Button onClick={() => handleDownloadDocument(client, output)}>
-                Download Help
-              </Button>
-            </div>
-          )}
-        </div>
-      </div>
-    </section>
-  );
-};
+      </section>
+    );
+  };
+  
 
 export default ToolBlock;
