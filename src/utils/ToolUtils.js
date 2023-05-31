@@ -208,7 +208,7 @@ export const Stage = ({ stageNumber, currentStage, stageName, isLoading }) => {
 export const Button = ({ onClick, children }) => (
   <button
     onClick={onClick}
-    className="bg-[#FFC700] hover:bg-[#FF6E00] w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
+    className="bg-[#FFC700] hover:bg-[#FF6E00] w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300 flex items-center space-x-2"
   >
     {children}
   </button>
