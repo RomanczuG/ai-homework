@@ -245,16 +245,16 @@ export const ActionButtons = ({ handleStudyNotes, handleChatBot }) => {
   }
 
   return (
-    <div className="flex">
+    <div className="flex border rounded-md overflow-hidden">
       <button
         onClick={() => selectAction('notes')}
-        className={`flex-1 m-1 py-2 px-4 rounded-md text-center cursor-pointer ${selectedAction === 'notes' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-700'}`}
+        className={`flex-1 py-2 px-4 text-center cursor-pointer transition-colors duration-300 ease-in-out ${selectedAction === 'notes' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-700'}`}
       >
         Generate Study Notes
       </button>
       <button
         onClick={() => selectAction('chat')}
-        className={`flex-1 m-1 py-2 px-4 rounded-md text-center cursor-pointer ${selectedAction === 'chat' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-700'}`}
+        className={`flex-1 py-2 px-4 text-center cursor-pointer transition-colors duration-300 ease-in-out ${selectedAction === 'chat' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-700'}`}
       >
         Talk with Chat Bot
       </button>

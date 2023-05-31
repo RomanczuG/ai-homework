@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 
@@ -10,7 +10,7 @@ import {
   Button,
   CheckIcon,
   Stage,
-  ActionButtons
+  ActionButtons,
 } from "../utils/ToolUtils";
 
 const ToolBlock = () => {
@@ -29,10 +29,10 @@ const ToolBlock = () => {
   const [uploadedLoading, setUploadedLoading] = useState(false);
   const [generated, setGenerated] = useState(false);
   const [uploadedFilename, setUploadedFilename] = useState(null);
-  const [actionType, setActionType] = useState('study-notes');
-  
+  const [actionType, setActionType] = useState("study-notes");
+
   const handleStart = () => {
-    if(actionType === 'study-notes') {
+    if (actionType === "study-notes") {
       handleStages(
         setOutputLoading,
         uploadedFilename,
@@ -42,13 +42,12 @@ const ToolBlock = () => {
         setGenerated,
         setStage
       );
-    } else if(actionType === 'chat-bot') {
-      console.log('chat bot');
+    } else if (actionType === "chat-bot") {
+      console.log("chat bot");
     }
-  }// default value
+  }; // default value
 
   // Some random dict in sampleData
-
 
   return (
     <section className="container mx-auto px-4 py-4">
@@ -91,18 +90,14 @@ const ToolBlock = () => {
 
         {uploaded && !outputLoading && (
           <>
-          <ActionButtons handleStudyNotes={() => setActionType('study-notes')} handleChatBot={() => setActionType('chat-bot')}>
-
-
-          </ActionButtons>
-          <Button
-            onClick={handleStart
-            }
-          >
-            
-            {generated && <CheckIcon />}
-            Start
-          </Button>
+            <ActionButtons
+              handleStudyNotes={() => setActionType("study-notes")}
+              handleChatBot={() => setActionType("chat-bot")}
+            ></ActionButtons>
+            <Button onClick={handleStart}>
+              {generated && <CheckIcon />}
+              Start
+            </Button>
           </>
         )}
         <div className="mt-8">
@@ -110,8 +105,8 @@ const ToolBlock = () => {
             {outputLoading && (
               <>
                 <p className="text-xl text-black mb-4">
-                  It can take up to 20/30 seconds per question to generate
-                  an analysis. Get a coffe or tea and relax &#x2615;
+                  It can take up to 20/30 seconds per question to generate an
+                  analysis. Get a coffe or tea and relax &#x2615;
                 </p>
                 <div className="flex space-x-4 mb-4">
                   <Stage
