@@ -29,7 +29,23 @@ const ToolBlock = () => {
   const [uploadedLoading, setUploadedLoading] = useState(false);
   const [generated, setGenerated] = useState(false);
   const [uploadedFilename, setUploadedFilename] = useState(null);
-  const [actionType, setActionType] = useState('study-notes'); // default value
+  const [actionType, setActionType] = useState('study-notes');
+  
+  const handleStart = () => {
+    if(actionType === 'study-notes') {
+      handleStages(
+        setOutputLoading,
+        uploadedFilename,
+        client,
+        setOutput,
+        output,
+        setGenerated,
+        setStage
+      );
+    } else if(actionType === 'chat-bot') {
+      console.log('chat bot');
+    }
+  }// default value
 
   // Some random dict in sampleData
 
@@ -80,16 +96,7 @@ const ToolBlock = () => {
 
           </ActionButtons>
           <Button
-            onClick={() =>
-              handleStages(
-                setOutputLoading,
-                uploadedFilename,
-                client,
-                setOutput,
-                output,
-                setGenerated,
-                setStage
-              )
+            onClick={handleStart
             }
           >
             
