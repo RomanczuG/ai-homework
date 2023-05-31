@@ -46,19 +46,18 @@ const ToolBlock = () => {
           />
         </label>
         {pdfSrc && (
-          <button
-            onClick={() =>
-              handleUpload(
-                client,
-                file,
-                setUploadedLoading,
-                setUploadedFilename,
-                setUploaded
-              )
-            }
-            className="bg-[#FFC700] flex hover:bg-[#FF6E00] w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
-          >
-            {uploaded && <CheckIcon />}
+          <Button
+          onClick={() =>
+            handleUpload(
+              client,
+              file,
+              setUploadedLoading,
+              setUploadedFilename,
+              setUploaded
+            )
+          }
+        >
+          {uploaded && <CheckIcon />}
             {uploadedLoading && (
               <ClipLoader
                 className="mr-1"
@@ -68,7 +67,7 @@ const ToolBlock = () => {
               />
             )}
             Upload PDF File
-          </button>
+        </Button>
         )}
 
         <div className="mt-8">
