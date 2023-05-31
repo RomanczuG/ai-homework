@@ -104,7 +104,7 @@ const ToolBlock = () => {
           </>
         )}
         <div className="mt-8">
-          <div className="w-full h-2 flex flex-col items-center">
+          <div className="w-full flex flex-col items-center">
             {outputLoading && (
               <>
                 <p className="text-xl text-black mb-4">
