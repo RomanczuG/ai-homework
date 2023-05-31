@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ClipLoader, BarLoader } from "react-spinners";
 import { FaCheck } from "react-icons/fa";
-import { handleDownloadDocument, handleFileChange, handleUpload, handleGenerate} from "../utils/ToolUtils";
+import { handleDownloadDocument, handleFileChange, handleUpload, handleStages} from "../utils/ToolUtils";
 
 
 const Stage = ({ stageNumber, currentStage, stageName, isLoading }) => {
@@ -43,20 +43,7 @@ const ToolBlock = () => {
   const sampleData = [];
 
   // ! HANDLE STAGES
-  const handleStages = async () => {
-    setOutputLoading(true);
 
-    const handleGeneratePromise = handleGenerate(setOutputLoading, uploadedFilename, client, setOutput, output, setGenerated);
-    const stagePromises = Array.from({ length: 4 }, (_, i) =>
-      new Promise((resolve) => setTimeout(resolve, i * 25000)).then(() => {
-        setStage((prevStage) => Math.max(prevStage, i + 1));
-      })
-    );
-    // setStage(4);
-    await Promise.all([...stagePromises, handleGeneratePromise]);
-    setStage(4);
-    setOutputLoading(false);
-  };
 
   const handleDownloadClick = () => {
     handleDownloadDocument(client, output);
@@ -122,7 +109,7 @@ const ToolBlock = () => {
           <div className="flex flex-col items-center">
             {uploaded && !outputLoading && (
               <button
-                onClick={() => handleStages}
+                onClick={() => handleStages(setOutputLoading, uploadedFilename, client, setOutput, output, setGenerated)}
                 className="flex bg-[#FFC700] hover:bg-[#FF6E00] w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
               >
                 {generated && (

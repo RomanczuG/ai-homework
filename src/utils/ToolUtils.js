@@ -137,3 +137,19 @@ export const handleGenerate = async (setOutputLoading, uploadedFilename, client,
     }
     setOutputLoading(false);
   };
+
+// ! HANDLE STAGES
+export const handleStages = async (setOutputLoading, uploadedFilename,client,setOutput, output, setGenerated, setStage) => {
+    setOutputLoading(true);
+
+    const handleGeneratePromise = handleGenerate(setOutputLoading, uploadedFilename, client, setOutput, output, setGenerated);
+    const stagePromises = Array.from({ length: 4 }, (_, i) =>
+      new Promise((resolve) => setTimeout(resolve, i * 25000)).then(() => {
+        setStage((prevStage) => Math.max(prevStage, i + 1));
+      })
+    );
+    // setStage(4);
+    await Promise.all([...stagePromises, handleGeneratePromise]);
+    setStage(4);
+    setOutputLoading(false);
+  };
