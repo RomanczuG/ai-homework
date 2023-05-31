@@ -90,7 +90,7 @@ const ToolBlock = () => {
         </label>
         {pdfSrc && (
           <button
-            onClick={handleUpload(client, file, setUploadedLoading, setUploadedFilename, setUploaded)}
+            onClick={() => handleUpload(client, file, setUploadedLoading, setUploadedFilename, setUploaded)}
             className="bg-[#FFC700] flex hover:bg-[#FF6E00] w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
           >
             {uploaded && (
@@ -122,7 +122,7 @@ const ToolBlock = () => {
           <div className="flex flex-col items-center">
             {uploaded && !outputLoading && (
               <button
-                onClick={handleStages}
+                onClick={() => handleStages}
                 className="flex bg-[#FFC700] hover:bg-[#FF6E00] w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
               >
                 {generated && (
@@ -187,7 +187,7 @@ const ToolBlock = () => {
                 Download the generated help as a word document.
               </p>
               <button
-                onClick={handleDownloadClick}
+                onClick={() => handleDownloadClick}
                 className="flex bg-[#FFC700] hover:bg-[#FF6E00] w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
               >
                 Download Help
