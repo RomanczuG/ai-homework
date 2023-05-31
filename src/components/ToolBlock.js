@@ -1,31 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { ClipLoader, BarLoader } from "react-spinners";
-import { FaCheck } from "react-icons/fa";
-import { handleDownloadDocument, handleFileChange, handleUpload, handleStages} from "../utils/ToolUtils";
+import { ClipLoader } from "react-spinners";
 
+import {
+  handleDownloadDocument,
+  handleFileChange,
+  handleUpload,
+  handleStages,
+  Button,
+  CheckIcon,
+  Stage,
+} from "../utils/ToolUtils";
 
-const Stage = ({ stageNumber, currentStage, stageName, isLoading }) => {
-  return (
-    <div className="flex items-center space-x-2">
-      {currentStage > stageNumber && (
-        <FaCheck className="text-green-500" size={20} />
-      )}
-      {isLoading && (
-        <BarLoader width={20} height={4} color={"#3f51b5"} loading={true} />
-      )}
-      <span
-        className={`text-md text-black ${
-          currentStage >= stageNumber ? "font-bold" : "font-normal"
-        }`}
-      >
-        {stageName}
-      </span>
-    </div>
-  );
-};
-
-const ToolBlock = () => { 
+const ToolBlock = () => {
   const client = axios.create({
     // baseURL: "http://127.0.0.1:5000",
     baseURL: "https://studyboost.uc.r.appspot.com",
@@ -46,46 +33,32 @@ const ToolBlock = () => {
     <section className="container mx-auto px-4 py-4">
       <div className="bg-[#F0FFE0] flex flex-col space-y-4 items-center">
         <label className="bg-white flex justify-center text-black py-2 px-4 border border-gray-200 rounded-md cursor-pointer hover:bg-gray-100 transition duration-300">
-          {pdfSrc && (
-            <svg
-              className="w-6 h-6 text-black"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path d="M5 13l4 4L19 7" />
-            </svg>
-          )}
+          {pdfSrc && <CheckIcon />}
 
           {file ? file.name : "Choose File"}
           <input
             type="file"
             accept=".pdf"
-            onChange={(e) => handleFileChange(e, setFile, setPdfSrc, setUploaded, setGenerated)}
+            onChange={(e) =>
+              handleFileChange(e, setFile, setPdfSrc, setUploaded, setGenerated)
+            }
             className="hidden"
           />
         </label>
         {pdfSrc && (
           <button
-            onClick={() => handleUpload(client, file, setUploadedLoading, setUploadedFilename, setUploaded)}
+            onClick={() =>
+              handleUpload(
+                client,
+                file,
+                setUploadedLoading,
+                setUploadedFilename,
+                setUploaded
+              )
+            }
             className="bg-[#FFC700] flex hover:bg-[#FF6E00] w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
           >
-            {uploaded && (
-              <svg
-                className="w-6 h-6 text-white"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path d="M5 13l4 4L19 7" />
-              </svg>
-            )}
+            {uploaded && <CheckIcon />}
             {uploadedLoading && (
               <ClipLoader
                 className="mr-1"
@@ -101,25 +74,23 @@ const ToolBlock = () => {
         <div className="mt-8">
           <div className="flex flex-col items-center">
             {uploaded && !outputLoading && (
-              <button
-                onClick={() => handleStages(setOutputLoading, uploadedFilename, client, setOutput, output, setGenerated, setStage)}
-                className="flex bg-[#FFC700] hover:bg-[#FF6E00] w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
+              <Button 
+                onClick={() =>
+                  handleStages(
+                    setOutputLoading,
+                    uploadedFilename,
+                    client,
+                    setOutput,
+                    output,
+                    setGenerated,
+                    setStage
+                  )
+                }
               >
-                {generated && (
-                  <svg
-                    className="w-6 h-6 text-white"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path d="M5 13l4 4L19 7" />
-                  </svg>
-                )}
+                {generated && <CheckIcon />}
                 Generate Help
-              </button>
+  
+              </Button>
             )}
             <div className="w-full h-2 ">
               {outputLoading && (
@@ -166,12 +137,9 @@ const ToolBlock = () => {
               <p className="text-xl text-black mb-4">
                 Download the generated help as a word document.
               </p>
-              <button
-                onClick={() =>    handleDownloadDocument(client, output)}
-                className="flex bg-[#FFC700] hover:bg-[#FF6E00] w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
-              >
+              <Button onClick={() => handleDownloadDocument(client, output)}>
                 Download Help
-              </button>
+              </Button>
             </div>
           )}
         </div>
