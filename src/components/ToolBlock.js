@@ -102,7 +102,7 @@ const ToolBlock = () => {
           <div className="flex flex-col items-center">
             {uploaded && !outputLoading && (
               <button
-                onClick={() => handleStages(setOutputLoading, uploadedFilename, client, setOutput, output, setGenerated)}
+                onClick={() => handleStages(setOutputLoading, uploadedFilename, client, setOutput, output, setGenerated, setStage)}
                 className="flex bg-[#FFC700] hover:bg-[#FF6E00] w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
               >
                 {generated && (
