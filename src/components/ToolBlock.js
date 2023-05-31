@@ -42,13 +42,6 @@ const ToolBlock = () => {
   const [uploadedFilename, setUploadedFilename] = useState(null);
   const sampleData = [];
 
-  // ! HANDLE STAGES
-
-
-  const handleDownloadClick = () => {
-    handleDownloadDocument(client, output);
-  };  
-
   return (
     <section className="container mx-auto px-4 py-4">
       <div className="bg-[#F0FFE0] flex flex-col space-y-4 items-center">
@@ -174,7 +167,7 @@ const ToolBlock = () => {
                 Download the generated help as a word document.
               </p>
               <button
-                onClick={() => handleDownloadClick}
+                onClick={() =>    handleDownloadDocument(client, output)}
                 className="flex bg-[#FFC700] hover:bg-[#FF6E00] w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300"
               >
                 Download Help
