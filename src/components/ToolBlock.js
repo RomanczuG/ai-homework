@@ -90,6 +90,9 @@ const ToolBlock = () => {
 
         {uploaded && !outputLoading && (
           <>
+          <p className="text-xl text-black mb-4">
+                  Choose what you want to do with the uploaded file.
+                </p>
             <ActionButtons
               handleStudyNotes={() => setActionType("study-notes")}
               handleChatBot={() => setActionType("chat-bot")}
@@ -131,7 +134,7 @@ const ToolBlock = () => {
                     stageNumber={4}
                     currentStage={stage}
                     stageName="Generating Help"
-                    isLoading={isLoading && stage === 4}
+                    isLoading={stage === 4}
                   />
                 </div>
               </>
