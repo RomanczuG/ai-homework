@@ -49,7 +49,7 @@ const ToolBlock = () => {
   return (
     <section className="container mx-auto px-4 py-4">
       <div className="bg-[#F0FFE0] flex flex-col space-y-4 items-center">
-        <h2 className="text-xl text-black mb-4">Step 1: Choose your PDF file</h2>
+        <h2 className="text-xl text-black ">Step 1: Choose your PDF file</h2>
         <label className="bg-white flex justify-center text-black py-2 px-4 border border-gray-200 rounded-md cursor-pointer hover:bg-gray-100 transition duration-300">
           {file ? file.name : "Choose File"}
           <input
