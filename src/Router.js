@@ -10,9 +10,9 @@ import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { TermsOfService } from "./pages/TermsOfService";
 import { Footer } from './components/Footer';
 import { LoginPage } from './pages/LoginPage'
-// import { AuthenticatedPage } from './pages/AuthenticatedPage';
+import { AuthenticatedPage } from './pages/AuthenticatedPage';
 import { RegisterPage } from './pages/RegisterPage';
-// import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute from './components/PrivateRoute';
 import { ChatPage } from './pages/ChatPage';
 
 const Router = () => (
