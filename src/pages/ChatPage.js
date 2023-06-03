@@ -34,7 +34,7 @@ const { uploadedFilename } = location.state;
           >
             {chat.name}
           </button>
-          {chat}
+          
         ))}
       </div>
       
