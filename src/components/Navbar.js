@@ -33,7 +33,7 @@ export const Navbar = () => {
 
 
   return (
-    <div className="bg-[#F0FFE0] sticky top-0 z-10 px-20">
+    <div className="bg-[#F0FFE0] sticky top-0 z-10 px-20 h-[75px]">
       <nav className="mx-auto px-6 md:px-20 py-6">
         <div className="flex items-center justify-between md:justify-between">
           <div className= {`${isMenuOpen ? "hidden" : "block"} text-[#252D62] font-semibold text-lg`}>

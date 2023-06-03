@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
-
+import { useNavigate } from "react-router-dom";
 import {
   handleDownloadDocument,
   handleFileChange,
@@ -14,6 +14,7 @@ import {
 } from "../utils/ToolUtils";
 
 const ToolBlock = () => {
+  const navigate = useNavigate(); 
   const client = axios.create({
     // baseURL: "http://127.0.0.1:5000",
     baseURL: "https://studyboost.uc.r.appspot.com",
@@ -42,7 +43,7 @@ const ToolBlock = () => {
         setStage
       );
     } else if (actionType === "chat-bot") {
-      console.log("chat bot");
+      navigate("/chat", { state: { uploadedFilename } });// replace "/chat" with the path to your chat page
     }
   };
 
@@ -61,38 +62,42 @@ const ToolBlock = () => {
             className="hidden"
           />
         </label>
-        
+
         {pdfSrc && (
           <>
-          <h2 className="text-xl text-black mb-4">Step 2: Upload your PDF file</h2>
-          <Button
-            onClick={() =>
-              handleUpload(
-                client,
-                file,
-                setUploadedLoading,
-                setUploadedFilename,
-                setUploaded
-              )
-            }
-          >
-            {uploaded && <CheckIcon />}
-            {uploadedLoading && (
-              <ClipLoader
-                className="mr-1"
-                size={25}
-                color={"#ffffff"}
-                loading={true}
-              />
-            )}
-            Upload PDF File
-          </Button>
+            <h2 className="text-xl text-black mb-4">
+              Step 2: Upload your PDF file
+            </h2>
+            <Button
+              onClick={() =>
+                handleUpload(
+                  client,
+                  file,
+                  setUploadedLoading,
+                  setUploadedFilename,
+                  setUploaded
+                )
+              }
+            >
+              {uploaded && <CheckIcon />}
+              {uploadedLoading && (
+                <ClipLoader
+                  className="mr-1"
+                  size={25}
+                  color={"#ffffff"}
+                  loading={true}
+                />
+              )}
+              Upload PDF File
+            </Button>
           </>
         )}
-        
+
         {uploaded && !outputLoading && (
           <>
-          <h2 className="text-xl text-black mb-4">Step 3: Choose an action</h2>
+            <h2 className="text-xl text-black mb-4">
+              Step 3: Choose an action
+            </h2>
 
             <ActionButtons
               handleStudyNotes={() => setActionType("study-notes")}
@@ -105,11 +110,11 @@ const ToolBlock = () => {
           </>
         )}
         <div className="mt-8">
-          
           {outputLoading && (
-
             <>
-            <h2 className="text-xl text-black mb-4">Step 4: Generating analysis...</h2>
+              <h2 className="text-xl text-black mb-4">
+                Step 4: Generating analysis...
+              </h2>
               <p className="text-md text-black mb-4">
                 It can take up to 20/30 seconds per question to generate an
                 analysis. Get a coffee or tea and relax &#x2615;
@@ -131,23 +136,24 @@ const ToolBlock = () => {
                   stageNumber={3}
                   currentStage={stage}
                   stageName="Extracting Questions"
-                  />
-                  <Stage
-                    stageNumber={4}
-                    currentStage={stage}
-                    stageName="Generating Help"
-                    isLoading={stage === 4}
-                  />
-                </div>
-              </>
-            )}
-          </div>
-          <div className="mt-8">
-            
-            {generated && (
-              <>
-              <h2 className="text-xl text-black mb-4">Step 5: Download the result</h2>
-              
+                />
+                <Stage
+                  stageNumber={4}
+                  currentStage={stage}
+                  stageName="Generating Help"
+                  isLoading={stage === 4}
+                />
+              </div>
+            </>
+          )}
+        </div>
+        <div className="mt-8">
+          {generated && (
+            <>
+              <h2 className="text-xl text-black mb-4">
+                Step 5: Download the result
+              </h2>
+
               <div className="flex flex-col items-center">
                 <p className="text-md text-black mb-4">
                   Download the generated help as a word document.
@@ -156,13 +162,12 @@ const ToolBlock = () => {
                   Download Help
                 </Button>
               </div>
-              </>
-            )}
-          </div>
+            </>
+          )}
         </div>
-      </section>
-    );
-  };
-  
+      </div>
+    </section>
+  );
+};
 
 export default ToolBlock;

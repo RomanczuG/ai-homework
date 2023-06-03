@@ -250,13 +250,13 @@ export const ActionButtons = ({ handleStudyNotes, handleChatBot }) => {
         onClick={() => selectAction('notes')}
         className={`flex-1 py-2 px-4 text-center cursor-pointer transition-colors duration-300 ease-in-out ${selectedAction === 'notes' ? 'bg-[#FF6E00] text-white' : 'bg-gray-100 text-gray-700'}`}
       >
-        Generate Study Notes
+        Generate Study Notes from the text
       </button>
       <button
         onClick={() => selectAction('chat')}
         className={`flex-1 py-2 px-4 text-center cursor-pointer transition-colors duration-300 ease-in-out ${selectedAction === 'chat' ? 'bg-[#FF6E00] text-white' : 'bg-gray-100 text-gray-700'}`}
       >
-        Talk with Chat Bot
+        Talk with Chat Bot about the text
       </button>
     </div>
   );
