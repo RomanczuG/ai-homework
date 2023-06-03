@@ -29,7 +29,7 @@ const Router = () => (
       <Route path="/terms-of-service" element={<TermsOfService />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
-      {/* <PrivateRoute path="/authenticated" element={<AuthenticatedPage />} /> */}
+      <PrivateRoute path="/authenticated" element={<AuthenticatedPage />} />
       <Route path="/chat" element={<ChatPage  />} />
     </Routes>
     <Footer />
