@@ -1,24 +1,24 @@
-import React from 'react';
+import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import App from './App';
-import Tool from './pages/Tool';
-import ToolTesting from './pages/ToolTesting';
+import App from "./App";
+import Tool from "./pages/Tool";
+import ToolTesting from "./pages/ToolTesting";
 import { Navbar } from "./components/Navbar";
 import { FAQ } from "./pages/FAQ";
 import { HowItWorks } from "./pages/HowItWorks";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { TermsOfService } from "./pages/TermsOfService";
-import { Footer } from './components/Footer';
-import { LoginPage } from './pages/LoginPage'
-import { AuthenticatedPage } from './pages/AuthenticatedPage';
-import { RegisterPage } from './pages/RegisterPage';
-import PrivateRoute from './components/PrivateRoute';
-import { ChatPage } from './pages/ChatPage';
+import { Footer } from "./components/Footer";
+import { LoginPage } from "./pages/LoginPage";
+import { AuthenticatedPage } from "./pages/AuthenticatedPage";
+import { RegisterPage } from "./pages/RegisterPage";
+import { PrivateRoute } from "./components/PrivateRoute";
+import { ChatPage } from "./pages/ChatPage";
 
 const Router = () => (
   <BrowserRouter>
-  <Navbar />
-  <Routes>
+    <Navbar />
+    <Routes>
       <Route path="/" element={<App />} />
       <Route path="/tool" element={<Tool />} />
       <Route path="/tool-testing" element={<ToolTesting />} />
@@ -29,8 +29,8 @@ const Router = () => (
       <Route path="/terms-of-service" element={<TermsOfService />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
-      <PrivateRoute path="/authenticated" element={<AuthenticatedPage />} />
-      <Route path="/chat" element={<ChatPage  />} />
+      <Route path="/authenticated" element={<PrivateRoute><AuthenticatedPage /></PrivateRoute>} />
+      <Route path="/chat" element={<ChatPage />} />
     </Routes>
     <Footer />
   </BrowserRouter>
