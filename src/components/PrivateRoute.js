@@ -8,13 +8,13 @@ export const PrivateRoute = ({ children }) => {
   const location = useLocation();
 
   useEffect(() => {
-    const currentSession = supabase.auth.session;
+    const currentSession = supabase.auth.getSession();
 
     if(currentSession) {
       setSession(true);
     }
 
-    const { data: authListener } = supabase.auth.onAuthStateChange(
+    const authListener = supabase.auth.onAuthStateChange(
       async (event, session) => {
         setLoading(true);
         if (event === 'SIGNED_IN') {
@@ -30,7 +30,8 @@ export const PrivateRoute = ({ children }) => {
     return () => {
       authListener.unsubscribe();
     };
-  }, []);
+}, []);
+
 
   if (loading) {
     return null; // You can add a loading screen here
