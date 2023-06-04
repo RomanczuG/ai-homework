@@ -8,10 +8,9 @@ export const PrivateRoute = ({ children }) => {
   const location = useLocation();
 
   useEffect(() => {
-    setSession(supabase.auth.session());
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
+    setSession(supabase.auth.session);
+    supabase.auth.onAuthStateChange((_event, newSession) => {
+      setSession(newSession);
       setLoading(false);
     });
   }, []);
