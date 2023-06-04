@@ -4,15 +4,32 @@ import { supabase } from '../supabaseClient';
 
 export const PrivateRoute = ({ children }) => {
   const [loading, setLoading] = useState(true);
-  const [session, setSession] = useState(null);
+  const [session, setSession] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
-    setSession(supabase.auth.session);
-    supabase.auth.onAuthStateChange((_event, newSession) => {
-      setSession(newSession);
-      setLoading(false);
-    });
+    const currentSession = supabase.auth.session();
+
+    if(currentSession) {
+      setSession(true);
+    }
+
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        setLoading(true);
+        if (event === 'SIGNED_IN') {
+          setSession(true);
+        }
+        if (event === 'SIGNED_OUT') {
+          setSession(false);
+        }
+        setLoading(false);
+      }
+    );
+
+    return () => {
+      authListener.unsubscribe();
+    };
   }, []);
 
   if (loading) {
