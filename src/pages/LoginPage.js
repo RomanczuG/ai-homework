@@ -26,6 +26,11 @@ export const LoginPage = () => {
       console.log("user logged in");
       navigate('/');
     }
+    else{
+      console.log("user not logged in");
+      console.log(user);
+      console.log(error);
+    }
 
     setLoading(false);
   };
