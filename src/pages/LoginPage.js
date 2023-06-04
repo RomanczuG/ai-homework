@@ -14,12 +14,12 @@ export const LoginPage = () => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-
-    const { user, error } = await supabase.auth.signInWithPassword({ email:email, password:password });
-
-    if (error) {
-      setError(error.message);
-      console.log(error);
+  
+    const { data: user, error: signInError } = await supabase.auth.signInWithPassword({ email:email, password:password });
+  
+    if (signInError) {
+      setError(signInError.message);
+      console.log(signInError);
       console.log("error");
     } else if (user) {
       console.log(user);
@@ -29,9 +29,9 @@ export const LoginPage = () => {
     else{
       console.log("user not logged in");
       console.log(user);
-      console.log(error);
+      console.log(signInError);
     }
-
+  
     setLoading(false);
   };
 
