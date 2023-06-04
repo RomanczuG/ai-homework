@@ -8,7 +8,7 @@ export const PrivateRoute = ({ children }) => {
   const location = useLocation();
 
   useEffect(() => {
-    const currentSession = supabase.auth.session();
+    const currentSession = supabase.auth.session;
 
     if(currentSession) {
       setSession(true);
