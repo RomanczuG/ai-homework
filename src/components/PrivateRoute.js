@@ -1,14 +1,15 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { supabase } from '../supabaseClient';
+// import { useUser } from '@supabase/supabase-js'
 
 
 export const PrivateRoute = ({ children }) => {
   
-const { data: { user } } = supabase.auth.getUser()
+const session = supabase.auth.session();
 
   const location = useLocation();
 
-  return user ? children : <Navigate to="/login" state={{ from: location }} />;
+  return session ? children : <Navigate to="/login" state={{ from: location }} />;
 };
 
 
