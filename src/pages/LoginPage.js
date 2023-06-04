@@ -19,7 +19,11 @@ export const LoginPage = () => {
 
     if (error) {
       setError(error.message);
+      console.log(error);
+      console.log("error");
     } else if (user) {
+      console.log(user);
+      console.log("user logged in");
       navigate('/');
     }
 

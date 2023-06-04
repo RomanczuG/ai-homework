@@ -5,8 +5,9 @@ import { supabase } from '../supabaseClient';
 
 export const PrivateRoute = ({ children }) => {
   
-const { data, error } = supabase.auth.setSession()
-console.log(data, error);
+const { data, error } = supabase.auth.getSession();
+console.log(data);
+console.log(error);
 
   const location = useLocation();
 
