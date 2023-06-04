@@ -5,12 +5,12 @@ import { supabase } from '../supabaseClient';
 
 export const PrivateRoute = ({ children }) => {
   
-const session = supabase.auth.session();
-console.log(session);
+const { data, error } = supabase.auth.setSession()
+console.log(data, error);
 
   const location = useLocation();
 
-  return session ? children : <Navigate to="/login" state={{ from: location }} />;
+  return data ? children : <Navigate to="/login" state={{ from: location }} />;
 };
 
 
