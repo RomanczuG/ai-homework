@@ -1,18 +1,24 @@
-import { Navigate, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
-// import { useUser } from '@supabase/supabase-js'
-
 
 export const PrivateRoute = ({ children }) => {
-  
-const { data, error } = supabase.auth.getSession();
-console.log(data);
-console.log(error);
-
+  const [loading, setLoading] = useState(true);
+  const [session, setSession] = useState(null);
   const location = useLocation();
 
-  return data ? children : <Navigate to="/login" state={{ from: location }} />;
+  useEffect(() => {
+    setSession(supabase.auth.session());
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading) {
+    return null; // You can add a loading screen here
+  }
+
+  return session ? children : <Navigate to="/login" state={{ from: location }} />;
 };
-
-
-
