@@ -24,7 +24,7 @@ export const LoginPage = () => {
     } else if (user) {
       console.log(user);
       console.log("user logged in");
-      navigate('/');
+      navigate('/dashboard');
     }
     else{
       console.log("user not logged in");

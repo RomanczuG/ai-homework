@@ -5,21 +5,21 @@ import { useNavigate } from 'react-router-dom';
 export const AuthenticatedPage = () => {
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    const fetchProtectedData = async () => {
-      const { data, error } = await supabase
-        .from('your-protected-flask-route')
-        .select('*');
+  // useEffect(() => {
+  //   const fetchProtectedData = async () => {
+  //     const { data, error } = await supabase
+  //       .from('your-protected-flask-route')
+  //       .select('*');
 
-      if (error) {
-        console.error('Error fetching protected data:', error);
-      } else {
-        setMessage(data);
-      }
-    };
+  //     if (error) {
+  //       console.error('Error fetching protected data:', error);
+  //     } else {
+  //       setMessage(data);
+  //     }
+  //   };
 
-    fetchProtectedData();
-  }, []);
+  //   fetchProtectedData();
+  // }, []);
   const [error, setError] = useState(null)
   // naviage to login page if not logged in
   const navigate = useNavigate()

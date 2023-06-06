@@ -43,18 +43,5 @@ if (error) {
   // return <><div>Session data: {JSON.stringify(data)}</div> <button onClick={handleLogout}> logout</button> </>
   return <><Outlet/>  </>
 }
-// return (
-//     auth.token ?  : <Navigate to='/login'/>
-//   )
+
 }
-
-
-
-// function PrivateComponent() {
-
-
-  
-
-  
-  
-// }

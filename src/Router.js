@@ -15,6 +15,7 @@ import { RegisterPage } from "./pages/RegisterPage";
 import { PrivateRoutes } from "./components/PrivateRoutes";
 // import { AuthProvider } from "./components/PrivateRoute";
 import { ChatPage } from "./pages/ChatPage";
+import { Dashboard } from "./pages/DashboardPage";
 
 const Router = () => (
   <BrowserRouter>
@@ -32,6 +33,7 @@ const Router = () => (
       <Route path="/register" element={<RegisterPage />} />
       <Route element={<PrivateRoutes />}>
         <Route path="/auth" element={<AuthenticatedPage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Route>
       <Route path="/chat" element={<ChatPage />} />
     </Routes>

@@ -84,10 +84,10 @@ export const Navbar = () => {
               </li>
               <li>
               <Link
-                to="/tool"
+                to="/dashboard"
                 className={`text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4 py-2 border text-md border-[#FFC700] rounded-md transition-all duration-200`}
               >
-                Start Using the Tool
+                Dashboard
               </Link>
             </li>
             </ul>
