@@ -12,7 +12,8 @@ import { Footer } from "./components/Footer";
 import { LoginPage } from "./pages/LoginPage";
 import { AuthenticatedPage } from "./pages/AuthenticatedPage";
 import { RegisterPage } from "./pages/RegisterPage";
-import { PrivateRoute } from "./components/PrivateRoute";
+import { PrivateRoutes } from "./components/PrivateRoutes";
+// import { AuthProvider } from "./components/PrivateRoute";
 import { ChatPage } from "./pages/ChatPage";
 
 const Router = () => (
@@ -29,8 +30,9 @@ const Router = () => (
       <Route path="/terms-of-service" element={<TermsOfService />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
-      {/* <Route path="/authenticated" element={<PrivateRoute></PrivateRoute>} /> */}
-      <Route path="/authenticated" element={<PrivateRoute><AuthenticatedPage /></PrivateRoute>} />
+      <Route element={<PrivateRoutes />}>
+        <Route path="/auth" element={<AuthenticatedPage />} />
+      </Route>
       <Route path="/chat" element={<ChatPage />} />
     </Routes>
     <Footer />
