@@ -31,9 +31,15 @@ export const RegisterPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-4xl font-bold mb-8">Create your account</h1>
-      <p className="text-lg mb-8">Join our amazing community</p>
+    <section className="flex flex-col items-center justify-center min-h-screen bg-[#F0FFE0] px-6 md:px-20 py-16">
+      <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-8">
+        <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
+          Create Your Account
+        </span>
+      </h1>
+      <p className="text-lg md:text-xl xl:text-2xl mb-8">
+        Join our amazing community
+      </p>
       <form onSubmit={handleRegister} className="w-full max-w-md">
         <input
           type="email"
@@ -55,13 +61,13 @@ export const RegisterPage = () => {
           <button
             type="submit"
             disabled={loading}
-            className="inline-flex items-center px-6 py-3 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+            className="py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
           >
-            {loading ? <ClipLoader size={20} color={'white'} /> : 'Register'}
+            {loading ? <ClipLoader size={20} color={'#252D62'} /> : 'Register'}
           </button>
         </div>
       </form>
       {error && <p className="mt-4 text-red-500">{error}</p>}
-    </div>
+    </section>
   );
 };
