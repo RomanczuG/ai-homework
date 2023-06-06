@@ -6,6 +6,7 @@ export const PrivateRoutes = () => {
   // let auth = {'token':true}
   const [data, setData] = useState(null)
   const [error, setError] = useState(null)
+
   useEffect(() => {
     async function fetchData() {
       const { data, error } = await supabase.auth.getSession()
@@ -19,10 +20,10 @@ export const PrivateRoutes = () => {
   }, [])
 if (error) {
   return <div>Error: {error.message}</div>
-} else if (!data) {
-  return <div>Loading...</div>
+} else if (!data["session"]) {
+  return <Navigate to='/login'/>
 } else {
-  return <div>Session data: {JSON.stringify(data)}</div>
+  return <div>Session data: {JSON.stringify(data["session"])}</div>
 }
 // return (
 //     auth.token ? <Outlet/> : <Navigate to='/login'/>
