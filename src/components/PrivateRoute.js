@@ -1,26 +1,16 @@
-import { Route, Redirect } from 'react-router-dom';
+import { Route, useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient'; // import your supabase client
 
-export const PrivateRoute = ({ component: Component, ...rest }) => {
-  const user = supabase.auth.getUser();
+export const PrivateRoute = (props) => {
+  const user = supabase.auth.user();
+  const navigate = useNavigate();
 
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        user ? (
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: props.location }
-            }}
-          />
-        )
-      }
-    />
-  );
+  if (!user) {
+    navigate("/login");
+    return null;
+  }
+
+  return <Route {...props} />;
 };
 
 // export default PrivateRoute;
