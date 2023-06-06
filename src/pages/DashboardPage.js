@@ -82,9 +82,9 @@ export const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center px-6 sm:px-8 lg:px-10">
+    <div className="py-36 bg-gray-100 flex flex-col items-center justify-center px-6 sm:px-8 lg:px-10">
       <h1 className="text-5xl font-bold mb-10 text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700] ">
-        Welcome to the center of your 
+        Welcome to the center of your {" "}
         <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
         AI study tool!
         </span>
@@ -107,7 +107,7 @@ export const Dashboard = () => {
             Create Class
           </button>
         </div>
-  
+        <div className="grid gap-4 grid-cols-3">
         {classes.map((item, index) => (
   <div
     key={index}
@@ -116,7 +116,7 @@ export const Dashboard = () => {
     <h2 className="text-3xl font-bold mb-3 text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700] ">
       {item.name}
     </h2>
-    <div className="space-y-3">
+    <div className="space-y-3 ">
       {item.files && Array.isArray(item.files) && item.files.length > 0 ? (
         item.files.map((file, index) => (
           <div key={index} className="flex items-center space-x-3 ">
@@ -132,6 +132,7 @@ export const Dashboard = () => {
     </div>
   </div>
 ))}
+</div>
 
   
         <div className="p-5 bg-white rounded-lg shadow-lg ">
