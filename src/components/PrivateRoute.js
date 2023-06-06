@@ -1,7 +1,7 @@
 import { Route, Redirect } from 'react-router-dom';
 import { supabase } from '../supabaseClient'; // import your supabase client
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+export const PrivateRoute = ({ component: Component, ...rest }) => {
   const user = supabase.auth.getUser();
 
   return (
@@ -23,4 +23,4 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   );
 };
 
-export default PrivateRoute;
+// export default PrivateRoute;
