@@ -39,13 +39,13 @@ export const Dashboard = () => {
         .from("classes")
         .select("*, files(*)") // This joins the classes with their associated files
         .eq("user_id", userID);
-  
-      if (error) {
-        console.error("Error fetching classes:", error);
-      } else {
-        setClasses(classes);
-        setSelectedClass(classes[0]);
-      }
+
+        if (error) {
+            console.error("Error fetching classes:", error);
+          } else {
+            setClasses(classes);
+            setSelectedClass(classes[0].id); // set selectedClass to be the id of the first class
+          }
     }
   };
 
@@ -66,12 +66,12 @@ export const Dashboard = () => {
   const handleFileUpload = async () => {
     setUploadedLoading(true);
     const fileName = file.name;
-    const classId = selectedClass.id;
-
+    const classId = selectedClass; // selectedClass is already an id
+  
     const { error } = await supabase
       .from("files")
       .insert([{ file_name: fileName, class_id: classId }]);
-
+  
     if (error) {
       console.error("Error inserting record:", error);
     } else {
@@ -82,15 +82,15 @@ export const Dashboard = () => {
   };
 
   return (
-    <div className="py-36 bg-gray-100 flex flex-col items-center justify-center px-6 sm:px-8 lg:px-10">
+    <div className="flex min-h-screen bg-gray-100 flex flex-col items-center justify-center px-6 sm:px-8 lg:px-10">
       <h1 className="text-5xl font-bold mb-10 text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700] ">
-        Welcome to the center of your {" "}
+        Welcome to the center of your
         <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
-        AI study tool!
+          {" "}
+          AI study tool!
         </span>
       </h1>
-      
-  
+
       <div className="flex flex-col w-full space-y-6">
         <div className="flex justify-between items-center">
           <input
@@ -107,51 +107,55 @@ export const Dashboard = () => {
             Create Class
           </button>
         </div>
+        <p className="text-gray-500">
+        Pick a file to chat or create study notes.
+        </p>
         <div className="grid gap-4 grid-cols-3">
-        {classes.map((item, index) => (
-  <div
-    key={index}
-    className="p-5 bg-white rounded-lg shadow-lg "
-  >
-    <h2 className="text-3xl font-bold mb-3 text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700] ">
-      {item.name}
-    </h2>
-    <div className="space-y-3 ">
-      {item.files && Array.isArray(item.files) && item.files.length > 0 ? (
-        item.files.map((file, index) => (
-          <div key={index} className="flex items-center space-x-3 ">
-            <div className="w-2 h-2 rounded-full bg-[#FFC700] mr-4"></div>
-            <a href={file.file_url} className="text-blue-500 underline hover:text-blue-700">
-              {file.file_name}
-            </a>
-          </div>
-        ))
-      ) : (
-        <p>No files uploaded yet</p>
-      )}
-    </div>
-  </div>
-))}
-</div>
+          {classes.map((item, index) => (
+            <div key={index} className="p-5 bg-white rounded-lg shadow-lg ">
+              <h2 className="text-3xl font-bold mb-3 text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700] ">
+                {item.name}
+              </h2>
+              <div className="space-y-3 ">
+                {item.files &&
+                Array.isArray(item.files) &&
+                item.files.length > 0 ? (
+                  item.files.map((file, index) => (
+                    <div key={index} className="flex items-center space-x-3 ">
+                      <div className="w-2 h-2 rounded-full bg-[#FFC700] mr-4"></div>
+                      <a
+                        href={file.file_url}
+                        className="text-blue-500 underline hover:text-blue-700"
+                      >
+                        {file.file_name}
+                      </a>
+                    </div>
+                  ))
+                ) : (
+                  <p>No files uploaded yet</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
 
-  
         <div className="p-5 bg-white rounded-lg shadow-lg ">
-            {/* Choose a call */}
-            <label className="block text-sm font-medium text-gray-700">
-                Upload your homework or textbook PDF file and pick a class to upload it to.
-            </label>
+          {/* Choose a call */}
+          <label className="block text-sm font-medium text-gray-700">
+            Choose a class and upload your homework or textbook PDF file.
+          </label>
           <select
-            value={selectedClass}
-            onChange={(e) => setSelectedClass(e.target.value)}
-            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md mb-3 p-3"
-          >
-            {classes.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name}
-              </option>
-            ))}
-          </select>
-          
+  value={selectedClass}
+  onChange={(e) => setSelectedClass(e.target.value)}
+  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md mb-3 p-3"
+>
+  {classes.map((c) => (
+    <option key={c.id} value={c.id}>
+      {c.name}
+    </option>
+  ))}
+</select>
+
           <label className="bg-white flex justify-center text-black py-2 px-4 border border-gray-200 rounded-md cursor-pointer hover:bg-gray-100 transition duration-300">
             {file ? file.name : "Choose File"}
             <input
@@ -164,25 +168,23 @@ export const Dashboard = () => {
           {pdfSrc && (
             <>
               <Button
-            onClick={handleFileUpload}
-            className="mt-4 py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
-          >
-            {uploadedLoading && (
-              <ClipLoader
-                className="mr-1"
-                size={25}
-                color={"#ffffff"}
-                loading={true}
-              />
-            )}
-            Upload File
-          </Button>
-        </>
-      )}
+                onClick={handleFileUpload}
+                className="mt-4 py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
+              >
+                {uploadedLoading && (
+                  <ClipLoader
+                    className="mr-1"
+                    size={25}
+                    color={"#ffffff"}
+                    loading={true}
+                  />
+                )}
+                Upload File
+              </Button>
+            </>
+          )}
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
-    );
-    };
-
+  );
+};
