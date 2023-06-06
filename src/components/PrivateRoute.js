@@ -1,41 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import { supabase } from '../supabaseClient';
+import { Route, Redirect } from 'react-router-dom';
+import { supabase } from '../supabaseClient'; // import your supabase client
 
-export const PrivateRoute = ({ children }) => {
-  const [loading, setLoading] = useState(true);
-  const [session, setSession] = useState(false);
-  const location = useLocation();
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  const user = supabase.auth.getUser();
 
-  useEffect(() => {
-    const currentSession = supabase.auth.getSession();
-
-    if(currentSession) {
-      setSession(true);
-    }
-
-    const authListener = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setLoading(true);
-        if (event === 'SIGNED_IN') {
-          setSession(true);
-        }
-        if (event === 'SIGNED_OUT') {
-          setSession(false);
-        }
-        setLoading(false);
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        user ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: props.location }
+            }}
+          />
+        )
       }
-    );
-
-    return () => {
-      authListener.unsubscribe();
-    };
-}, []);
-
-
-  if (loading) {
-    return null; // You can add a loading screen here
-  }
-
-  return session ? children : <Navigate to="/login" state={{ from: location }} />;
+    />
+  );
 };
+
+export default PrivateRoute;
