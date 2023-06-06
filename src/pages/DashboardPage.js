@@ -82,10 +82,14 @@ export const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center px-2 sm:px-2 lg:px-2">
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center px-6 sm:px-8 lg:px-10">
       <h1 className="text-5xl font-bold mb-10 text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700] ">
-        Welcome to the center of your AI study tool!
+        Welcome to the center of your 
+        <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
+        AI study tool!
+        </span>
       </h1>
+      
   
       <div className="flex flex-col w-full space-y-6">
         <div className="flex justify-between items-center">
