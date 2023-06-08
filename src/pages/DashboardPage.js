@@ -62,7 +62,7 @@ export const Dashboard = () => {
       fetchClassesWithFiles();
     }
   };
-  const handleFileUpload = async () => {
+  const handleFileUploadDashboard = async () => {
 
     if (!file) {
       console.error("No file selected");
@@ -183,7 +183,7 @@ export const Dashboard = () => {
             {pdfSrc && (
               <>
                 <Button
-                  onClick={handleFileUpload}
+                  onClick={handleFileUploadDashboard}
                   className="mt-4 py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
                 >
                   {uploadedLoading && (
