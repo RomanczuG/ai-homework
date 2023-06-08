@@ -177,7 +177,7 @@ export const Dashboard = () => {
                         </button>
                         {loading[file.file_id] ? (
                           <CircularProgress /> // Replace with your spinner
-                        ) : generated[file.file_id] ? (
+                        ) : file.study_notes_created ? (
                           <button
                             // href={/* link to download the study notes */}
                             className="px-2 py-1 ml-2 rounded-md text-white bg-green-500 hover:bg-green-600"
