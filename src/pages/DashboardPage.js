@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
-import { Button, handleUpload, Modal } from "../utils/ToolUtils";
+import { Button, hashFilename, Modal } from "../utils/ToolUtils";
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import { FaPlusCircle, FaFilePdf } from "react-icons/fa";
@@ -11,9 +11,7 @@ export const Dashboard = () => {
   const [userID, setUserID] = useState(null);
   const [file, setFile] = useState("");
   const [pdfSrc, setPdfSrc] = useState("");
-  const [uploaded, setUploaded] = useState(false);
   const [uploadedLoading, setUploadedLoading] = useState(false);
-  const [uploadedFilename, setUploadedFilename] = useState(null);
   const [isOpenClass, setIsOpenClass] = useState(false);
   const [isOpenFile, setIsOpenFile] = useState(false);
   const client = axios.create({
@@ -66,23 +64,57 @@ export const Dashboard = () => {
   };
   const handleFileUpload = async () => {
 
+    if (!file) {
+      console.error("No file selected");
+      alert("Please select a file to upload");
+      return;
+    }
+    setUploadedLoading(true);
     const fileName = file.name;
     const classId = selectedClass; // selectedClass is already an id
-    const hashedFilename =  handleUpload(client, file, setUploadedLoading, setUploadedFilename, setUploaded);
-    setUploadedLoading(true);
-    console.log("Hashed filename" + uploadedFilename)
+    const formData = new FormData();
+    const hashedFilename = hashFilename(file.name);
+    const newFile = new File([file], hashedFilename, { type: file.type });
+    formData.append("file", newFile);
+    console.log("Form data:", formData);
+    console.log("Hashed filename" + hashFilename)
     console.log("File name" + fileName)
     console.log("Class id" + classId)
+    const fileSize = file.size;
     const { error } = await supabase
       .from("files")
-      .insert([{ file_name: fileName, class_id: classId, hashed_file_name: hashedFilename }]);
+      .insert([{ file_name: fileName, class_id: classId, hashed_file_name: hashFilename }]);
 
     if (error) {
       console.error("Error inserting record:", error);
     } else {
-      console.log("file uploaded");
+      console.log("File uploaded to supabase");
       fetchClassesWithFiles();
     }
+
+    try {
+      const response = await client.post("/upload", formData);
+      console.log("File upload response:", response);
+  
+      if (response.status === 200) {
+        window.sa_event("PDF successfull upload", {
+          filename: file.name,
+          fileSize,
+        });
+        console.log("File uploaded to flask server ");// Store the filename in the state
+        
+      } else {
+        alert("File upload failed");
+        console.error(
+          "File upload failed. Check internet connection and try again."
+        );
+      }
+    } catch (error) {
+      alert("File upload failed. Check internet connection and try again.");
+      window.sa_event("PDF failed upload", { error: error.message });
+      console.error("Error during file upload:", error);
+    }
+
     setUploadedLoading(false);
   };
 

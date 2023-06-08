@@ -107,7 +107,6 @@ export const handleUpload = async (
     console.error("Error during file upload:", error);
   }
   setUploadedLoading(false);
-  return hashedFilename;
 };
 
 // ! GENERATE HELP
