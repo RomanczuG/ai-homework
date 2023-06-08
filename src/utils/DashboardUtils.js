@@ -1,11 +1,26 @@
 import { hashFilename } from "./ToolUtils";
 import { supabase } from "../supabaseClient";
 import axios from "axios";
-
+import { useNavigate } from 'react-router-dom';
 const client = axios.create({
   // baseURL: "http://127.0.0.1:5000",
   baseURL: "https://studyboost.uc.r.appspot.com",
 });
+// const navigate = useNavigate()
+export   const handleLogout = async () => {
+
+  const { error } = await supabase.auth.signOut()
+  if (error) {
+    alert(error)
+  }
+  else
+  {
+
+  }
+
+    
+}
+
 export const Modal = ({ children, isOpen, setIsOpen }) => {
   return (
     <div

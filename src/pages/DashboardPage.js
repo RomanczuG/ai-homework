@@ -5,6 +5,7 @@ import {
   fetchClassesWithFiles,
   handleNewClass,
   handleFileUploadDashboard,
+  handleLogout
 } from "../utils/DashboardUtils";
 import { ClipLoader } from "react-spinners";
 import { FaPlusCircle, FaFilePdf } from "react-icons/fa";
@@ -202,6 +203,14 @@ export const Dashboard = () => {
           </div>
         </div>
       </div>
+      {/* Log out button */}
+      <button
+      onClick={() => handleLogout()}
+      className="mt-4 py-2 w-40 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200">
+        Log Out
+      </button>
+
+
     </div>
   );
 };
