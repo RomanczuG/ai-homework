@@ -77,13 +77,13 @@ export const Dashboard = () => {
     const newFile = new File([file], hashedFilename, { type: file.type });
     formData.append("file", newFile);
     console.log("Form data:", formData);
-    console.log("Hashed filename" + hashFilename)
+    console.log("Hashed filename" + hashedFilename)
     console.log("File name" + fileName)
     console.log("Class id" + classId)
     const fileSize = file.size;
     const { error } = await supabase
       .from("files")
-      .insert([{ file_name: fileName, class_id: classId, hashed_file_name: hashFilename }]);
+      .insert([{ file_name: fileName, class_id: classId, hashed_file_name: hashedFilename }]);
 
     if (error) {
       console.error("Error inserting record:", error);
