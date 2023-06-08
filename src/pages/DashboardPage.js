@@ -1,49 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { supabase } from "../supabaseClient";
 import { Button } from "../utils/ToolUtils";
-import { Modal, handleNewClass, handleFileUploadDashboard } from "../utils/DashboardUtils";
+import {
+  Modal,
+  fetchClassesWithFiles,
+  handleNewClass,
+  handleFileUploadDashboard,
+} from "../utils/DashboardUtils";
 import { ClipLoader } from "react-spinners";
 import { FaPlusCircle, FaFilePdf } from "react-icons/fa";
 export const Dashboard = () => {
   const [classes, setClasses] = useState([]);
   const [selectedClass, setSelectedClass] = useState("");
   const [newClass, setNewClass] = useState("");
-  const [userID, setUserID] = useState(null);
   const [file, setFile] = useState("");
   const [pdfSrc, setPdfSrc] = useState("");
   const [uploadedLoading, setUploadedLoading] = useState(false);
   const [isOpenClass, setIsOpenClass] = useState(false);
   const [isOpenFile, setIsOpenFile] = useState(false);
- 
+
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
     setPdfSrc(URL.createObjectURL(e.target.files[0]));
   };
 
   useEffect(() => {
-    fetchClassesWithFiles();
+    fetchClassesWithFiles(setClasses, setSelectedClass);
   }, []);
-
-  const fetchClassesWithFiles = async (setUserID, setClasses, setSelectedClass) => {
-    const { data, errorUser } = await supabase.auth.getSession();
-    if (errorUser) {
-      console.error("Error getting user session:", errorUser);
-    } else {
-      const userID = data["session"]["user"]["id"];
-      setUserID(userID);
-      const { data: classes, error } = await supabase
-        .from("classes")
-        .select("*, files(*)") // This joins the classes with their associated files
-        .eq("user_id", userID);
-
-      if (error) {
-        console.error("Error fetching classes:", error);
-      } else {
-        setClasses(classes);
-        setSelectedClass(classes[0].id); // set selectedClass to be the id of the first class
-      }
-    }
-  };
 
   return (
     <div className="flex min-h-screen bg-gray-100 flex flex-col items-center justify-center py-8 px-6 sm:px-8 lg:px-10">
@@ -66,7 +48,14 @@ export const Dashboard = () => {
               className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3"
             />
             <button
-              onClick={handleNewClass(setNewClass, newClass, userID)}
+              onClick={() =>
+                handleNewClass(
+                  setNewClass,
+                  newClass,
+                  setClasses,
+                  setSelectedClass
+                )
+              }
               className="mt-4 py-2 w-40 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
             >
               Create Class
@@ -110,7 +99,15 @@ export const Dashboard = () => {
             {pdfSrc && (
               <>
                 <Button
-                  onClick={handleFileUploadDashboard(setUploadedLoading, file, selectedClass)}
+                  onClick={() =>
+                    handleFileUploadDashboard(
+                      setUploadedLoading,
+                      file,
+                      selectedClass,
+                      setClasses,
+                      setSelectedClass,
+                    )
+                  }
                   className="mt-4 py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
                 >
                   {uploadedLoading && (
