@@ -7,7 +7,7 @@ const client = axios.create({
   baseURL: "https://studyboost.uc.r.appspot.com",
 });
 
-export   const handleLogout = async () => {
+export   const handleLogout = async (navigate) => {
 
   const { error } = await supabase.auth.signOut()
   if (error) {
