@@ -6,11 +6,11 @@ import {
   handleNewClass,
   handleFileUploadDashboard,
   handleLogout,
-  handleGenerate
+  handleGenerate,
 } from "../utils/DashboardUtils";
 import { ClipLoader } from "react-spinners";
 import { FaPlusCircle, FaFilePdf } from "react-icons/fa";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 export const Dashboard = () => {
   const [classes, setClasses] = useState([]);
   const [selectedClass, setSelectedClass] = useState("");
@@ -20,7 +20,7 @@ export const Dashboard = () => {
   const [uploadedLoading, setUploadedLoading] = useState(false);
   const [isOpenClass, setIsOpenClass] = useState(false);
   const [isOpenFile, setIsOpenFile] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [loading, setLoading] = useState({});
   const [generated, setGenerated] = useState({});
   const handleFileChange = (e) => {
@@ -110,7 +110,7 @@ export const Dashboard = () => {
                       file,
                       selectedClass,
                       setClasses,
-                      setSelectedClass,
+                      setSelectedClass
                     )
                   }
                   className="mt-4 py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
@@ -176,22 +176,31 @@ export const Dashboard = () => {
                           Chat with Study Bot
                         </button>
                         {loading[file.file_id] ? (
-                  <CircularProgress /> // Replace with your spinner
-                ) : generated[file.file_id] ? (
-                  <button
-                    // href={/* link to download the study notes */}
-                    className="px-2 py-1 ml-2 rounded-md text-white bg-green-500 hover:bg-green-600"
-                  >
-                    Download Study Notes
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => handleGenerate(file.hashed_file_name, file.file_id)}
-                    className="px-2 py-1 ml-2 rounded-md text-white bg-green-500 hover:bg-green-600"
-                  >
-                    Generate Study Notes
-                  </button>
-                )}
+                          <CircularProgress /> // Replace with your spinner
+                        ) : generated[file.file_id] ? (
+                          <button
+                            // href={/* link to download the study notes */}
+                            className="px-2 py-1 ml-2 rounded-md text-white bg-green-500 hover:bg-green-600"
+                          >
+                            Download Study Notes
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() =>
+                              handleGenerate(
+                                file.hashed_file_name,
+                                file.file_id,
+                                setGenerated,
+                                setLoading
+                                
+
+                              )
+                            }
+                            className="px-2 py-1 ml-2 rounded-md text-white bg-green-500 hover:bg-green-600"
+                          >
+                            Generate Study Notes
+                          </button>
+                        )}
                       </div>
                     </div>
                   ))
@@ -220,12 +229,11 @@ export const Dashboard = () => {
       </div>
       {/* Log out button */}
       <button
-      onClick={() => handleLogout(navigate)}
-      className="mt-4 py-2 w-40 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200">
+        onClick={() => handleLogout(navigate)}
+        className="mt-4 py-2 w-40 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
+      >
         Log Out
       </button>
-
-
     </div>
   );
 };
