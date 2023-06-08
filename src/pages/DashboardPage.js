@@ -9,6 +9,7 @@ import {
 } from "../utils/DashboardUtils";
 import { ClipLoader } from "react-spinners";
 import { FaPlusCircle, FaFilePdf } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
 export const Dashboard = () => {
   const [classes, setClasses] = useState([]);
   const [selectedClass, setSelectedClass] = useState("");
@@ -18,7 +19,7 @@ export const Dashboard = () => {
   const [uploadedLoading, setUploadedLoading] = useState(false);
   const [isOpenClass, setIsOpenClass] = useState(false);
   const [isOpenFile, setIsOpenFile] = useState(false);
-
+  const navigate = useNavigate()
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
     setPdfSrc(URL.createObjectURL(e.target.files[0]));
@@ -205,7 +206,7 @@ export const Dashboard = () => {
       </div>
       {/* Log out button */}
       <button
-      onClick={() => handleLogout()}
+      onClick={() => handleLogout(navigate)}
       className="mt-4 py-2 w-40 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200">
         Log Out
       </button>
