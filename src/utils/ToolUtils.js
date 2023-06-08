@@ -261,3 +261,19 @@ export const ActionButtons = ({ handleStudyNotes, handleChatBot }) => {
     </div>
   );
 }
+
+
+export const Modal = ({ children, isOpen, setIsOpen }) => {
+  return (
+    <div 
+      className={`fixed z-50 inset-0 overflow-y-auto bg-gray-500 bg-opacity-75 ${isOpen ? '' : 'hidden'}`} 
+      onClick={() => setIsOpen(false)}
+    >
+      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+      onClick={(e) => e.stopPropagation()}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
-import { Button, handleUpload } from "../utils/ToolUtils";
+import { Button, handleUpload, Modal } from "../utils/ToolUtils";
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
+import { FaPlusCircle, FaFilePdf } from "react-icons/fa";
 export const Dashboard = () => {
   const [classes, setClasses] = useState([]);
   const [selectedClass, setSelectedClass] = useState("");
@@ -11,8 +12,10 @@ export const Dashboard = () => {
   const [file, setFile] = useState("");
   const [pdfSrc, setPdfSrc] = useState("");
   const [uploaded, setUploaded] = useState(false);
-
+  const [uploadedLoading, setUploadedLoading] = useState(false);
   const [uploadedFilename, setUploadedFilename] = useState(null);
+  const [isOpenClass, setIsOpenClass] = useState(false);
+  const [isOpenFile, setIsOpenFile] = useState(true);
   const client = axios.create({
     // baseURL: "http://127.0.0.1:5000",
     baseURL: "https://studyboost.uc.r.appspot.com",
@@ -21,8 +24,6 @@ export const Dashboard = () => {
     setFile(e.target.files[0]);
     setPdfSrc(URL.createObjectURL(e.target.files[0]));
   };
-
-  const [uploadedLoading, setUploadedLoading] = useState(false);
 
   useEffect(() => {
     fetchClassesWithFiles();
@@ -40,12 +41,12 @@ export const Dashboard = () => {
         .select("*, files(*)") // This joins the classes with their associated files
         .eq("user_id", userID);
 
-        if (error) {
-            console.error("Error fetching classes:", error);
-          } else {
-            setClasses(classes);
-            setSelectedClass(classes[0].id); // set selectedClass to be the id of the first class
-          }
+      if (error) {
+        console.error("Error fetching classes:", error);
+      } else {
+        setClasses(classes);
+        setSelectedClass(classes[0].id); // set selectedClass to be the id of the first class
+      }
     }
   };
 
@@ -64,14 +65,15 @@ export const Dashboard = () => {
     }
   };
   const handleFileUpload = async () => {
-    setUploadedLoading(true);
+
     const fileName = file.name;
     const classId = selectedClass; // selectedClass is already an id
-  
+    handleUpload(client, file, setUploadedLoading, setUploadedFilename, setUploaded);
+    setUploadedLoading(true);
     const { error } = await supabase
       .from("files")
-      .insert([{ file_name: fileName, class_id: classId }]);
-  
+      .insert([{ file_name: fileName, class_id: classId, hashed_file_name: uploadedFilename }]);
+
     if (error) {
       console.error("Error inserting record:", error);
     } else {
@@ -82,8 +84,89 @@ export const Dashboard = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100 flex flex-col items-center justify-center px-6 sm:px-8 lg:px-10">
-      <h1 className="text-5xl font-bold mb-10 text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700] ">
+    <div className="flex min-h-screen bg-gray-100 flex flex-col items-center justify-center py-8 px-6 sm:px-8 lg:px-10">
+      <Modal isOpen={isOpenClass} setIsOpen={setIsOpenClass}>
+        <div className="flex flex-col items-center justify-center">
+          <div className="bg-white rounded-lg shadow-lg p-5 text-center">
+            <div className="mb-4">
+              <h1 className="text-xl font-bold mb-2 text-black bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700] ">
+                Add a new class
+              </h1>
+              <p className="text-gray-500">
+                Enter the name of your class below.
+              </p>
+            </div>
+            <input
+              type="text"
+              value={newClass}
+              onChange={(e) => setNewClass(e.target.value)}
+              placeholder="New Class"
+              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3"
+            />
+            <button
+              onClick={handleNewClass}
+              className="mt-4 py-2 w-40 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
+            >
+              Create Class
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      <Modal isOpen={isOpenFile} setIsOpen={setIsOpenFile}>
+        <div className="flex flex-col items-center justify-center">
+          <div className="bg-white rounded-lg shadow-lg p-5 text-center">
+            <div className="mb-4">
+              <h1 className="text-xl font-bold mb-2 text-black bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700] ">
+                Upload a new file
+              </h1>
+              <p className="text-gray-500">
+                Choose a class and upload your homework or textbook PDF file.
+              </p>
+            </div>
+            <select
+              value={selectedClass}
+              onChange={(e) => setSelectedClass(e.target.value)}
+              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md mb-3 p-3"
+            >
+              {classes.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+
+            <label className="bg-white flex justify-center text-black py-2 px-4 border border-gray-200 rounded-md cursor-pointer hover:bg-gray-100 transition duration-300">
+              {file ? file.name : "Choose File"}
+              <input
+                type="file"
+                accept=".pdf"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+            </label>
+            {pdfSrc && (
+              <>
+                <Button
+                  onClick={handleFileUpload}
+                  className="mt-4 py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
+                >
+                  {uploadedLoading && (
+                    <ClipLoader
+                      className="mr-1"
+                      size={25}
+                      color={"#ffffff"}
+                      loading={true}
+                    />
+                  )}
+                  Upload File
+                </Button>
+              </>
+            )}
+          </div>
+        </div>
+      </Modal>
+      <h1 className="text-5xl font-bold mb-10 text-gray-900 bg-clip-text  ">
         Welcome to the center of your
         <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
           {" "}
@@ -92,97 +175,72 @@ export const Dashboard = () => {
       </h1>
 
       <div className="flex flex-col w-full space-y-6">
-        <div className="flex justify-between items-center">
-          <input
-            type="text"
-            value={newClass}
-            onChange={(e) => setNewClass(e.target.value)}
-            placeholder="New Class"
-            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3"
-          />
-          <button
-            onClick={handleNewClass}
-            className="ml-4 py-2 w-40 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
-          >
-            Create Class
-          </button>
-        </div>
-        <p className="text-gray-500">
-        Pick a file to chat or create study notes.
-        </p>
         <div className="grid gap-4 grid-cols-3">
           {classes.map((item, index) => (
-            <div key={index} className="p-5 bg-white rounded-lg shadow-lg ">
+            <div
+              key={index}
+              className="p-5 min-h-[25vh] bg-white rounded-lg shadow-lg "
+            >
               <h2 className="text-3xl font-bold mb-3 text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700] ">
                 {item.name}
               </h2>
-              <div className="space-y-3 ">
+              <div className="space-y-3">
                 {item.files &&
                 Array.isArray(item.files) &&
                 item.files.length > 0 ? (
                   item.files.map((file, index) => (
-                    <div key={index} className="flex items-center space-x-3 ">
-                      <div className="w-2 h-2 rounded-full bg-[#FFC700] mr-4"></div>
-                      <a
-                        href={file.file_url}
-                        className="text-blue-500 underline hover:text-blue-700"
-                      >
-                        {file.file_name}
-                      </a>
+                    <div
+                      key={index}
+                      className="group flex items-center space-x-3 p-2 bg-gray-50 rounded-lg relative hover:bg-gray-100"
+                    >
+                      <div className="mr-2">
+                        <FaFilePdf className="text-red-500" />
+                      </div>
+                      <div className="flex-grow">
+                        <a
+                          href={file.file_url}
+                          className="text-blue-500 hover:text-blue-700"
+                        >
+                          {file.file_name}
+                        </a>
+                      </div>
+                      <div className=" text-sm absolute right-0 mr-4 opacity-0 group-hover:opacity-100 transition duration-200">
+                        <button
+                          // onClick={() => startChat(file.file_id)}
+                          className="px-2 py-1 rounded-md text-white bg-blue-500 hover:bg-blue-600"
+                        >
+                          Chat with Study Bot
+                        </button>
+                        <button
+                          // onClick={() => createStudyNote(file.file_id)}
+                          className="px-2 py-1 ml-2 rounded-md text-white bg-green-500 hover:bg-green-600"
+                        >
+                          Download Study Notes
+                        </button>
+                      </div>
                     </div>
                   ))
                 ) : (
                   <p>No files uploaded yet</p>
                 )}
+                <div
+                  onClick={() => setIsOpenFile(true)}
+                  className="flex items-center space-x-3 p-2 bg-gray-50 rounded-lg"
+                >
+                  <FaPlusCircle className="text-md text-green-500 mr-2" />
+
+                  <p className="text-gray-500">Add a new file</p>
+                </div>
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="p-5 bg-white rounded-lg shadow-lg ">
-          {/* Choose a call */}
-          <label className="block text-sm font-medium text-gray-700">
-            Choose a class and upload your homework or textbook PDF file.
-          </label>
-          <select
-  value={selectedClass}
-  onChange={(e) => setSelectedClass(e.target.value)}
-  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md mb-3 p-3"
->
-  {classes.map((c) => (
-    <option key={c.id} value={c.id}>
-      {c.name}
-    </option>
-  ))}
-</select>
-
-          <label className="bg-white flex justify-center text-black py-2 px-4 border border-gray-200 rounded-md cursor-pointer hover:bg-gray-100 transition duration-300">
-            {file ? file.name : "Choose File"}
-            <input
-              type="file"
-              accept=".pdf"
-              onChange={handleFileChange}
-              className="hidden"
+          <div className="p-5 min-h-[25vh] bg-white rounded-lg shadow-lg flex flex-col items-center place-content-center">
+            <p className="mb-3">Add a new class</p>
+            <FaPlusCircle
+              onClick={() => setIsOpenClass(true)}
+              className="text-5xl text-[#FFC700]"
             />
-          </label>
-          {pdfSrc && (
-            <>
-              <Button
-                onClick={handleFileUpload}
-                className="mt-4 py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
-              >
-                {uploadedLoading && (
-                  <ClipLoader
-                    className="mr-1"
-                    size={25}
-                    color={"#ffffff"}
-                    loading={true}
-                  />
-                )}
-                Upload File
-              </Button>
-            </>
-          )}
+          </div>
         </div>
       </div>
     </div>
