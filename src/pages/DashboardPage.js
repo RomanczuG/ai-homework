@@ -70,6 +70,9 @@ export const Dashboard = () => {
     const classId = selectedClass; // selectedClass is already an id
     handleUpload(client, file, setUploadedLoading, setUploadedFilename, setUploaded);
     setUploadedLoading(true);
+    console.log("Hashed filename" + uploadedFilename)
+    console.log("File name" + fileName)
+    console.log("Class id" + classId)
     const { error } = await supabase
       .from("files")
       .insert([{ file_name: fileName, class_id: classId, hashed_file_name: uploadedFilename }]);
