@@ -77,7 +77,7 @@ export const LoginPage = () => {
             onClick={() => navigate("/register")} // handleRegister function needs to be implemented
             className="py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-sm border-[#FFC700] rounded-md transition-all duration-200"
           >
-            Register
+            Create an account
           </button>
           {/* <button
             type="button"
