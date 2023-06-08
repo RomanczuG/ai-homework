@@ -74,18 +74,18 @@ export const LoginPage = () => {
         <div className="flex justify-center mt-4 space-x-4">
           <button
             type="button"
-            // onClick={handleRegister} // handleRegister function needs to be implemented
+            onClick={() => navigate("/register")} // handleRegister function needs to be implemented
             className="py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-sm border-[#FFC700] rounded-md transition-all duration-200"
           >
             Register
           </button>
-          <button
+          {/* <button
             type="button"
             // onClick={handleForgotPassword} // handleForgotPassword function needs to be implemented
             className="py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-sm border-[#FFC700] rounded-md transition-all duration-200"
           >
             Forgot Password
-          </button>
+          </button> */}
         </div>
       </form>
       {error && <p className="mt-4 text-red-500">{error}</p>}
