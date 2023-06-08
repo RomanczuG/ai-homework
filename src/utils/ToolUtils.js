@@ -75,6 +75,7 @@ export const handleUpload = async (
 
   const formData = new FormData();
   const hashedFilename = hashFilename(file.name);
+  setUploadedFilename(hashedFilename);
   const newFile = new File([file], hashedFilename, { type: file.type });
   formData.append("file", newFile);
   console.log("Form data:", formData);
@@ -93,7 +94,7 @@ export const handleUpload = async (
         fileSize,
       });
       console.log("File uploaded ");
-      setUploadedFilename(response.data.filename); // Store the filename in the state
+      // setUploadedFilename(response.data.filename); // Store the filename in the state
       setUploaded(true);
     } else {
       alert("File upload failed");
