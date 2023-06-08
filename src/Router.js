@@ -13,7 +13,6 @@ import { LoginPage } from "./pages/LoginPage";
 import { AuthenticatedPage } from "./pages/AuthenticatedPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { PrivateRoutes } from "./components/PrivateRoutes";
-// import { AuthProvider } from "./components/PrivateRoute";
 import { ChatPage } from "./pages/ChatPage";
 import { Dashboard } from "./pages/DashboardPage";
 

@@ -152,3 +152,50 @@ export const handleFileUploadDashboard = async (
   fetchClassesWithFiles(setClasses, setSelectedClass);
   setUploadedLoading(false);
 };
+
+
+
+// ! HANDLE GENERATE
+
+export const handleGenerate = async (
+  setOutputLoading,
+  uploadedFilename,
+  setOutput,
+  setGenerated
+) => {
+  window.sa_event("Generate help - Started");
+  const startTime = new Date().getTime();
+
+  setOutputLoading(true);
+  try {
+    if (!uploadedFilename) {
+      console.error("No file uploaded");
+      alert("Please upload a file first");
+      return;
+    }
+    const response = await client.get(`/api/generate/${uploadedFilename}`);
+    const formattedData = response.data;
+    setOutput(formattedData);
+
+    const suffix = "_help"; 
+    const lastDotPosition = uploadedFilename.lastIndexOf('.');
+    const filenameWithoutExtension = uploadedFilename.substring(0, lastDotPosition);
+    const newFilename = filenameWithoutExtension + suffix + uploadedFilename.substring(lastDotPosition);
+    const hashedFilename = hashFilename(newFilename);
+    const payload = {
+      sampleDatatest: formattedData,
+      filename: hashedFilename + ".docx",
+    };
+
+    await axios.post('/api/upload_study_help', payload);
+    setGenerated(true);
+    const endTime = new Date().getTime();
+    const timeTaken = (endTime - startTime) / 1000; // In seconds
+    window.sa_event("Generate Help - Time", { timeTaken });
+  } catch (error) {
+    window.sa_event("Generate Help - Error", { error: error.message });
+    alert("PDF file is too long, please try to use shorter pdf files.");
+    console.error("Error generating help:", error);
+  }
+  setOutputLoading(false);
+};
