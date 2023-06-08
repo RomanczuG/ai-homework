@@ -15,7 +15,7 @@ export const Dashboard = () => {
   const [uploadedLoading, setUploadedLoading] = useState(false);
   const [uploadedFilename, setUploadedFilename] = useState(null);
   const [isOpenClass, setIsOpenClass] = useState(false);
-  const [isOpenFile, setIsOpenFile] = useState(true);
+  const [isOpenFile, setIsOpenFile] = useState(false);
   const client = axios.create({
     // baseURL: "http://127.0.0.1:5000",
     baseURL: "https://studyboost.uc.r.appspot.com",
