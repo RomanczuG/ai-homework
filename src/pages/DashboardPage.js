@@ -5,7 +5,8 @@ import {
   fetchClassesWithFiles,
   handleNewClass,
   handleFileUploadDashboard,
-  handleLogout
+  handleLogout,
+  handleGenerate
 } from "../utils/DashboardUtils";
 import { ClipLoader } from "react-spinners";
 import { FaPlusCircle, FaFilePdf } from "react-icons/fa";
@@ -20,6 +21,8 @@ export const Dashboard = () => {
   const [isOpenClass, setIsOpenClass] = useState(false);
   const [isOpenFile, setIsOpenFile] = useState(false);
   const navigate = useNavigate()
+  const [loading, setLoading] = useState({});
+  const [generated, setGenerated] = useState({});
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
     setPdfSrc(URL.createObjectURL(e.target.files[0]));
@@ -172,12 +175,23 @@ export const Dashboard = () => {
                         >
                           Chat with Study Bot
                         </button>
-                        <button
-                          // onClick={() => createStudyNote(file.file_id)}
-                          className="px-2 py-1 ml-2 rounded-md text-white bg-green-500 hover:bg-green-600"
-                        >
-                          Download Study Notes
-                        </button>
+                        {loading[file.file_id] ? (
+                  <CircularProgress /> // Replace with your spinner
+                ) : generated[file.file_id] ? (
+                  <button
+                    // href={/* link to download the study notes */}
+                    className="px-2 py-1 ml-2 rounded-md text-white bg-green-500 hover:bg-green-600"
+                  >
+                    Download Study Notes
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => handleGenerate(file.hashed_file_name, file.file_id)}
+                    className="px-2 py-1 ml-2 rounded-md text-white bg-green-500 hover:bg-green-600"
+                  >
+                    Generate Study Notes
+                  </button>
+                )}
                       </div>
                     </div>
                   ))

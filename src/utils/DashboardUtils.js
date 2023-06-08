@@ -158,15 +158,15 @@ export const handleFileUploadDashboard = async (
 // ! HANDLE GENERATE
 
 export const handleGenerate = async (
-  setOutputLoading,
   uploadedFilename,
-  setOutput,
-  setGenerated
+  fileId,
+  setGenerated,
+  setLoading
 ) => {
+  setLoading(prevLoading => ({ ...prevLoading, [fileId]: true }));
   window.sa_event("Generate help - Started");
   const startTime = new Date().getTime();
 
-  setOutputLoading(true);
   try {
     if (!uploadedFilename) {
       console.error("No file uploaded");
@@ -175,7 +175,6 @@ export const handleGenerate = async (
     }
     const response = await client.get(`/api/generate/${uploadedFilename}`);
     const formattedData = response.data;
-    setOutput(formattedData);
 
     const suffix = "_help"; 
     const lastDotPosition = uploadedFilename.lastIndexOf('.');
@@ -188,7 +187,7 @@ export const handleGenerate = async (
     };
 
     await axios.post('/api/upload_study_help', payload);
-    setGenerated(true);
+    await updateStudyNotes(fileId, hashedFilename);
     const endTime = new Date().getTime();
     const timeTaken = (endTime - startTime) / 1000; // In seconds
     window.sa_event("Generate Help - Time", { timeTaken });
@@ -197,5 +196,26 @@ export const handleGenerate = async (
     alert("PDF file is too long, please try to use shorter pdf files.");
     console.error("Error generating help:", error);
   }
-  setOutputLoading(false);
+  setGenerated(prevGenerated => ({ ...prevGenerated, [fileId]: true }));
+    setLoading(prevLoading => ({ ...prevLoading, [fileId]: false }));
 };
+
+export const updateStudyNotes = async (fileId, noteFileName) => {
+  try {
+    const { data, error } = await supabase
+      .from('study_notes')
+      .insert([
+        { file_id: fileId, note_file_name: noteFileName },
+      ])
+
+    if (error) {
+      console.error("Error inserting into study_notes:", error);
+      return;
+    }
+
+    console.log("Study notes updated successfully:", data);
+  } catch (error) {
+    console.error("Error updating study_notes:", error);
+  }
+};
+
