@@ -2,6 +2,9 @@ import CryptoJS from "crypto-js";
 import { FaCheck } from "react-icons/fa";
 import { BarLoader } from "react-spinners";
 import { useState } from "react";
+import { motion } from 'framer-motion';
+
+
 export const hashFilename = (filename) => {
   const timestamp = new Date().getTime();
   const uniqueFilename = `${timestamp}-${filename}`;
@@ -9,6 +12,8 @@ export const hashFilename = (filename) => {
   const fileExtension = filename.split(".").pop();
   return `${hashedFilename}.${fileExtension}`;
 };
+
+
 
 // ! FILE DOWNLOAD
 export const handleDownloadDocument = (client, output) => {
@@ -231,35 +236,48 @@ export const CheckIcon = () => (
 );
 
 
-export const ActionButtons = ({ handleStudyNotes, handleChatBot }) => {
-  const [selectedAction, setSelectedAction] = useState('notes');
+export const ActionButtons = ({ func1, func2, text1="Generate Study Notes from the text", text2="Talk with Chat Bot about the text", action1 = "notes", action2 = "chat", setAction }) => {
+  const [selectedAction, setSelectedAction] = useState(action1);
 
   const selectAction = (action) => {
+    setAction(action);
     setSelectedAction(action);
 
-    if (action === 'notes') {
-      handleStudyNotes();
-    } else if (action === 'chat') {
-      handleChatBot();
+    if (action === action1) {
+      console.log("func1");
+      func1();
+    } else if (action === action2) {
+      console.log("func2");
+      func2();
     }
   }
 
+  const variants = {
+    [action1]: { x: 0 },
+    [action2]: { x: "100%" },
+  };
+
   return (
-    <div className="flex border rounded-md overflow-hidden">
+    <div className="relative flex border rounded-md overflow-hidden">
+      <motion.div 
+        className="absolute h-full w-1/2 bg-[#FF6E00] z-10 rounded-md"
+        initial={false}
+        animate={selectedAction}
+        variants={variants}
+        transition={{ type: "tween" }}
+      />
       <button
-        onClick={() => selectAction('notes')}
-        className={`flex-1 py-2 px-4 text-center cursor-pointer transition-colors duration-300 ease-in-out ${selectedAction === 'notes' ? 'bg-[#FF6E00] text-white' : 'bg-gray-100 text-gray-700'}`}
+        onClick={() => selectAction(action1)}
+        className={`relative z-20 flex-1 py-2 px-4 text-center cursor-pointer transition-colors duration-300 ease-in-out ${selectedAction === action1 ? 'text-white' : 'text-gray-700'}`}
       >
-        Generate Study Notes from the text
+        {text1}
       </button>
       <button
-        onClick={() => selectAction('chat')}
-        className={`flex-1 py-2 px-4 text-center cursor-pointer transition-colors duration-300 ease-in-out ${selectedAction === 'chat' ? 'bg-[#FF6E00] text-white' : 'bg-gray-100 text-gray-700'}`}
+        onClick={() => selectAction(action2)}
+        className={`relative z-20 flex-1 py-2 px-4 text-center cursor-pointer transition-colors duration-300 ease-in-out ${selectedAction === action2 ? 'text-white' : 'text-gray-700'}`}
       >
-        Talk with Chat Bot about the text
+        {text2}
       </button>
     </div>
   );
 }
-
-

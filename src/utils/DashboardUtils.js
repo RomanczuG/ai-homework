@@ -24,13 +24,13 @@ export   const handleLogout = async (navigate) => {
 export const Modal = ({ children, isOpen, setIsOpen }) => {
   return (
     <div
-      className={`fixed z-50 inset-0 overflow-y-auto bg-gray-500 bg-opacity-75 ${
+      className={`fixed z-50 inset-0 overflow-y-auto bg-gray-500 bg-opacity-75 flex items-center justify-center ${
         isOpen ? "" : "hidden"
       }`}
       onClick={() => setIsOpen(false)}
     >
       <div
-        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+        className="relative flex justify-center" // add 'flex' and 'justify-center' here
         onClick={(e) => e.stopPropagation()}
       >
         {children}
@@ -38,6 +38,7 @@ export const Modal = ({ children, isOpen, setIsOpen }) => {
     </div>
   );
 };
+
 
 export const fetchClassesWithFiles = async (setClasses, setSelectedClass) => {
   const { data, errorUser } = await supabase.auth.getSession();

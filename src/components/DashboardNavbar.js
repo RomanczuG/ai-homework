@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
-export const Navbar = () => {  
+export const DashboardNavbar = ({ onUpgradeClick }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,6 +32,8 @@ export const Navbar = () => {
   };
 
 
+
+
   return (
     <div className="bg-[#F0FFE0] sticky top-0 z-10 px-20 ">
       <nav className="mx-auto px-6 md:px-20 py-6">
@@ -50,44 +52,28 @@ export const Navbar = () => {
             <ul
               className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6"
             >
-              {/* <li>
-                <span
-                  onClick={handleFeaturesClick}
-                  className="text-[#252D62] hover:text-[#FF6E00] cursor-pointer transition-all duration-200"
-                >
-                  Features
-                </span>
-              </li>
-              <li>
-                <span
-                  onClick={handleAuthorClick}
-                  className="text-[#252D62] hover:text-[#FF6E00] cursor-pointer transition-all duration-200"
-                >
-                  About the Author
-                </span>
-              </li> */}
               <li>
                 <Link
-                  to="/faq"
+                  to="/dashboard"
                   className="text-[#252D62] hover:text-[#FF6E00] transition-all duration-200"
                 >
-                  FAQ
+                  My Classes
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/how-it-works"
-                  className="text-[#252D62] hover:text-[#FF6E00] transition-all duration-200"
-                >
-                  How It Works
-                </Link>
+              <div
+        className="text-[#252D62] hover:text-[#FF6E00] transition-all duration-200"
+        onClick={onUpgradeClick}
+      >
+        Upgrade
+      </div>
               </li>
               <li>
               <Link
-                to="/dashboard"
+                to="/dashboard/account"
                 className={`text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4 py-2 border text-md border-[#FFC700] rounded-md transition-all duration-200`}
               >
-                Get started &rarr;
+                Account
               </Link>
             </li>
             </ul>
