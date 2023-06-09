@@ -176,7 +176,12 @@ export const Dashboard = () => {
                           Chat with Study Bot
                         </button>
                         {loading[file.file_id] ? (
-                          <CircularProgress /> // Replace with your spinner
+                           <ClipLoader
+                           className="mr-1"
+                           size={25}
+                           color={"#ffffff"}
+                           loading={true}
+                         />
                         ) : file.study_notes_created ? (
                           <button
                             // href={/* link to download the study notes */}
