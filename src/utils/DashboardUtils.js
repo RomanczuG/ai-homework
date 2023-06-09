@@ -7,19 +7,14 @@ const client = axios.create({
   baseURL: "https://studyboost.uc.r.appspot.com",
 });
 
-export   const handleLogout = async (navigate) => {
-
-  const { error } = await supabase.auth.signOut()
+export const handleLogout = async (navigate) => {
+  const { error } = await supabase.auth.signOut();
   if (error) {
-    alert(error)
+    alert(error);
+  } else {
+    navigate("/");
   }
-  else
-  {
-    navigate('/')
-  }
-
-    
-}
+};
 
 export const Modal = ({ children, isOpen, setIsOpen }) => {
   return (
@@ -38,7 +33,6 @@ export const Modal = ({ children, isOpen, setIsOpen }) => {
     </div>
   );
 };
-
 
 export const fetchClassesWithFiles = async (setClasses, setSelectedClass) => {
   const { data, errorUser } = await supabase.auth.getSession();
@@ -92,8 +86,8 @@ export const handleFileUploadDashboard = async (
   setUploadedLoading,
   file,
   selectedClass,
-    setClasses,
-    setSelectedClass
+  setClasses,
+  setSelectedClass
 ) => {
   if (!file) {
     console.error("No file selected");
@@ -101,37 +95,37 @@ export const handleFileUploadDashboard = async (
     return;
   }
   setUploadedLoading(true);
-  const fileName = file.name;
+
+  // Upload file to supabase
+
+  const fileName = file.name; // This is the original filename
   const classId = selectedClass; // selectedClass is already an id
   const formData = new FormData();
-  const hashedFilename = hashFilename(file.name);
+  const hashedFilename = hashFilename(file.name); // This is the hashed filename
+  const hashedStudyNotesFilename = hashFilename(file.name + "_help.docx");
+  const hashedFaissFilename = hashFilename(file.name + "_faiss.json");
   const newFile = new File([file], hashedFilename, { type: file.type });
   formData.append("file", newFile);
+  formData.append("hashedStudyNotesFilename", hashedStudyNotesFilename);
+  formData.append("hashedFaissFilename", hashedFaissFilename);
   console.log("Form data:", formData);
-  console.log("Hashed filename" + hashedFilename);
-  console.log("File name" + fileName);
-  console.log("Class id" + classId);
   const fileSize = file.size;
-  const { error } = await supabase
-    .from("files")
-    .insert([
-      {
-        file_name: fileName,
-        class_id: classId,
-        hashed_file_name: hashedFilename,
-      },
-    ]);
+  const { data, error } = await supabase.from("files").insert([
+    {
+      file_name: fileName,
+      class_id: classId,
+      hashed_file_name: hashedFilename,
+    },
+  ]);
 
   if (error) {
     console.error("Error inserting record:", error);
-  } else {
-    console.log("File uploaded to supabase");
-    //   fetchClassesWithFiles();
-  }
+  } 
+  // Upload file to flask server
 
   try {
-    const response = await client.post("/upload", formData);
-    console.log("File upload response:", response);
+    const response = await client.post("/gen_upload", formData);
+    console.log("File uploaded and generated notes response:", response);
 
     if (response.status === 200) {
       window.sa_event("PDF successfull upload", {
@@ -139,6 +133,25 @@ export const handleFileUploadDashboard = async (
         fileSize,
       });
       console.log("File uploaded to flask server "); // Store the filename in the state
+      const { error } = await supabase.from("study_notes").insert([
+        {
+          file_id: data[0].file_id,
+          hashed_note_name: hashedStudyNotesFilename,
+        },
+      ]);
+      if (error) {
+        console.error("Error inserting record:", error);
+      }
+      const { errorFaiss } = await supabase.from("faiss").insert([
+        {
+          file_id: data[0].file_id,
+          hashed_faiss_name: hashedFaissFilename,
+        },
+      ]);
+      if (errorFaiss) {
+        console.error("Error inserting record:", error);
+      }
+      
     } else {
       alert("File upload failed");
       console.error(
@@ -150,11 +163,14 @@ export const handleFileUploadDashboard = async (
     window.sa_event("PDF failed upload", { error: error.message });
     console.error("Error during file upload:", error);
   }
+
+
+
+
+
   fetchClassesWithFiles(setClasses, setSelectedClass);
   setUploadedLoading(false);
 };
-
-
 
 // ! HANDLE GENERATE
 
@@ -164,7 +180,7 @@ export const handleGenerate = async (
   setGenerated,
   setLoading
 ) => {
-  setLoading(prevLoading => ({ ...prevLoading, [fileId]: true }));
+  setLoading((prevLoading) => ({ ...prevLoading, [fileId]: true }));
   window.sa_event("Generate help - Started");
   const startTime = new Date().getTime();
 
@@ -177,17 +193,23 @@ export const handleGenerate = async (
     const response = await client.get(`/api/generate/${uploadedFilename}`);
     const formattedData = response.data;
 
-    const suffix = "_help"; 
-    const lastDotPosition = uploadedFilename.lastIndexOf('.');
-    const filenameWithoutExtension = uploadedFilename.substring(0, lastDotPosition);
-    const newFilename = filenameWithoutExtension + suffix + uploadedFilename.substring(lastDotPosition);
+    const suffix = "_help";
+    const lastDotPosition = uploadedFilename.lastIndexOf(".");
+    const filenameWithoutExtension = uploadedFilename.substring(
+      0,
+      lastDotPosition
+    );
+    const newFilename =
+      filenameWithoutExtension +
+      suffix +
+      uploadedFilename.substring(lastDotPosition);
     const hashedFilename = hashFilename(newFilename);
     const payload = {
       sampleDatatest: formattedData,
       filename: hashedFilename + ".docx",
     };
 
-    await axios.post('/api/upload_study_help', payload);
+    await axios.post("/api/upload_study_help", payload);
     await updateStudyNotes(fileId, hashedFilename);
     const endTime = new Date().getTime();
     const timeTaken = (endTime - startTime) / 1000; // In seconds
@@ -197,17 +219,15 @@ export const handleGenerate = async (
     alert("PDF file is too long, please try to use shorter pdf files.");
     console.error("Error generating help:", error);
   }
-  setGenerated(prevGenerated => ({ ...prevGenerated, [fileId]: true }));
-    setLoading(prevLoading => ({ ...prevLoading, [fileId]: false }));
+  setGenerated((prevGenerated) => ({ ...prevGenerated, [fileId]: true }));
+  setLoading((prevLoading) => ({ ...prevLoading, [fileId]: false }));
 };
 
 export const updateStudyNotes = async (fileId, noteFileName) => {
   try {
     const { data, error } = await supabase
-      .from('study_notes')
-      .insert([
-        { file_id: fileId, note_file_name: noteFileName },
-      ])
+      .from("study_notes")
+      .insert([{ file_id: fileId, note_file_name: noteFileName }]);
 
     if (error) {
       console.error("Error inserting into study_notes:", error);
@@ -219,4 +239,3 @@ export const updateStudyNotes = async (fileId, noteFileName) => {
     console.error("Error updating study_notes:", error);
   }
 };
-
