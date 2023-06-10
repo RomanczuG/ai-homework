@@ -50,9 +50,9 @@ export const Dashboard = () => {
               value={newClass}
               onChange={(e) => setNewClass(e.target.value)}
               placeholder="New Class"
-              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3"
+              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md mb-3 p-3"
             />
-            <button
+            <Button
               onClick={() =>
                 handleNewClass(
                   setNewClass,
@@ -61,10 +61,9 @@ export const Dashboard = () => {
                   setSelectedClass
                 )
               }
-              className="mt-4 py-2 w-40 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
             >
               Create Class
-            </button>
+            </Button>
           </div>
         </div>
       </Modal>
@@ -176,12 +175,12 @@ export const Dashboard = () => {
                           Chat with Study Bot
                         </button>
                         {loading[file.file_id] ? (
-                           <ClipLoader
-                           className="mr-1"
-                           size={25}
-                           color={"#ffffff"}
-                           loading={true}
-                         />
+                          <ClipLoader
+                            className="mr-1"
+                            size={25}
+                            color={"#ffffff"}
+                            loading={true}
+                          />
                         ) : file.study_notes_created ? (
                           <button
                             // href={/* link to download the study notes */}
@@ -197,8 +196,6 @@ export const Dashboard = () => {
                                 file.file_id,
                                 setGenerated,
                                 setLoading
-                                
-
                               )
                             }
                             className="px-2 py-1 ml-2 rounded-md text-white bg-green-500 hover:bg-green-600"
