@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "../utils/ToolUtils";
+import { useNavigate } from "react-router-dom";
+import { FaPlusCircle, FaFilePdf } from "react-icons/fa";
+import { ClipLoader } from "react-spinners";
 import {
   Modal,
   fetchClassesWithFiles,
@@ -8,9 +10,8 @@ import {
   handleLogout,
   handleGenerate,
 } from "../utils/DashboardUtils";
-import { ClipLoader } from "react-spinners";
-import { FaPlusCircle, FaFilePdf } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Button } from "../utils/ToolUtils";
+
 export const Dashboard = () => {
   const [classes, setClasses] = useState([]);
   const [selectedClass, setSelectedClass] = useState("");
@@ -20,9 +21,9 @@ export const Dashboard = () => {
   const [uploadedLoading, setUploadedLoading] = useState(false);
   const [isOpenClass, setIsOpenClass] = useState(false);
   const [isOpenFile, setIsOpenFile] = useState(false);
-  const navigate = useNavigate();
   const [loading, setLoading] = useState({});
   const [generated, setGenerated] = useState({});
+  
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
     setPdfSrc(URL.createObjectURL(e.target.files[0]));
