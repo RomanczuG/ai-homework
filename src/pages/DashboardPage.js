@@ -36,7 +36,7 @@ export const Dashboard = () => {
   }, []);
 
   return (
-    <div className="flex min-h-screen bg-gray-100 flex flex-col items-center justify-center py-8 px-6 sm:px-8 lg:px-10">
+    <div className="flex min-h-screen bg-[#F0FFE0] flex flex-col items-center py-12 px-6 sm:px-8 lg:px-10">
       <Modal isOpen={isOpenClass} setIsOpen={setIsOpenClass}>
         <div className="flex flex-col items-center justify-center">
           <div className="bg-white rounded-lg shadow-lg p-5 text-center">
@@ -147,7 +147,7 @@ export const Dashboard = () => {
       </h1>
 
       <div className="flex flex-col w-full space-y-6">
-        <div className="grid gap-4 grid-cols-3">
+        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {classes.map((item, index) => (
             <div
               key={index}
