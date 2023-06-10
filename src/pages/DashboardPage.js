@@ -218,7 +218,7 @@ export const Dashboard = () => {
                 )}
                 <div
                   onClick={() => setIsOpenFile(true)}
-                  className="flex items-center space-x-3 p-2 bg-gray-50 rounded-lg"
+                  className="cursor-pointer flex items-center space-x-3 p-2 bg-gray-50 rounded-lg"
                 >
                   <FaPlusCircle className="text-md text-green-500 mr-2" />
 
@@ -227,7 +227,7 @@ export const Dashboard = () => {
               </div>
             </div>
           ))}
-          <div className="p-5 min-h-[25vh] bg-white rounded-lg shadow-lg flex flex-col items-center place-content-center">
+          <div className="cursor-pointer p-5 min-h-[25vh] bg-white rounded-lg shadow-lg flex flex-col items-center place-content-center">
             <p className="mb-3">Add a new class</p>
             <FaPlusCircle
               onClick={() => setIsOpenClass(true)}
