@@ -117,6 +117,7 @@ export const handleFileUploadDashboard = async (
       hashed_file_name: hashedFilename,
     },
   ]);
+  console.log("File uploaded to supabase:", data);
 
   if (error) {
     console.error("Error inserting record:", error);
@@ -135,7 +136,7 @@ export const handleFileUploadDashboard = async (
       console.log("File uploaded to flask server "); // Store the filename in the state
       const { error } = await supabase.from("study_notes").insert([
         {
-          file_id: data[0].file_id,
+          file_id: data[0].id,
           hashed_note_name: hashedStudyNotesFilename,
         },
       ]);
@@ -144,7 +145,7 @@ export const handleFileUploadDashboard = async (
       }
       const { errorFaiss } = await supabase.from("faiss").insert([
         {
-          file_id: data[0].file_id,
+          file_id: data[0].id,
           hashed_faiss_name: hashedFaissFilename,
         },
       ]);
