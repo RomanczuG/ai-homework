@@ -53,14 +53,15 @@ export const Dashboard = () => {
               className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md mb-3 p-3"
             />
             <Button
-              onClick={() =>
+              onClick={() => {
                 handleNewClass(
                   setNewClass,
                   newClass,
                   setClasses,
                   setSelectedClass
-                )
-              }
+                );
+                setIsOpenClass(false);
+              }}
             >
               Create Class
             </Button>
@@ -103,7 +104,7 @@ export const Dashboard = () => {
             {pdfSrc && (
               <>
                 <Button
-                  onClick={() =>
+                  onClick={() =>{
                     handleFileUploadDashboard(
                       setUploadedLoading,
                       file,
@@ -111,6 +112,8 @@ export const Dashboard = () => {
                       setClasses,
                       setSelectedClass
                     )
+                    setIsOpenFile(false)
+                  }
                   }
                   className="mt-4 py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
                 >
@@ -230,12 +233,12 @@ export const Dashboard = () => {
         </div>
       </div>
       {/* Log out button */}
-      <button
+      <Button
         onClick={() => handleLogout(navigate)}
         className="mt-4 py-2 w-40 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
       >
         Log Out
-      </button>
+      </Button>
     </div>
   );
 };
