@@ -116,8 +116,9 @@ export const handleFileUploadDashboard = async (
       class_id: classId,
       hashed_file_name: hashedFilename,
     },
-  ]);
+  ]).select();
   console.log("File uploaded to supabase:", data);
+  // console.log("Error:", error)
 
   if (error) {
     console.error("Error inserting record:", error);
