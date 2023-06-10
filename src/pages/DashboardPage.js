@@ -227,10 +227,12 @@ export const Dashboard = () => {
               </div>
             </div>
           ))}
-          <div className="cursor-pointer p-5 min-h-[25vh] bg-white rounded-lg shadow-lg flex flex-col items-center place-content-center">
+          <div
+          onClick={() => setIsOpenClass(true)}
+          className="cursor-pointer p-5 min-h-[25vh] bg-white rounded-lg shadow-lg flex flex-col items-center place-content-center">
             <p className="mb-3">Add a new class</p>
             <FaPlusCircle
-              onClick={() => setIsOpenClass(true)}
+              
               className="text-5xl text-[#FFC700]"
             />
           </div>
