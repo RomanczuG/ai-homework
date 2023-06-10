@@ -52,6 +52,7 @@ export const Dashboard = () => {
               placeholder="New Class"
               className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md mb-3 p-3"
             />
+            <div className="mt-4 ">
             <Button
               onClick={() => {
                 handleNewClass(
@@ -65,6 +66,7 @@ export const Dashboard = () => {
             >
               Create Class
             </Button>
+            </div>
           </div>
         </div>
       </Modal>
@@ -103,6 +105,7 @@ export const Dashboard = () => {
             </label>
             {pdfSrc && (
               <>
+              <div className="mt-4 ">
                 <Button
                   onClick={() =>{
                     handleFileUploadDashboard(
@@ -115,7 +118,7 @@ export const Dashboard = () => {
                     setIsOpenFile(false)
                   }
                   }
-                  className="mt-4 py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
+                  className="py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
                 >
                   {uploadedLoading && (
                     <ClipLoader
@@ -127,6 +130,7 @@ export const Dashboard = () => {
                   )}
                   Upload File
                 </Button>
+                </div>
               </>
             )}
           </div>
@@ -233,12 +237,14 @@ export const Dashboard = () => {
         </div>
       </div>
       {/* Log out button */}
+      <div className="mt-4 ">
       <Button
         onClick={() => handleLogout(navigate)}
         className="mt-4 py-2 w-40 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
       >
         Log Out
       </Button>
+      </div>
     </div>
   );
 };
