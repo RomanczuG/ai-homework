@@ -7,6 +7,16 @@ const client = axios.create({
   baseURL: "https://studyboost.uc.r.appspot.com",
 });
 
+async function getUserId() {
+  const { data, error } = await supabase.auth.getSession();
+  if (error) {
+    console.error("Error getting user session:", error);
+    throw error;
+  }
+
+  return data["session"]["user"]["id"];
+}
+
 export const handleLogout = async (navigate) => {
   const { error } = await supabase.auth.signOut();
   if (error) {
@@ -35,12 +45,8 @@ export const Modal = ({ children, isOpen, setIsOpen }) => {
 };
 
 export const fetchClassesWithFiles = async (setClasses, setSelectedClass) => {
-  const { data, errorUser } = await supabase.auth.getSession();
-  if (errorUser) {
-    console.error("Error getting user session:", errorUser);
-  } else {
-    const userID = data["session"]["user"]["id"];
-    //   setUserID(userID);
+  try {
+    const userID = await getUserId();
     const { data: classes, error } = await supabase
       .from("classes")
       .select("*, files(*)") // This joins the classes with their associated files
@@ -48,24 +54,24 @@ export const fetchClassesWithFiles = async (setClasses, setSelectedClass) => {
 
     if (error) {
       console.error("Error fetching classes:", error);
-    } else {
-      setClasses(classes);
-      setSelectedClass(classes[0].id); // set selectedClass to be the id of the first class
+      return;
     }
+    setClasses(classes);
+    setSelectedClass(classes[0].id); // set selectedClass to be the id of the first class
+  } catch (error) {
+    console.error("Error fetching classes:", error);
   }
 };
 
+// ! HANDLE UPLOAD and GENERATE NOTES
 export const handleNewClass = async (
   setNewClass,
   newClass,
   setClasses,
   setSelectedClass
 ) => {
-  const { data, errorUser } = await supabase.auth.getSession();
-  if (errorUser) {
-    console.error("Error getting user session:", errorUser);
-  } else {
-    const userID = data["session"]["user"]["id"];
+  try {
+    const userID = await getUserId();
 
     const { error } = await supabase
       .from("classes")
@@ -79,6 +85,8 @@ export const handleNewClass = async (
       setNewClass("");
       fetchClassesWithFiles(setClasses, setSelectedClass);
     }
+  } catch (error) {
+    console.error("Error fetching classes:", error);
   }
 };
 
@@ -110,19 +118,22 @@ export const handleFileUploadDashboard = async (
   formData.append("hashedFaissFilename", hashedFaissFilename);
   console.log("Form data:", formData);
   const fileSize = file.size;
-  const { data, error } = await supabase.from("files").insert([
-    {
-      file_name: fileName,
-      class_id: classId,
-      hashed_file_name: hashedFilename,
-    },
-  ]).select();
+  const { data, error } = await supabase
+    .from("files")
+    .insert([
+      {
+        file_name: fileName,
+        class_id: classId,
+        hashed_file_name: hashedFilename,
+      },
+    ])
+    .select();
   console.log("File uploaded to supabase:", data);
   // console.log("Error:", error)
 
   if (error) {
     console.error("Error inserting record:", error);
-  } 
+  }
   // Upload file to flask server
 
   try {
@@ -153,7 +164,6 @@ export const handleFileUploadDashboard = async (
       if (errorFaiss) {
         console.error("Error inserting record:", error);
       }
-      
     } else {
       alert("File upload failed");
       console.error(
@@ -166,78 +176,7 @@ export const handleFileUploadDashboard = async (
     console.error("Error during file upload:", error);
   }
 
-
-
-
-
   fetchClassesWithFiles(setClasses, setSelectedClass);
   setUploadedLoading(false);
 };
 
-// ! HANDLE GENERATE
-
-export const handleGenerate = async (
-  uploadedFilename,
-  fileId,
-  setGenerated,
-  setLoading
-) => {
-  setLoading((prevLoading) => ({ ...prevLoading, [fileId]: true }));
-  window.sa_event("Generate help - Started");
-  const startTime = new Date().getTime();
-
-  try {
-    if (!uploadedFilename) {
-      console.error("No file uploaded");
-      alert("Please upload a file first");
-      return;
-    }
-    const response = await client.get(`/api/generate/${uploadedFilename}`);
-    const formattedData = response.data;
-
-    const suffix = "_help";
-    const lastDotPosition = uploadedFilename.lastIndexOf(".");
-    const filenameWithoutExtension = uploadedFilename.substring(
-      0,
-      lastDotPosition
-    );
-    const newFilename =
-      filenameWithoutExtension +
-      suffix +
-      uploadedFilename.substring(lastDotPosition);
-    const hashedFilename = hashFilename(newFilename);
-    const payload = {
-      sampleDatatest: formattedData,
-      filename: hashedFilename + ".docx",
-    };
-
-    await axios.post("/api/upload_study_help", payload);
-    await updateStudyNotes(fileId, hashedFilename);
-    const endTime = new Date().getTime();
-    const timeTaken = (endTime - startTime) / 1000; // In seconds
-    window.sa_event("Generate Help - Time", { timeTaken });
-  } catch (error) {
-    window.sa_event("Generate Help - Error", { error: error.message });
-    alert("PDF file is too long, please try to use shorter pdf files.");
-    console.error("Error generating help:", error);
-  }
-  setGenerated((prevGenerated) => ({ ...prevGenerated, [fileId]: true }));
-  setLoading((prevLoading) => ({ ...prevLoading, [fileId]: false }));
-};
-
-export const updateStudyNotes = async (fileId, noteFileName) => {
-  try {
-    const { data, error } = await supabase
-      .from("study_notes")
-      .insert([{ file_id: fileId, note_file_name: noteFileName }]);
-
-    if (error) {
-      console.error("Error inserting into study_notes:", error);
-      return;
-    }
-
-    console.log("Study notes updated successfully:", data);
-  } catch (error) {
-    console.error("Error updating study_notes:", error);
-  }
-};

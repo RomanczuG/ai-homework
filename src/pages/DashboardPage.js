@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaPlusCircle, FaFilePdf } from "react-icons/fa";
+import { AiOutlineMessage, AiOutlineFileText } from "react-icons/ai";
 import { ClipLoader } from "react-spinners";
 import {
   Modal,
@@ -8,9 +9,9 @@ import {
   handleNewClass,
   handleFileUploadDashboard,
   handleLogout,
-  handleGenerate,
 } from "../utils/DashboardUtils";
 import { Button } from "../utils/ToolUtils";
+
 
 export const Dashboard = () => {
   const [classes, setClasses] = useState([]);
@@ -23,7 +24,8 @@ export const Dashboard = () => {
   const [isOpenFile, setIsOpenFile] = useState(false);
   const [loading, setLoading] = useState({});
   const [generated, setGenerated] = useState({});
-  
+  const navigate = useNavigate();
+
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
     setPdfSrc(URL.createObjectURL(e.target.files[0]));
@@ -54,19 +56,19 @@ export const Dashboard = () => {
               className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md mb-3 p-3"
             />
             <div className="mt-4 ">
-            <Button
-              onClick={() => {
-                handleNewClass(
-                  setNewClass,
-                  newClass,
-                  setClasses,
-                  setSelectedClass
-                );
-                setIsOpenClass(false);
-              }}
-            >
-              Create Class
-            </Button>
+              <Button
+                onClick={() => {
+                  handleNewClass(
+                    setNewClass,
+                    newClass,
+                    setClasses,
+                    setSelectedClass
+                  );
+                  setIsOpenClass(false);
+                }}
+              >
+                Create Class
+              </Button>
             </div>
           </div>
         </div>
@@ -106,31 +108,30 @@ export const Dashboard = () => {
             </label>
             {pdfSrc && (
               <>
-              <div className="mt-4 ">
-                <Button
-                  onClick={() =>{
-                    handleFileUploadDashboard(
-                      setUploadedLoading,
-                      file,
-                      selectedClass,
-                      setClasses,
-                      setSelectedClass
-                    )
-                    setIsOpenFile(false)
-                  }
-                  }
-                  className="py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
-                >
-                  {uploadedLoading && (
-                    <ClipLoader
-                      className="mr-1"
-                      size={25}
-                      color={"#ffffff"}
-                      loading={true}
-                    />
-                  )}
-                  Upload File
-                </Button>
+                <div className="mt-4 ">
+                  <Button
+                    onClick={() => {
+                      handleFileUploadDashboard(
+                        setUploadedLoading,
+                        file,
+                        selectedClass,
+                        setClasses,
+                        setSelectedClass
+                      );
+                      setIsOpenFile(false);
+                    }}
+                    className="py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
+                  >
+                    {uploadedLoading && (
+                      <ClipLoader
+                        className="mr-1"
+                        size={25}
+                        color={"#ffffff"}
+                        loading={true}
+                      />
+                    )}
+                    Upload File
+                  </Button>
                 </div>
               </>
             )}
@@ -175,53 +176,35 @@ export const Dashboard = () => {
                           {file.file_name}
                         </a>
                       </div>
-                      <div className=" text-sm absolute right-0 mr-4 opacity-0 group-hover:opacity-100 transition duration-200">
-                        <button
-                          // onClick={() => startChat(file.file_id)}
-                          className="px-2 py-1 rounded-md text-white bg-blue-500 hover:bg-blue-600"
-                        >
-                          Chat with Study Bot
-                        </button>
-                        {loading[file.file_id] ? (
-                          <ClipLoader
-                            className="mr-1"
-                            size={25}
-                            color={"#ffffff"}
-                            loading={true}
-                          />
-                        ) : file.study_notes_created ? (
-                          <button
-                            // href={/* link to download the study notes */}
-                            className="px-2 py-1 ml-2 rounded-md text-white bg-green-500 hover:bg-green-600"
-                          >
-                            Download Study Notes
+                      <div className="flex space-x-4 absolute right-0 mr-4">
+                        <div className="group">
+                          <button className="flex items-center space-x-2 p-1 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00] overflow-hidden relative group-hover:w-32">
+                            <AiOutlineMessage />
+                            <span className="text-xs transition-all ease-in duration-200 text-white absolute whitespace-nowrap  py-1 px-2 rounded-sm right-full group-hover:right-0">
+                              Chat with the file
+                            </span>
                           </button>
-                        ) : (
-                          <button
-                            onClick={() =>
-                              handleGenerate(
-                                file.hashed_file_name,
-                                file.file_id,
-                                setGenerated,
-                                setLoading
-                              )
-                            }
-                            className="px-2 py-1 ml-2 rounded-md text-white bg-green-500 hover:bg-green-600"
-                          >
-                            Generate Study Notes
+                        </div>
+                        <div className="group">
+                          <button className="flex items-center space-x-2 p-1 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00] overflow-hidden relative group-hover:w-40">
+                            <AiOutlineFileText />
+                            <span className="text-xs transition-all ease-in duration-200 text-white absolute whitespace-nowrap  py-1 px-2 rounded-sm right-full group-hover:right-0">
+                              Download study notes
+                            </span>
                           </button>
-                        )}
+                        </div>
                       </div>
                     </div>
                   ))
                 ) : (
                   <p>No files uploaded yet</p>
                 )}
+
                 <div
                   onClick={() => setIsOpenFile(true)}
                   className="cursor-pointer flex items-center space-x-3 p-2 bg-gray-50 rounded-lg"
                 >
-                  <FaPlusCircle className="text-md text-green-500 mr-2" />
+                  <FaPlusCircle className="text-md text-[#a4c1ae] mr-2" />
 
                   <p className="text-gray-500">Add a new file</p>
                 </div>
@@ -229,24 +212,22 @@ export const Dashboard = () => {
             </div>
           ))}
           <div
-          onClick={() => setIsOpenClass(true)}
-          className="cursor-pointer p-5 min-h-[25vh] bg-white rounded-lg shadow-lg flex flex-col items-center place-content-center">
+            onClick={() => setIsOpenClass(true)}
+            className="cursor-pointer p-5 min-h-[25vh] bg-white rounded-lg shadow-lg flex flex-col items-center place-content-center"
+          >
             <p className="mb-3">Add a new class</p>
-            <FaPlusCircle
-              
-              className="text-5xl text-[#FFC700]"
-            />
+            <FaPlusCircle className="text-5xl text-[#a4c1ae]" />
           </div>
         </div>
       </div>
       {/* Log out button */}
       <div className="mt-4 ">
-      <Button
-        onClick={() => handleLogout(navigate)}
-        className="mt-4 py-2 w-40 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
-      >
-        Log Out
-      </Button>
+        <Button
+          onClick={() => handleLogout(navigate)}
+          className="mt-4 py-2 w-40 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
+        >
+          Log Out
+        </Button>
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-
 export const Navbar = () => {  
   const navigate = useNavigate();
   const location = useLocation();
@@ -85,7 +84,7 @@ export const Navbar = () => {
               <li>
               <Link
                 to="/dashboard"
-                className={`text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4 py-2 border text-md border-[#FFC700] rounded-md transition-all duration-200`}
+                className={`text-white bg-[#FFC700] hover:bg-[#FF6E00] px-4 py-2 border text-md border-[#FFC700] rounded-md transition-all duration-200`}
               >
                 Get started &rarr;
               </Link>
