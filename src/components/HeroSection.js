@@ -15,7 +15,7 @@ export const HeroSection = () => {
           </span>
         </h1>
         <p className="text-base md:text-lg xl:text-xl mb-6">
-          Upload your honmework or textbook and allow our AI to provide comprehensive
+          Upload your homework or textbook and allow our AI to provide comprehensive
           study notes, or interact with the AI bot for further insight. Improve
           your test-taking strategies, study smarter, achieve academic success,
           and master learning strategies with ease.

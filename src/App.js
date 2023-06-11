@@ -13,7 +13,7 @@ function App() {
   const appContent = useMemo(() => (
     <>
       <Helmet>
-        <title>StudyBoost: AI-Powered Homework Help</title>
+        <title>Study Smarter Now: Achieve academic success with AI</title>
         <meta
           name="description"
           content="Boost your learning with StudyBoost, an AI-powered homework help tool that generates comprehensive study notes from your homework PDFs. Improve test-taking strategies, achieve academic success, and master learning strategies with ease."
