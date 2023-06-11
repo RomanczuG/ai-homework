@@ -43,7 +43,7 @@ export const LoginPage = () => {
         </span>
       </h1>
       <p className="text-lg md:text-xl xl:text-2xl mb-8">
-      Login to your account and facilitate your learning
+      Log in to your account and facilitate your learning
       </p>
 
       <form onSubmit={handleLogin} className="w-full max-w-md">
