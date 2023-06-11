@@ -20,7 +20,7 @@ export const HeroSection = () => {
           your test-taking strategies, study smarter, achieve academic success,
           and master learning strategies with ease.
         </p>
-        <p className="text-3xl mb-8 font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
+        <p className="text-3xl mb-4 font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
             Study Tools:
           </p>
         <div className="space-y-4 mb-6 text-lg md:text-xl xl:text-2xl">
@@ -34,10 +34,10 @@ export const HeroSection = () => {
             <p className="font-semibold">Get easy-to-understand study notes</p>
           </div>
         </div>
-        <h2 className="text-lg md:text-xl font-bold mb-4">
+        {/* <h2 className="text-lg md:text-xl font-bold mb-4">
           &#11088;&#11088;&#11088;&#11088;&#11088; rates and hundreds of happy
           students
-        </h2>
+        </h2> */}
         <a
           href="#features"
           className="py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"

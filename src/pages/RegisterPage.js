@@ -31,14 +31,14 @@ export const RegisterPage = () => {
   };
 
   return (
-    <section className="flex flex-col items-center justify-center min-h-screen bg-[#F0FFE0] px-6 md:px-20 py-16">
+    <section className="flex flex-col items-center min-h-screen bg-[#F0FFE0] px-6 md:px-20 py-16">
       <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-8">
         <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
           Create Your Account
         </span>
       </h1>
       <p className="text-lg md:text-xl xl:text-2xl mb-8">
-        Join our amazing community
+        Join our amazing community and facilitate your learning!
       </p>
       <form onSubmit={handleRegister} className="w-full max-w-md">
         <input
