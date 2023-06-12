@@ -66,7 +66,7 @@ const Router = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dashboard/account" element={<Account />} />
         </Route>
-        <Route path="/chat" element={<ChatPage />} />
+        <Route path="/dashboard/chat" element={<ChatPage />} />
       </Routes>
       </Layout>
     </BrowserRouter>
