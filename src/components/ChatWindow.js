@@ -3,7 +3,7 @@ import { Button } from "../utils/ToolUtils";
 import axios from "axios";
 
 const ChatWindow = ({ hashedFaissFilename }) => {
-  console.log('In ChatWindow, hashedFaissFilename:', hashedFaissFilename);
+  console.log("In ChatWindow, hashedFaissFilename:", hashedFaissFilename);
   const client = axios.create({
     // baseURL: "http://127.0.0.1:5000",
     baseURL: "https://studyboost.uc.r.appspot.com",
@@ -16,38 +16,52 @@ const ChatWindow = ({ hashedFaissFilename }) => {
   const sendMessage = (e) => {
     setWaiting(true);
     e.preventDefault();
-    if (newMessage !== '') {
-      setMessages([...messages, { text: newMessage, sender: 'you' }]);
-      const dataToSend = { question: newMessage, hashedFaissFilename: hashedFaissFilename };
-      console.log('Sending:', dataToSend);
-      client.post('/chat', dataToSend)
-        .then(response => {
+    if (newMessage !== "") {
+      setMessages([...messages, { text: newMessage, sender: "you" }]);
+      const dataToSend = {
+        question: newMessage,
+        hashedFaissFilename: hashedFaissFilename,
+      };
+      console.log("Sending:", dataToSend);
+      client
+        .post("/chat", dataToSend)
+        .then((response) => {
           const data = response.data;
-          setMessages(prevMessages => [...prevMessages, { text: data.message, sender: 'bot' }]);
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            { text: data.message, sender: "bot" },
+          ]);
         })
-        .catch(e => console.error('Error:', e));
-      setNewMessage('');
+        .catch((e) => console.error("Error:", e));
+      setNewMessage("");
     }
     setWaiting(false);
   };
 
   useEffect(() => {
     setWaiting(true);
-    if (newMessage !== '') {
+    if (newMessage !== "") {
       // setMessages([...messages, { text: newMessage, sender: 'you' }]);
-      const dataToSend = { question: "Who are you? How can you help me? Can you give me example questions I can ask you?", hashedFaissFilename: hashedFaissFilename };
-      console.log('Sending:', dataToSend);
-      client.post('/chat', dataToSend)
-        .then(response => {
+      const dataToSend = {
+        question:
+          "Who are you? How can you help me? Can you give me example questions I can ask you?",
+        hashedFaissFilename: hashedFaissFilename,
+      };
+      console.log("Sending:", dataToSend);
+      client
+        .post("/chat", dataToSend)
+        .then((response) => {
           const data = response.data;
-          setMessages(prevMessages => [...prevMessages, { text: data.message, sender: 'bot' }]);
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            { text: data.message, sender: "bot" },
+          ]);
         })
-        .catch(e => console.error('Error:', e));
-      setNewMessage('');
+        .catch((e) => console.error("Error:", e));
+      setNewMessage("");
     }
     setWaiting(false);
   }, []);
-  
 
   return (
     <div className="flex flex-col h-[75vh]">
@@ -66,10 +80,17 @@ const ChatWindow = ({ hashedFaissFilename }) => {
                 }
               `}
           >
-            <b>{message.sender}:</b> {message.text}
+            <b>{message.sender}:</b>{" "}
+            {message.text.split("\n").map((line, i) => (
+              <div key={i}>{line}</div>
+            ))}
           </div>
         ))}
-        {waiting && <div className="my-2 px-4 py-2 rounded-lg bg-orange-300 ml-auto">Bot is typing...</div>}
+        {waiting && (
+          <div className="my-2 px-4 py-2 rounded-lg bg-orange-300 ml-auto">
+            Bot is typing...
+          </div>
+        )}
       </div>
 
       {/* Send message form */}
@@ -79,9 +100,7 @@ const ChatWindow = ({ hashedFaissFilename }) => {
           onChange={(e) => setNewMessage(e.target.value)}
           className="border rounded px-2 py-1 mr-2 flex-grow"
         />
-        <Button 
-        
-        onClick={sendMessage}>Send</Button>
+        <Button onClick={sendMessage}>Send</Button>
       </form>
     </div>
   );
