@@ -146,24 +146,24 @@ export const handleFileUploadDashboard = async (
         fileSize,
       });
       console.log("File uploaded to flask server "); // Store the filename in the state
-      const { error } = await supabase.from("study_notes").insert([
-        {
-          file_id: data[0].id,
-          hashed_note_name: hashedStudyNotesFilename,
-        },
-      ]);
-      if (error) {
-        console.error("Error inserting record:", error);
-      }
-      const { errorFaiss } = await supabase.from("faiss").insert([
-        {
-          file_id: data[0].id,
-          hashed_faiss_name: hashedFaissFilename,
-        },
-      ]);
-      if (errorFaiss) {
-        console.error("Error inserting record:", error);
-      }
+      // const { error } = await supabase.from("study_notes").insert([
+      //   {
+      //     file_id: data[0].id,
+      //     hashed_note_name: hashedStudyNotesFilename,
+      //   },
+      // ]);
+      // if (error) {
+      //   console.error("Error inserting record:", error);
+      // }
+      // const { errorFaiss } = await supabase.from("faiss").insert([
+      //   {
+      //     file_id: data[0].id,
+      //     hashed_faiss_name: hashedFaissFilename,
+      //   },
+      // ]);
+      // if (errorFaiss) {
+      //   console.error("Error inserting record:", error);
+      // }
     } else {
       alert("File upload failed");
       console.error(
