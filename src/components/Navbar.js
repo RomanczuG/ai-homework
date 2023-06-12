@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { HiMenu } from "react-icons/hi";
 
 export const Navbar = () => {
   const navigate = useNavigate();
@@ -38,14 +39,10 @@ export const Navbar = () => {
   };
 
   return (
-    <div className="bg-[#F0FFE0] sticky top-0 z-10 md:px-20 ">
+    <div className="bg-[#F8F9FA] shadow sticky top-0 z-10 md:px-20 ">
       <nav className="mx-auto px-6 md:px-20 py-6">
         <div className="flex items-center justify-between md:justify-between">
-          <div
-            className={`${
-              isMenuOpen ? "hidden" : "block"
-            } text-[#252D62] font-semibold text-lg`}
-          >
+          <div className={`${isMenuOpen ? "hidden" : "block"} text-[#212529] font-semibold text-lg`}>
             <Link to="/" className="hover:text-[#FF6E00]">
               Study Smarter Now!
             </Link>
@@ -64,7 +61,7 @@ export const Navbar = () => {
                   <li>
                     <Link
                       to="/faq"
-                      className="text-[#252D62] hover:text-[#FF6E00] transition-all duration-200"
+                      className="text-[#212529] hover:text-[#FF6E00] transition-all duration-200"
                     >
                       FAQ
                     </Link>
@@ -72,7 +69,7 @@ export const Navbar = () => {
                   <li>
                     <Link
                       to="/how-it-works"
-                      className="text-[#252D62] hover:text-[#FF6E00] transition-all duration-200"
+                      className="text-[#212529] hover:text-[#FF6E00] transition-all duration-200"
                     >
                       How It Works
                     </Link>
@@ -92,22 +89,10 @@ export const Navbar = () => {
             
           </div>
           <div className="md:hidden">
-              <button aria-label="Toggle menu" onClick={toggleMenu}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  width="24"
-                  height="24"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M18 10a1 1 0 0 1 0 2H2a1 1 0 1 1 0-2h16zM3 5a1 1 0 1 0 0-2h12a1 1 0 1 0 0 2H3zm0 14a1 1 0 1 0 0-2h12a1 1 0 1 0 0 2H3z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </button>
-            </div>
+            <button aria-label="Toggle menu" onClick={toggleMenu}>
+              <HiMenu size={24} />
+            </button>
+          </div>
         </div>
       </nav>
     </div>

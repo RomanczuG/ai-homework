@@ -193,40 +193,47 @@ export const Dashboard = () => {
                         </a>
                       </div>
                       <div className="flex space-x-4 absolute right-0 mr-4">
-                        <motion.button
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          transition={{ duration: 0.1 }}
-                          onClick={() => {
-                            console.log(file);
-                            navigate("/dashboard/chat", {
-                              state: {
-                                hashedFaissFilename: file.hashedFaissFilename,
-                              },
-                            });
-                          }}
-                          className="flex items-center space-x-2 p-1 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00] overflow-hidden relative group-hover:w-32"
-                        >
-                          <HiOutlineChatAlt />
-                          <span className="text-xs transition-all ease-in duration-200 text-white absolute whitespace-nowrap  py-1 px-2 rounded-sm right-full group-hover:right-0">
-                            Chat with the file
-                          </span>
-                        </motion.button>
-                        <motion.button
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          transition={{ duration: 0.1 }}
-                          onClick={() =>
-                            downloadStudyNote(file.hashedStudyNotesFilename)
-                          }
-                          className="flex items-center space-x-2 p-1 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00] overflow-hidden relative group-hover:w-40"
-                        >
-                          <HiOutlineDocumentDownload />
-                          <span className="text-xs transition-all ease-in duration-200 text-white absolute whitespace-nowrap  py-1 px-2 rounded-sm right-full group-hover:right-0">
-                            Download study notes
-                          </span>
-                        </motion.button>
-                      </div>
+  <div className="group relative">
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      transition={{ duration: 0.1 }}
+      onClick={() => {
+        console.log(file);
+        navigate("/dashboard/chat", {
+          state: {
+            hashedFaissFilename: file.hashedFaissFilename,
+          },
+        });
+      }}
+      className="flex items-center p-1 hover:py-1 hover:px-2 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00]"
+    >
+      <HiOutlineChatAlt />
+      <span className="text-xs transition-all ease-in duration-200 text-transparent group-hover:text-white whitespace-nowrap  py-1 ml-1 rounded-sm absolute group-hover:static">
+        Chat with the file
+      </span>
+    </motion.button>
+  </div>
+
+  <div className="group relative">
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      transition={{ duration: 0.1 }}
+      onClick={() =>
+        downloadStudyNote(file.hashedStudyNotesFilename)
+      }
+      className="flex items-center p-1 hover:py-1 hover:px-2 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00]"
+    >
+      <HiOutlineDocumentDownload />
+      <span className="text-xs transition-all ease-in duration-200 text-transparent group-hover:text-white whitespace-nowrap  py-1 ml-1 rounded-sm absolute group-hover:static">
+        Download study notes
+      </span>
+    </motion.button>
+  </div>
+</div>
+
+
                     </motion.div>
                   ))
                 ) : (
