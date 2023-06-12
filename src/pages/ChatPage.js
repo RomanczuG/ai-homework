@@ -24,8 +24,8 @@ export const ChatPage = () => {
     >
       <div className="flex flex-row h-full">
         {/* Sidebar */}
-        {/* <div className="w-1/2 bg-gray-200 p-4">
-        <h2 className="mb-4 font-bold">PDF file</h2> */}
+        <div className="w-1/2 bg-gray-200 p-4">
+        <h2 className="mb-4 font-bold">PDF file</h2>
         {/* {chats.map(chat => (
           <button
             key={chat.id}
@@ -36,10 +36,10 @@ export const ChatPage = () => {
           </button>
           
         ))} */}
-      {/* </div> */}
+      </div>
 
         {/* Chat area */}
-        <div className="w-full p-4 overflow-auto">
+        <div className="w-1/2 p-4 overflow-auto">
           {/* <h2 className="mb-4 font-bold">Chat with {selectedChat.name}</h2> */}
           <h2 className="mb-4 font-bold">Chat </h2>
           {/* The chat messages will be displayed here */}
