@@ -3,6 +3,7 @@ import { Button } from "../utils/ToolUtils";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { IoSendSharp } from "react-icons/io5";
+import { ClipLoader } from "react-spinners";
 
 const ChatWindow = ({ hashedFaissFilename }) => {
   console.log("In ChatWindow, hashedFaissFilename:", hashedFaissFilename);
@@ -67,14 +68,14 @@ const ChatWindow = ({ hashedFaissFilename }) => {
   };
 
   return (
-    <div className="flex flex-col h-[75vh] space-y-4 p-4">
+    <div className="flex flex-col  space-y-4 p-4">
       {/* Messages */}
       <div className="overflow-auto mb-4 flex-grow space-y-4">
         {messages.map((message, i) => (
           <motion.div
             key={i}
             className={`my-2 px-4 py-2 rounded-lg 
-              ${message.sender === "you" ? "bg-blue-500 text-white ml-auto" : "bg-gray-200 mr-auto"}`}
+              ${message.sender === "you" ? "bg-[#FF6E00] text-white ml-auto" : "bg-gray-200 mr-auto"}`}
             variants={messageVariants}
             initial="hidden"
             animate="visible"
@@ -101,9 +102,16 @@ const ChatWindow = ({ hashedFaissFilename }) => {
           placeholder="Type your message here..."
           disabled={waiting}
         />
-        <button onClick={sendMessage} className="bg-blue-500 px-4 py-2" disabled={waiting}>
+        
+          <button onClick={sendMessage} className="bg-[#FF6E00] px-4 py-2" disabled={waiting}>
+          {waiting ? ( 
           <IoSendSharp className="text-white"/>
+          ) : (
+            <ClipLoader color="white" size={20} />
+          )}
         </button>
+      
+        
       </form>
     </div>
   );
