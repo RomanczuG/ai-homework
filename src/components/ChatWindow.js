@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "../utils/ToolUtils";
 import axios from "axios";
+import { motion } from "framer-motion";
+import { IoSendSharp } from "react-icons/io5";
 
 const ChatWindow = ({ hashedFaissFilename }) => {
   console.log("In ChatWindow, hashedFaissFilename:", hashedFaissFilename);
@@ -59,44 +61,49 @@ const ChatWindow = ({ hashedFaissFilename }) => {
       });
   }, []);
 
-  return (
-    <div className="flex flex-col h-[75vh]">
-      {/* Messages */}
+  const messageVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0 },
+  };
 
-      <div className="overflow-auto mb-4 flex-grow">
+  return (
+    <div className="flex flex-col h-[75vh] space-y-4 p-4">
+      {/* Messages */}
+      <div className="overflow-auto mb-4 flex-grow space-y-4">
         {messages.map((message, i) => (
-          <div
+          <motion.div
             key={i}
-            className={`
-                my-2 px-4 py-2 rounded-lg 
-                ${
-                  message.sender === "you"
-                    ? "bg-orange-300 ml-auto"
-                    : "bg-orange-500 mr-auto"
-                }
-              `}
+            className={`my-2 px-4 py-2 rounded-lg 
+              ${message.sender === "you" ? "bg-blue-500 text-white ml-auto" : "bg-gray-200 mr-auto"}`}
+            variants={messageVariants}
+            initial="hidden"
+            animate="visible"
           >
-            <b>{message.sender == "bot" ? "Your AI tutor" : "You"}:</b>{" "}
+            <b>{message.sender === "bot" ? "AI Tutor" : "You"}:</b>{" "}
             {message.text.split("\n").map((line, i) => (
               <div key={i}>{line}</div>
             ))}
-          </div>
+          </motion.div>
         ))}
         {waiting && (
-          <div className="my-2 px-4 py-2 rounded-lg bg-orange-300 ml-auto">
+          <div className="my-2 px-4 py-2 rounded-lg bg-gray-200 mr-auto animate-pulse">
             Bot is typing...
           </div>
         )}
       </div>
 
       {/* Send message form */}
-      <form onSubmit={sendMessage} className="mt-auto flex">
+      <form onSubmit={sendMessage} className="mt-auto flex rounded-lg overflow-hidden shadow-lg">
         <input
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
-          className="border rounded px-2 py-1 mr-2 flex-grow"
+          className="flex-grow px-4 py-2"
+          placeholder="Type your message here..."
+          disabled={waiting}
         />
-        <Button onClick={sendMessage} disabled={waiting}>Send</Button>
+        <button onClick={sendMessage} className="bg-blue-500 px-4 py-2" disabled={waiting}>
+          <IoSendSharp className="text-white"/>
+        </button>
       </form>
     </div>
   );
