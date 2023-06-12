@@ -17,6 +17,26 @@ async function getUserId() {
   return data["session"]["user"]["id"];
 }
 
+export const downloadStudyNote = async (hashedStudyNotesFilename) => 
+  {
+    const filename = hashedStudyNotesFilename;
+    // Send a POST request to the backend with the filename to download the file
+    axios.post('/download_dashboard', { filename })
+      .then(response => {
+        // Create a blob from the response data and download it
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'document.docx');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      })
+      .catch(error => {
+        console.error('Download failed:', error);
+      });
+  }
+
 export const handleLogout = async (navigate) => {
   const { error } = await supabase.auth.signOut();
   if (error) {

@@ -9,6 +9,7 @@ import {
   handleNewClass,
   handleFileUploadDashboard,
   handleLogout,
+  downloadStudyNote
 } from "../utils/DashboardUtils";
 import { Button } from "../utils/ToolUtils";
 
@@ -192,7 +193,9 @@ export const Dashboard = () => {
                           </button>
                         </div>
                         <div className="group">
-                          <button className="flex items-center space-x-2 p-1 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00] overflow-hidden relative group-hover:w-40">
+                          <button
+                          onClick={() => downloadStudyNote(file.hashedStudyNotesFilename)}
+                          className="flex items-center space-x-2 p-1 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00] overflow-hidden relative group-hover:w-40">
                             <AiOutlineFileText />
                             <span className="text-xs transition-all ease-in duration-200 text-white absolute whitespace-nowrap  py-1 px-2 rounded-sm right-full group-hover:right-0">
                               Download study notes
