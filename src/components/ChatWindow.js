@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "../utils/ToolUtils";
 import axios from "axios";
 
@@ -10,9 +10,11 @@ const ChatWindow = ({ hashedFaissFilename }) => {
   });
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [waiting, setWaiting] = useState(false);
 
   // Mock send message function
   const sendMessage = (e) => {
+    setWaiting(true);
     e.preventDefault();
     if (newMessage !== '') {
       setMessages([...messages, { text: newMessage, sender: 'you' }]);
@@ -26,7 +28,25 @@ const ChatWindow = ({ hashedFaissFilename }) => {
         .catch(e => console.error('Error:', e));
       setNewMessage('');
     }
+    setWaiting(false);
   };
+
+  useEffect(() => {
+    setWaiting(true);
+    if (newMessage !== '') {
+      // setMessages([...messages, { text: newMessage, sender: 'you' }]);
+      const dataToSend = { question: "Who are you? How can you help me? Can you give me example questions I can ask you?", hashedFaissFilename: hashedFaissFilename };
+      console.log('Sending:', dataToSend);
+      client.post('/chat', dataToSend)
+        .then(response => {
+          const data = response.data;
+          setMessages(prevMessages => [...prevMessages, { text: data.message, sender: 'bot' }]);
+        })
+        .catch(e => console.error('Error:', e));
+      setNewMessage('');
+    }
+    setWaiting(false);
+  }, []);
   
 
   return (
@@ -49,6 +69,7 @@ const ChatWindow = ({ hashedFaissFilename }) => {
             <b>{message.sender}:</b> {message.text}
           </div>
         ))}
+        {waiting && <div className="my-2 px-4 py-2 rounded-lg bg-orange-300 ml-auto">Bot is typing...</div>}
       </div>
 
       {/* Send message form */}
