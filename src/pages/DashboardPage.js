@@ -12,8 +12,8 @@ import {
 } from "../utils/DashboardUtils";
 import { Button } from "../utils/ToolUtils";
 
-
 export const Dashboard = () => {
+  
   const [classes, setClasses] = useState([]);
   const [selectedClass, setSelectedClass] = useState("");
   const [newClass, setNewClass] = useState("");
@@ -178,7 +178,9 @@ export const Dashboard = () => {
                       </div>
                       <div className="flex space-x-4 absolute right-0 mr-4">
                         <div className="group">
-                          <button className="flex items-center space-x-2 p-1 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00] overflow-hidden relative group-hover:w-32">
+                          <button
+                          onClick={() => navigate('/chat', { state: { hashedfilename: file.hashedfilename }})}
+                          className="flex items-center space-x-2 p-1 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00] overflow-hidden relative group-hover:w-32">
                             <AiOutlineMessage />
                             <span className="text-xs transition-all ease-in duration-200 text-white absolute whitespace-nowrap  py-1 px-2 rounded-sm right-full group-hover:right-0">
                               Chat with the file

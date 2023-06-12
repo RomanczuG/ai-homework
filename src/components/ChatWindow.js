@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
 import { Button } from '../utils/ToolUtils';
 
-const ChatWindow = ({ chat }) => {
+const ChatWindow = (hashedFaissFilename ) => {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
   
     // Mock send message function
     const sendMessage = (e) => {
       e.preventDefault();
-      setMessages([...messages, { text: newMessage, sender: 'you' }]);
-      // setMessages([...messages, { text: newMessage, sender: 'bot' }]);
-      setNewMessage('');
+      if (newMessage !== '') {
+        setMessages([...messages, { text: newMessage, sender: 'you' }]);
+        fetch('/chat', {   // replace '/chat' with the URL of your chat endpoint
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question: newMessage, hashedFaissFilename: hashedFaissFilename }),
+        })
+          .then(response => response.json())
+          .then(data => setMessages([...messages, { text: data.message, sender: 'bot' }]))
+          .catch(e => console.error('Error:', e));
+        setNewMessage('');
+      }
     };
-    // const receiveMessage = (e) => {
-    //     e.preventDefault();
-    //     setMessages([...messages, { text: newMessage, sender: 'bot' }]);
-    //     setNewMessage('');
-    //     };
   
     return (
       <div className="flex flex-col h-[75vh]">
