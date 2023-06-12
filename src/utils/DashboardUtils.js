@@ -21,8 +21,9 @@ export const downloadStudyNote = async (hashedStudyNotesFilename) =>
   {
     const filename = hashedStudyNotesFilename;
     // Send a POST request to the backend with the filename to download the file
-    axios.post('/download_dashboard', { filename })
+    axios.post('/download_dashboard', { filename }, { responseType: 'blob' })  // Add 'blob' responseType
       .then(response => {
+        console.log('Download response:', response);
         // Create a blob from the response data and download it
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement('a');
