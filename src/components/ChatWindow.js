@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '../utils/ToolUtils';
 
-const ChatWindow = (hashedFaissFilename ) => {
+const ChatWindow = ({hashedFaissFilename} ) => {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
   
@@ -15,6 +15,7 @@ const ChatWindow = (hashedFaissFilename ) => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ question: newMessage, hashedFaissFilename: hashedFaissFilename }),
         })
+
           .then(response => response.json())
           .then(data => setMessages([...messages, { text: data.message, sender: 'bot' }]))
           .catch(e => console.error('Error:', e));
