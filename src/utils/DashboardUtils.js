@@ -20,6 +20,7 @@ async function getUserId() {
 export const downloadStudyNote = async (hashedStudyNotesFilename) => 
   {
     const filename = hashedStudyNotesFilename;
+    console.log('In downloadStudyNote, filename:', filename);
     // Send a POST request to the backend with the filename to download the file
     axios.post('/download_dashboard', { filename }, { responseType: 'blob' })  // Add 'blob' responseType
       .then(response => {
