@@ -3,13 +3,22 @@ import { useNavigate } from "react-router-dom";
 import { FaPlusCircle, FaFilePdf } from "react-icons/fa";
 import { AiOutlineMessage, AiOutlineFileText } from "react-icons/ai";
 import { ClipLoader } from "react-spinners";
+import { motion } from "framer-motion";
+import {
+  HiOutlineLogout,
+  HiOutlinePlus,
+  HiOutlineUpload,
+  HiOutlineChatAlt,
+  HiOutlineDocumentDownload,
+  HiOutlineDocumentText,
+} from "react-icons/hi";
 import {
   Modal,
   fetchClassesWithFiles,
   handleNewClass,
   handleFileUploadDashboard,
   handleLogout,
-  downloadStudyNote
+  downloadStudyNote,
 } from "../utils/DashboardUtils";
 import { Button } from "../utils/ToolUtils";
 
@@ -130,6 +139,7 @@ export const Dashboard = () => {
                         loading={true}
                       />
                     )}
+                    <HiOutlineUpload className="mr-2" />
                     Upload File
                   </Button>
                 </div>
@@ -149,9 +159,12 @@ export const Dashboard = () => {
       <div className="flex flex-col w-full space-y-6">
         <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {classes.map((item, index) => (
-            <div
+            <motion.div
               key={index}
               className="p-5 min-h-[25vh] bg-white rounded-lg shadow-lg "
+              initial={{ y: -50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
             >
               <h2 className="text-3xl font-bold mb-3 text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700] ">
                 {item.name}
@@ -161,12 +174,15 @@ export const Dashboard = () => {
                 Array.isArray(item.files) &&
                 item.files.length > 0 ? (
                   item.files.map((file, index) => (
-                    <div
+                    <motion.div
                       key={index}
                       className="group flex items-center space-x-3 p-2 bg-gray-50 rounded-lg relative hover:bg-gray-100"
+                      initial={{ y: -10, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: index * 0.05 }}
                     >
                       <div className="mr-2">
-                        <FaFilePdf className="text-red-500" />
+                        <HiOutlineDocumentText className="text-red-500" />
                       </div>
                       <div className="flex-grow">
                         <a
@@ -177,56 +193,69 @@ export const Dashboard = () => {
                         </a>
                       </div>
                       <div className="flex space-x-4 absolute right-0 mr-4">
-                        <div className="group">
-                          <button
-                            onClick={() => {
-                              console.log(file)
-                              navigate('/dashboard/chat', { state: { hashedFaissFilename: file.hashedFaissFilename }})
-                            }}
-                            
-                            className="flex items-center space-x-2 p-1 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00] overflow-hidden relative group-hover:w-32"
-                          >
-                            <AiOutlineMessage />
-                            <span className="text-xs transition-all ease-in duration-200 text-white absolute whitespace-nowrap  py-1 px-2 rounded-sm right-full group-hover:right-0">
-                              Chat with the file
-                            </span>
-                          </button>
-                        </div>
-                        <div className="group">
-                          <button
-                          onClick={() => downloadStudyNote(file.hashedStudyNotesFilename)}
-                          className="flex items-center space-x-2 p-1 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00] overflow-hidden relative group-hover:w-40">
-                            <AiOutlineFileText />
-                            <span className="text-xs transition-all ease-in duration-200 text-white absolute whitespace-nowrap  py-1 px-2 rounded-sm right-full group-hover:right-0">
-                              Download study notes
-                            </span>
-                          </button>
-                        </div>
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          transition={{ duration: 0.1 }}
+                          onClick={() => {
+                            console.log(file);
+                            navigate("/dashboard/chat", {
+                              state: {
+                                hashedFaissFilename: file.hashedFaissFilename,
+                              },
+                            });
+                          }}
+                          className="flex items-center space-x-2 p-1 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00] overflow-hidden relative group-hover:w-32"
+                        >
+                          <HiOutlineChatAlt />
+                          <span className="text-xs transition-all ease-in duration-200 text-white absolute whitespace-nowrap  py-1 px-2 rounded-sm right-full group-hover:right-0">
+                            Chat with the file
+                          </span>
+                        </motion.button>
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          transition={{ duration: 0.1 }}
+                          onClick={() =>
+                            downloadStudyNote(file.hashedStudyNotesFilename)
+                          }
+                          className="flex items-center space-x-2 p-1 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00] overflow-hidden relative group-hover:w-40"
+                        >
+                          <HiOutlineDocumentDownload />
+                          <span className="text-xs transition-all ease-in duration-200 text-white absolute whitespace-nowrap  py-1 px-2 rounded-sm right-full group-hover:right-0">
+                            Download study notes
+                          </span>
+                        </motion.button>
                       </div>
-                    </div>
+                    </motion.div>
                   ))
                 ) : (
                   <p>No files uploaded yet</p>
                 )}
 
-                <div
+                <motion.div
                   onClick={() => setIsOpenFile(true)}
                   className="cursor-pointer flex items-center space-x-3 p-2 bg-gray-50 rounded-lg"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ duration: 0.1 }}
                 >
-                  <FaPlusCircle className="text-md text-[#a4c1ae] mr-2" />
-
+                  <HiOutlinePlus className="text-md text-[#a4c1ae] mr-2" />
                   <p className="text-gray-500">Add a new file</p>
-                </div>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
           ))}
-          <div
+          <motion.div
             onClick={() => setIsOpenClass(true)}
             className="cursor-pointer p-5 min-h-[25vh] bg-white rounded-lg shadow-lg flex flex-col items-center place-content-center"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.1 }}
           >
             <p className="mb-3">Add a new class</p>
             <FaPlusCircle className="text-5xl text-[#a4c1ae]" />
-          </div>
+          </motion.div>
         </div>
       </div>
       {/* Log out button */}
@@ -235,6 +264,7 @@ export const Dashboard = () => {
           onClick={() => handleLogout(navigate)}
           className="mt-4 py-2 w-40 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
         >
+          <HiOutlineLogout className="mr-2" />
           Log Out
         </Button>
       </div>

@@ -103,8 +103,8 @@ const ChatWindow = ({ hashedFaissFilename }) => {
           disabled={waiting}
         />
         
-          <button onClick={sendMessage} className="bg-[#FF6E00] px-4 py-2" disabled={waiting}>
-          {waiting ? ( 
+          <button onClick={sendMessage} className="flex bg-[#FF6E00] px-4 py-2 items-center justify-between" disabled={waiting}>
+          {!waiting ? ( 
           <IoSendSharp className="text-white"/>
           ) : (
             <ClipLoader color="white" size={20} />
