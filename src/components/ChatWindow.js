@@ -37,7 +37,7 @@ const ChatWindow = ({ hashedFaissFilename }) => {
   useEffect(() => {
     setWaiting(true);
     // Initial question
-    const initialQuestion = "Who are you? How can you help me? Can you give me example questions I can ask you?";
+    const initialQuestion = "Who are you? How can you help me? Can you give me example questions I can ask you related to the terms, problems, questions, definitions provided as context?";
     const dataToSend = {
       question: initialQuestion,
       hashedFaissFilename: hashedFaissFilename,
