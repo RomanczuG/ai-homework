@@ -3,6 +3,7 @@ import { Button } from "../utils/ToolUtils";
 import axios from "axios";
 
 const ChatWindow = ({ hashedFaissFilename }) => {
+  console.log('In ChatWindow, hashedFaissFilename:', hashedFaissFilename);
   const client = axios.create({
     // baseURL: "http://127.0.0.1:5000",
     baseURL: "https://studyboost.uc.r.appspot.com",
@@ -15,7 +16,7 @@ const ChatWindow = ({ hashedFaissFilename }) => {
     e.preventDefault();
     if (newMessage !== '') {
       setMessages([...messages, { text: newMessage, sender: 'you' }]);
-      const dataToSend = { question: newMessage, hashedFaissFilename };
+      const dataToSend = { question: newMessage, hashedFaissFilename: hashedFaissFilename };
       console.log('Sending:', dataToSend);
       client.post('/chat', dataToSend)
         .then(response => {
@@ -57,7 +58,9 @@ const ChatWindow = ({ hashedFaissFilename }) => {
           onChange={(e) => setNewMessage(e.target.value)}
           className="border rounded px-2 py-1 mr-2 flex-grow"
         />
-        <Button onClick={sendMessage}>Send</Button>
+        <Button 
+        
+        onClick={sendMessage}>Send</Button>
       </form>
     </div>
   );

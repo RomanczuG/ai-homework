@@ -13,7 +13,6 @@ import {
 import { Button } from "../utils/ToolUtils";
 
 export const Dashboard = () => {
-  
   const [classes, setClasses] = useState([]);
   const [selectedClass, setSelectedClass] = useState("");
   const [newClass, setNewClass] = useState("");
@@ -22,8 +21,8 @@ export const Dashboard = () => {
   const [uploadedLoading, setUploadedLoading] = useState(false);
   const [isOpenClass, setIsOpenClass] = useState(false);
   const [isOpenFile, setIsOpenFile] = useState(false);
-  const [loading, setLoading] = useState({});
-  const [generated, setGenerated] = useState({});
+  // const [loading, setLoading] = useState({});
+  // const [generated, setGenerated] = useState({});
   const navigate = useNavigate();
 
   const handleFileChange = (e) => {
@@ -179,8 +178,13 @@ export const Dashboard = () => {
                       <div className="flex space-x-4 absolute right-0 mr-4">
                         <div className="group">
                           <button
-                          onClick={() => navigate('/dashboard/chat', { state: { hashedFaissFilename: file.hashedFaissFilename }})}
-                          className="flex items-center space-x-2 p-1 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00] overflow-hidden relative group-hover:w-32">
+                            onClick={() => {
+                              console.log(file)
+                              navigate('/dashboard/chat', { state: { hashedFaissFilename: file.hashedFaissFilename }})
+                            }}
+                            
+                            className="flex items-center space-x-2 p-1 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00] overflow-hidden relative group-hover:w-32"
+                          >
                             <AiOutlineMessage />
                             <span className="text-xs transition-all ease-in duration-200 text-white absolute whitespace-nowrap  py-1 px-2 rounded-sm right-full group-hover:right-0">
                               Chat with the file

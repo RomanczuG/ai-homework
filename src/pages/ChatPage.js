@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import ChatWindow from "../components/ChatWindow";
 import { motion } from "framer-motion";
+import { useLocation } from "react-router-dom";
 // Mock data
 // const chats = [
 //   { id: 1, name: 'ECE362', pdf: ['textbook1', 'hw2'] },
@@ -8,7 +9,11 @@ import { motion } from "framer-motion";
 //   { id: 3, name: 'MA132', pdf: ['textbook1', 'hw2']  },
 // ];
 
-export const ChatPage = ({ hashedFaissFilename }) => {
+export const ChatPage = () => {
+  const location = useLocation();
+  const hashedFaissFilename = location.state.hashedFaissFilename;
+  console.log('In ChatPage, hashedFaissFilename:', hashedFaissFilename);
+ 
 
   return (
     <motion.div
