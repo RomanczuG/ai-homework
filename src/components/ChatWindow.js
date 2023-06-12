@@ -15,7 +15,9 @@ const ChatWindow = ({ hashedFaissFilename }) => {
     e.preventDefault();
     if (newMessage !== '') {
       setMessages([...messages, { text: newMessage, sender: 'you' }]);
-      client.post('/chat', { question: newMessage, hashedFaissFilename })
+      const dataToSend = { question: newMessage, hashedFaissFilename };
+      console.log('Sending:', dataToSend);
+      client.post('/chat', dataToSend)
         .then(response => {
           const data = response.data;
           setMessages(prevMessages => [...prevMessages, { text: data.message, sender: 'bot' }]);
@@ -24,6 +26,7 @@ const ChatWindow = ({ hashedFaissFilename }) => {
       setNewMessage('');
     }
   };
+  
 
   return (
     <div className="flex flex-col h-[75vh]">
