@@ -22,7 +22,7 @@ export const downloadStudyNote = async (hashedStudyNotesFilename) =>
     const filename = hashedStudyNotesFilename;
     console.log('In downloadStudyNote, filename:', filename);
     // Send a POST request to the backend with the filename to download the file
-    client.post('/download_dashboard', { filename }, { responseType: 'blob' })  // Add 'blob' responseType
+    client.post('/download_dashboard', { filename:filename }, { responseType: 'blob' })  // Add 'blob' responseType
       .then(response => {
         console.log('Download response:', response);
         // Create a blob from the response data and download it
