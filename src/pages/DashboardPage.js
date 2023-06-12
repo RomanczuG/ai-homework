@@ -179,7 +179,7 @@ export const Dashboard = () => {
                       <div className="flex space-x-4 absolute right-0 mr-4">
                         <div className="group">
                           <button
-                          onClick={() => navigate('/dashboard/chat', { state: { hashedfilename: file.hashedfilename }})}
+                          onClick={() => navigate('/dashboard/chat', { state: { hashedFaissFilename: file.hashedFaissFilename }})}
                           className="flex items-center space-x-2 p-1 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00] overflow-hidden relative group-hover:w-32">
                             <AiOutlineMessage />
                             <span className="text-xs transition-all ease-in duration-200 text-white absolute whitespace-nowrap  py-1 px-2 rounded-sm right-full group-hover:right-0">

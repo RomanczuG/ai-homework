@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 //   { id: 3, name: 'MA132', pdf: ['textbook1', 'hw2']  },
 // ];
 
-export const ChatPage = ({ hashedfilename }) => {
+export const ChatPage = ({ hashedFaissFilename }) => {
 
   return (
     <motion.div
@@ -38,7 +38,7 @@ export const ChatPage = ({ hashedfilename }) => {
           {/* <h2 className="mb-4 font-bold">Chat with {selectedChat.name}</h2> */}
           <h2 className="mb-4 font-bold">Chat </h2>
           {/* The chat messages will be displayed here */}
-          <ChatWindow hashedfilename={hashedfilename} />
+          <ChatWindow hashedFaissFilename={hashedFaissFilename} />
         </div>
       </div>
     </motion.div>
