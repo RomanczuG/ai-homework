@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import { HiMail, HiLockClosed } from 'react-icons/hi';
 import { ClipLoader } from 'react-spinners';
+import { Button } from '../utils/ToolUtils';
+import { motion } from 'framer-motion';
 
 export const RegisterPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -14,6 +18,11 @@ export const RegisterPage = () => {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    if(password !== repeatPassword) {
+      setError('Passwords do not match!');
+      setLoading(false);
+      return;
+    }
 
     const { user, error } = await supabase.auth.signUp({ email:email, password:password });
 
@@ -31,43 +40,69 @@ export const RegisterPage = () => {
   };
 
   return (
-    <section className="flex flex-col items-center min-h-screen bg-[#F0FFE0] px-6 md:px-20 py-16">
+    <motion.section
+      className="flex flex-col items-center justify-center min-h-screen bg-[#F0FFE0] py-16 px-6 md:px-20  pattern-grid-lg"
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      
+
+      <form onSubmit={handleRegister} className="w-full max-w-md shadow-lg p-8 rounded-lg space-y-6 bg-white">
       <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-8">
         <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
           Create Your Account
         </span>
       </h1>
-      <p className="text-lg md:text-xl xl:text-2xl mb-8">
+      <p className="text-lg md:text-xl xl:text-2xl mb-8 text-center">
         Join our amazing community and facilitate your learning!
       </p>
-      <form onSubmit={handleRegister} className="w-full max-w-md">
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="block w-full px-4 py-3 mb-4 border border-gray-300 rounded-md"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          className="block w-full px-4 py-3 mb-4 border border-gray-300 rounded-md"
-        />
+        <div className="relative">
+          <HiMail className="absolute text-[#FF6E00] left-3 top-1/2 transform -translate-y-1/2" />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-md"
+          />
+        </div>
+        <div className="relative">
+          <HiLockClosed className="absolute text-[#FF6E00] left-3 top-1/2 transform -translate-y-1/2" />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-md"
+          />
+        </div>
+        <div className="relative">
+          <HiLockClosed className="absolute text-[#FF6E00] left-3 top-1/2 transform -translate-y-1/2" />
+          <input
+            type="password"
+            placeholder="Repeat Password"
+            value={repeatPassword}
+            onChange={(e) => setRepeatPassword(e.target.value)}
+            required
+            className="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-md"
+          />
+        </div>
         <div className="flex justify-center">
-          <button
-            type="submit"
-            disabled={loading}
-            className="py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
-          >
+          <Button variant="solid" color="yellow" className="w-full" type="submit" disabled={loading}>
             {loading ? <ClipLoader size={20} color={'#252D62'} /> : 'Register'}
-          </button>
+          </Button>
         </div>
       </form>
+      <div className="mt-4">
+        Already have an account?{' '}
+        <Button variant="link" color="yellow" onClick={() => navigate('/login')}>
+          Log In
+        </Button>
+      </div>
       {error && <p className="mt-4 text-red-500">{error}</p>}
-    </section>
+    </motion.section>
   );
 };

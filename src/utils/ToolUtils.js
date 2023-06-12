@@ -211,14 +211,38 @@ export const Stage = ({ stageNumber, currentStage, stageName, isLoading }) => {
 };
 
 // ! BUTTONS
-export const Button = ({ onClick, children }) => (
-  <button
-    onClick={onClick}
-    className="bg-[#FFC700] hover:bg-[#FF6E00] w-48 justify-center text-white rounded-md px-3 py-2 transition duration-300 flex items-center space-x-2"
-  >
-    {children}
-  </button>
-);
+
+
+
+export const Button = ({ onClick, children }) => {
+  const buttonVariants = {
+    hover: {
+      scale: 1.05,
+      transition: {
+        duration: 0.3
+      }
+    },
+    tap: {
+      scale: 0.95,
+      backgroundColor: "#FF6E00",
+      transition: {
+        duration: 0.1
+      }
+    }
+  };
+
+  return (
+    <motion.button
+      onClick={onClick}
+      whileHover="hover"
+      whileTap="tap"
+      variants={buttonVariants}
+      className="bg-[#FFC700] hover:bg-[#FF6E00] w-48 justify-center text-white rounded-md px-3 py-2 transition-all duration-300 ease-in-out flex items-center space-x-2"
+    >
+      {children}
+    </motion.button>
+  );
+};
 
 // ! CHECKBOX
 export const CheckIcon = () => (

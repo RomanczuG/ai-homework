@@ -1,6 +1,7 @@
 import React from "react";
-// import { motion } from 'framer-motion';
+import { HiCheckCircle } from "react-icons/hi";
 import YouTubeVideo from "./YouTubeVideo";
+
 export const HeroSection = () => {
   return (
     <section className="relative flex flex-col md:flex-row items-center justify-around px-6 md:px-20 py-16 min-h-[55vh] bg-[#F0FFE0]">
@@ -26,18 +27,14 @@ export const HeroSection = () => {
         <div className="space-y-4 mb-6 text-lg md:text-xl xl:text-2xl">
         
           <div className="flex items-center">
-            <div className="w-2 h-2 rounded-full bg-[#FFC700] mr-4"></div>
+            <HiCheckCircle className="text-[#FFC700] mr-2" size={24} />
             <p className="font-semibold">Chat about textbooks with an AI bot (soon)</p>
           </div>
           <div className="flex items-center">
-            <div className="w-2 h-2 rounded-full bg-[#FFC700] mr-4"></div>
+            <HiCheckCircle className="text-[#FFC700] mr-2" size={24} />
             <p className="font-semibold">Get easy-to-understand study notes</p>
           </div>
         </div>
-        {/* <h2 className="text-lg md:text-xl font-bold mb-4">
-          &#11088;&#11088;&#11088;&#11088;&#11088; rates and hundreds of happy
-          students
-        </h2> */}
         <a
           href="#features"
           className="py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
@@ -50,7 +47,7 @@ export const HeroSection = () => {
         <img
           className="w-full h-full object-cover rounded-lg shadow-md"
           src="/hero.webp" // Replace with your preferred image URL
-          alt="Hero Image"
+          alt="AI studying tool illustration"
         />
       </div>
     </section>
