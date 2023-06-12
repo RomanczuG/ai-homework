@@ -76,7 +76,7 @@ const ChatWindow = ({ hashedFaissFilename }) => {
                 }
               `}
           >
-            <b>{message.sender}:</b>{" "}
+            <b>{message.sender == "bot" ? "Your AI tutor" : "You"}:</b>{" "}
             {message.text.split("\n").map((line, i) => (
               <div key={i}>{line}</div>
             ))}
