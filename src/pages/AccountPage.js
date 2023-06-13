@@ -5,8 +5,8 @@ import { ClipLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 import { Upgrade } from "../components/Upgrade";
-import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
-
+import { AiOutlineMail, AiOutlineLock} from 'react-icons/ai';
+import { HiOutlineLogout } from "react-icons/hi";
 import { motion } from 'framer-motion';
 
 const fetchSession = async () => {
@@ -35,7 +35,7 @@ export const Account = () => {
 
   return (
     <motion.div
-      className="flex min-h-screen bg-gray-100 flex flex-col items-center justify-center py-8 px-2 sm:px-8 lg:px-10"
+      className="flex min-h-screen bg-[#F0FFE0] flex flex-col items-center justify-center py-8 px-2 sm:px-8 lg:px-10"
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -79,9 +79,13 @@ export const Account = () => {
         <Upgrade />
       </div>
       {/* Log out button */}
-      <div className="mt-3">
-        <Button variant="solid" color="primary" onClick={() => handleLogout(navigate)}>
-          Sign out
+      <div className="mt-4 ">
+        <Button
+          onClick={() => handleLogout(navigate)}
+          className="mt-4 py-2 w-40 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
+        >
+          <HiOutlineLogout className="mr-2" />
+          Log Out
         </Button>
       </div>
     </motion.div>
