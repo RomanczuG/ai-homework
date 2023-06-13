@@ -67,8 +67,10 @@ export const ChatPage = () => {
             </div>
           )}
           {pdfUrl && (
-            <Button>
- onClick={() => window.open(pdfUrl, "_blank")}
+            <Button
+            onClick={() => window.open(pdfUrl, "_blank")}
+            >
+
 
 Open PDF in new tab
             </Button>
