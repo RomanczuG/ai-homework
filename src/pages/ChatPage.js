@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Button } from "../utils/ToolUtils";
 
 const client = axios.create({
   // baseURL: "http://127.0.0.1:5000",
@@ -66,12 +67,17 @@ export const ChatPage = () => {
             </div>
           )}
           {pdfUrl && (
-            <button
-              className="mt-4 px-4 py-2 rounded bg-blue-500 text-white"
-              onClick={() => window.open(pdfUrl, "_blank")}
-            >
-              Open PDF in new tab
-            </button>
+            <Button>
+ onClick={() => window.open(pdfUrl, "_blank")}
+
+Open PDF in new tab
+            </Button>
+            // <button
+            //   className="mt-4 px-4 py-2 rounded bg-blue-500 text-white"
+             
+            // >
+              
+            // </button>
           )}
         </div>
 
