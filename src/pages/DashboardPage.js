@@ -21,6 +21,7 @@ import {
   downloadStudyNote,
 } from "../utils/DashboardUtils";
 import { Button } from "../utils/ToolUtils";
+import { supabase } from "../supabaseClient";
 
 export const Dashboard = () => {
   const [classes, setClasses] = useState([]);
@@ -33,6 +34,8 @@ export const Dashboard = () => {
   const [isOpenFile, setIsOpenFile] = useState(false);
   // const [loading, setLoading] = useState({});
   // const [generated, setGenerated] = useState({});
+  const [filesGenerated, setFilesGenerated] = useState(false);
+  const [fileId, setFileId] = useState("");
   const navigate = useNavigate();
 
   const handleFileChange = (e) => {
@@ -44,8 +47,49 @@ export const Dashboard = () => {
     fetchClassesWithFiles(setClasses, setSelectedClass);
   }, []);
 
+  useEffect(() => {
+    const checkFilesGenerated = async () => {
+      const { data, error } = await supabase.from('files').select('study_notes_created, faiss_created').eq('id', fileId);
+      console.log(data);
+      if (error) {
+        console.error("Error fetching file info: ", error);
+      } else {
+        const file = data[0];
+        if (file.study_notes_created && file.faiss_created) {
+          setFilesGenerated(true);
+          clearInterval(intervalId);
+        }
+      }
+    };
+
+    let intervalId;
+    if (fileId) {
+      intervalId = setInterval(checkFilesGenerated, 3 * 60 * 1000);
+    }
+    
+    return () => {
+      clearInterval(intervalId);
+    }
+  }, [fileId]);
+
+  const handleFileUpload = async () => {
+    const id = await handleFileUploadDashboard(
+      setUploadedLoading,
+      file,
+      selectedClass,
+      setClasses,
+      setSelectedClass
+    );
+    console.log("id:", id);
+    setFileId(id);
+    setUploadedLoading(true);
+  }
+
   return (
     <div className="flex min-h-screen bg-[#F0FFE0] flex flex-col items-center py-12 px-6 sm:px-8 lg:px-10">
+      {filesGenerated && ( 
+        <div> generated </div>
+      )}
       <Modal isOpen={isOpenClass} setIsOpen={setIsOpenClass}>
         <div className="flex flex-col items-center justify-center">
           <div className="bg-white rounded-lg shadow-lg p-5 text-center">
@@ -120,13 +164,7 @@ export const Dashboard = () => {
                 <div className="mt-4 ">
                   <Button
                     onClick={() => {
-                      handleFileUploadDashboard(
-                        setUploadedLoading,
-                        file,
-                        selectedClass,
-                        setClasses,
-                        setSelectedClass
-                      );
+                      handleFileUpload();
                       setIsOpenFile(false);
                     }}
                     className="py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
@@ -193,47 +231,45 @@ export const Dashboard = () => {
                         </a>
                       </div>
                       <div className="flex space-x-4 absolute right-0 mr-4">
-  <div className="group relative">
-    <motion.button
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      transition={{ duration: 0.1 }}
-      onClick={() => {
-        console.log(file);
-        navigate("/dashboard/chat", {
-          state: {
-            hashedFaissFilename: file.hashedFaissFilename,
-          },
-        });
-      }}
-      className="flex items-center p-1 hover:py-1 hover:px-2 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00]"
-    >
-      <HiOutlineChatAlt />
-      <span className="text-xs transition-all ease-in duration-200 text-transparent group-hover:text-white whitespace-nowrap  py-1 ml-1 rounded-sm absolute group-hover:static">
-        Chat with the file
-      </span>
-    </motion.button>
-  </div>
+                        <div className="group relative">
+                          <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={{ duration: 0.1 }}
+                            onClick={() => {
+                              console.log(file);
+                              navigate("/dashboard/chat", {
+                                state: {
+                                  hashedFaissFilename: file.hashedFaissFilename,
+                                },
+                              });
+                            }}
+                            className="flex items-center p-1 hover:py-1 hover:px-2 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00]"
+                          >
+                            <HiOutlineChatAlt />
+                            <span className="text-xs transition-all ease-in duration-200 text-transparent group-hover:text-white whitespace-nowrap  py-1 ml-1 rounded-sm absolute group-hover:static">
+                              Chat with the file
+                            </span>
+                          </motion.button>
+                        </div>
 
-  <div className="group relative">
-    <motion.button
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      transition={{ duration: 0.1 }}
-      onClick={() =>
-        downloadStudyNote(file.hashedStudyNotesFilename)
-      }
-      className="flex items-center p-1 hover:py-1 hover:px-2 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00]"
-    >
-      <HiOutlineDocumentDownload />
-      <span className="text-xs transition-all ease-in duration-200 text-transparent group-hover:text-white whitespace-nowrap  py-1 ml-1 rounded-sm absolute group-hover:static">
-        Download study notes
-      </span>
-    </motion.button>
-  </div>
-</div>
-
-
+                        <div className="group relative">
+                          <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={{ duration: 0.1 }}
+                            onClick={() =>
+                              downloadStudyNote(file.hashedStudyNotesFilename)
+                            }
+                            className="flex items-center p-1 hover:py-1 hover:px-2 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00]"
+                          >
+                            <HiOutlineDocumentDownload />
+                            <span className="text-xs transition-all ease-in duration-200 text-transparent group-hover:text-white whitespace-nowrap  py-1 ml-1 rounded-sm absolute group-hover:static">
+                              Download study notes
+                            </span>
+                          </motion.button>
+                        </div>
+                      </div>
                     </motion.div>
                   ))
                 ) : (

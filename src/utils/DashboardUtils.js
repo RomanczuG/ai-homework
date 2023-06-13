@@ -154,6 +154,7 @@ export const handleFileUploadDashboard = async (
     ])
     .select();
   console.log("File uploaded to supabase:", data);
+  formData.append("file_id", data[0].id);
   // console.log("Error:", error)
 
   if (error) {
@@ -203,5 +204,7 @@ export const handleFileUploadDashboard = async (
 
   fetchClassesWithFiles(setClasses, setSelectedClass);
   setUploadedLoading(false);
+  // lets return file id from data
+  return data[0].id;
 };
 
