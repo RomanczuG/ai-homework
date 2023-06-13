@@ -28,12 +28,14 @@ export const ChatPage = () => {
       responseType: 'blob' // Force to receive data in a Blob Format
     })
     .then(response => {
+      console.log('In ChatPage, response:', response);
       //Create a Blob from the PDF Stream
       const file = new Blob(
         [response.data], 
         {type: 'application/pdf'});
       //Build a URL from the file
       const fileURL = URL.createObjectURL(file);
+      console.log('In ChatPage, fileURL:', fileURL);
       //Open the URL on new Window
       setPdfUrl(fileURL);
     })

@@ -6,7 +6,7 @@ import { IoSendSharp } from "react-icons/io5";
 import { ClipLoader } from "react-spinners";
 
 const ChatWindow = ({ hashedFaissFilename }) => {
-  console.log("In ChatWindow, hashedFaissFilename:", hashedFaissFilename);
+  
   const client = axios.create({
     // baseURL: "http://127.0.0.1:5000",
     baseURL: "https://studyboost.uc.r.appspot.com",
