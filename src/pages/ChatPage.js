@@ -18,6 +18,8 @@ export const ChatPage = () => {
   const [numPages, setNumPages] = useState(null);
   const [pdfUrl, setPdfUrl] = useState(null);
   console.log('In ChatPage, hashedFaissFilename:', hashedFaissFilename);
+  console.log('In ChatPage, pdfFilename:', pdfFilename);
+  console.log('In ChatPage, hashedFilename:', hashedFilename);
   
 
 
