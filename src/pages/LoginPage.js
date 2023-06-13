@@ -14,6 +14,17 @@ export const LoginPage = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  const resetPassword = async () => {
+    const emailforgot = prompt('Please enter your email:');
+    if (!emailforgot) {
+      alert('Please enter your email!');
+      return;
+    }
+    await supabase.auth.resetPasswordForEmail(emailforgot);
+    // await supabase.auth.api.resetPasswordForEmail(emailforgot);
+    alert('Check your email for the password reset link!');
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -92,6 +103,7 @@ export const LoginPage = () => {
           </label>
           <button
             type="button"
+            onClick={resetPassword}
             // onClick={handleForgotPassword}
             className="text-[#FF6E00] hover:underline"
           >

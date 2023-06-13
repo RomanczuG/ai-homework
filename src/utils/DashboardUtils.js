@@ -114,7 +114,7 @@ export const handleNewClass = async (
 };
 
 export const handleFileUploadDashboard = async (
-  setUploadedLoading,
+  // setUploadedLoading,
   file,
   selectedClass,
   setClasses,
@@ -125,7 +125,7 @@ export const handleFileUploadDashboard = async (
     alert("Please select a file to upload");
     return;
   }
-  setUploadedLoading(true);
+  
 
   // Upload file to supabase
 
@@ -155,6 +155,7 @@ export const handleFileUploadDashboard = async (
   console.log("File uploaded to supabase:", data);
   formData.append("file_id", data[0].id);
   console.log("Form data:", formData);
+  // setUploadedLoading((prev) => ({...prev, [data[0].id]: true}));
   // console.log("Error:", error)
 
   if (error) {
@@ -203,7 +204,7 @@ export const handleFileUploadDashboard = async (
   }
 
   fetchClassesWithFiles(setClasses, setSelectedClass);
-  setUploadedLoading(false);
+  
   // lets return file id from data
   return data[0].id;
 };

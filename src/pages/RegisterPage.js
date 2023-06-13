@@ -14,6 +14,8 @@ export const RegisterPage = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+
+
   const handleRegister = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -33,10 +35,11 @@ export const RegisterPage = () => {
     } else if (user) {
       console.log(user);
       console.log("user created");
-      navigate('/login');
+      // navigate('/login');
     }
 
     setLoading(false);
+    alert('Check your email for the confirmation link!');
   };
 
   return (
@@ -90,11 +93,11 @@ export const RegisterPage = () => {
             className="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-md"
           />
         </div>
-        <div className="flex justify-center">
+        {/* <div className="flex justify-center"> */}
           <Button variant="solid" color="yellow" className="w-full" type="submit" disabled={loading}>
             {loading ? <ClipLoader size={20} color={'#252D62'} /> : 'Register'}
           </Button>
-        </div>
+        {/* </div> */}
       </form>
       <div className="mt-4">
         Already have an account?{' '}

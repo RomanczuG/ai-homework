@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "../utils/ToolUtils";
-import { Modal, handleLogout } from "../utils/DashboardUtils";
-import { ClipLoader } from "react-spinners";
+import { handleLogout } from "../utils/DashboardUtils";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 import { Upgrade } from "../components/Upgrade";
@@ -9,12 +8,14 @@ import { AiOutlineMail, AiOutlineLock} from 'react-icons/ai';
 import { HiOutlineLogout } from "react-icons/hi";
 import { motion } from 'framer-motion';
 
-const fetchSession = async () => {
+const fetchSession = async (setEmail) => {
   const { data, error } = await supabase.auth.getSession();
   if (error) {
     console.error("Error getting user session:", error);
   } else {
+    
     console.log(data);
+    setEmail(data.session.user.email);
   }
 };
 
@@ -27,10 +28,26 @@ const Card = ({ children }) => {
 };
 
 export const Account = () => {
-  const [upgradeModal, setUpgradeModal] = useState(false);
+  const [email, setEmail] = useState("");
+  // const [upgradeModal, setUpgradeModal] = useState(false);
+  const resetPassword = async () => {
+    await supabase.auth.resetPasswordForEmail(email);
+    alert('Check your email for the password reset link!');
+  };
+  const resetEmail = async () => {
+    const newEmail = prompt('Please enter your new email:');
+    if (!newEmail) {
+      alert('Please enter your new email!');
+      return;
+    }
+    await supabase.auth.updateUser({ email: newEmail });
+    alert('Check your email for the confirmation link!');
+    window.location.reload();
+  };
+
   const navigate = useNavigate();
   useEffect(() => {
-    fetchSession();
+    fetchSession(setEmail);
   }, []);
 
   return (
@@ -59,17 +76,21 @@ export const Account = () => {
                 <AiOutlineMail className="text-[#FF6E00]" />
                 <p>Email:</p>
               </span>
-              <Button variant="outline" color="primary">
+              <Button
+              onClick={() => resetEmail()}
+              variant="outline" color="primary">
                 Change email
               </Button>
             </div>
-            <p className="bg-gray-200 p-2 rounded-md">romanczug@icloud.com</p>
+            <p className="bg-gray-200 p-2 rounded-md">{email}</p>
             <div className="flex items-center justify-between">
               <span className="flex items-center space-x-2">
                 <AiOutlineLock className="text-[#FF6E00]" />
                 <p>Password:</p>
               </span>
-              <Button variant="outline" color="primary">
+              <Button
+              onClick={() => resetPassword()}
+              variant="outline" color="primary">
                 Change password
               </Button>
             </div>
