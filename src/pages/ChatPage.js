@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button } from "../utils/ToolUtils";
+import { ClipLoader } from 'react-spinners';
 
 const client = axios.create({
   // baseURL: "http://127.0.0.1:5000",
@@ -53,7 +54,7 @@ export const ChatPage = () => {
         {/* Sidebar */}
         <div className="w-full sm:w-1/2 bg-gray-200 p-4 flex flex-col">
           <h2 className="mb-4 font-bold">{pdfFilename}</h2>
-          {pdfUrl && (
+          {pdfUrl ? (
             <div className="w-full flex-grow overflow-auto shadow-lg">
               <iframe
                 src={`${pdfUrl}#toolbar=0`}
@@ -65,6 +66,15 @@ export const ChatPage = () => {
                 }}
               />
             </div>
+          ):(
+
+
+            <ClipLoader
+            size={20}
+            color={"#FF6E00"}
+            
+            loading={true}
+          />
           )}
           {pdfUrl && (
             <div className="mt-3">
