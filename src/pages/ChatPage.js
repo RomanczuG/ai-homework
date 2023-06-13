@@ -54,7 +54,7 @@ export const ChatPage = () => {
         <div className="w-full sm:w-1/2 bg-gray-200 p-4 flex flex-col">
           <h2 className="mb-4 font-bold">{pdfFilename}</h2>
           {pdfUrl && (
-            <div className="w-full flex-grow overflow-auto rounded-lg shadow-lg">
+            <div className="w-full flex-grow overflow-auto shadow-lg">
               <iframe
                 src={`${pdfUrl}#toolbar=0`}
                 title="PDF Document"
