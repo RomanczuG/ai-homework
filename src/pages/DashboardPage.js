@@ -20,7 +20,6 @@ import {
   downloadStudyNote,
 } from "../utils/DashboardUtils";
 import { Button } from "../utils/ToolUtils";
-import { supabase } from "../supabaseClient";
 
 export const Dashboard = () => {
   const [classes, setClasses] = useState([]);
@@ -29,14 +28,8 @@ export const Dashboard = () => {
   const [file, setFile] = useState("");
   const [pdfSrc, setPdfSrc] = useState("");
   const [loading, setLoading] = useState(false);
-  // const [uploadedLoading, setUploadedLoading] = useState({});
-  // const [filesGenerated, setFilesGenerated] = useState({});
-
   const [isOpenClass, setIsOpenClass] = useState(false);
   const [isOpenFile, setIsOpenFile] = useState(false);
-  // const [loading, setLoading] = useState({});
-  // const [generated, setGenerated] = useState({});
-  const [fileId, setFileId] = useState("");
   const navigate = useNavigate();
 
   const handleFileChange = (e) => {
@@ -44,9 +37,6 @@ export const Dashboard = () => {
     setPdfSrc(URL.createObjectURL(e.target.files[0]));
   };
 
-  // useEffect(() => {
-  //   fetchClassesWithFiles(setClasses, setSelectedClass);
-  // }, []);
 
   useEffect(() => {
     // Immediately fetch on component mount
@@ -62,41 +52,7 @@ export const Dashboard = () => {
     // Return a cleanup function to clear the interval when the component is unmounted
     return () => clearInterval(intervalId);
   }, []); // Empty dependency array so this runs once on mount and not on every render
-  
 
-  // useEffect(() => {
-  //   const checkFilesGenerated = async () => {
-  //     const { data, error } = await supabase
-  //       .from("files")
-  //       .select("study_notes_created, faiss_created")
-  //       .eq("id", fileId);
-  //     console.log("data:", data);
-      
-  //     // setFilesGenerated((prev) => ({ ...prev, [fileId]: false }));
-  //     if (error) {
-  //       console.error("Error fetching file info: ", error);
-  //     } else {
-  //       const file = data[0];
-  //       if (file.study_notes_created && file.faiss_created) {
-  //         // setFilesGenerated((prev) => ({ ...prev, [fileId]: true }));
-  //         clearInterval(intervalId);
-  //       }
-  //     }
-  //   };
-
-  //   let intervalId;
-  //   if (fileId) {
-  //     intervalId = setInterval(checkFilesGenerated, 1 * 60 * 1000);
-  //     return () => {
-  //       clearInterval(intervalId);
-  //       setFileId("");
-  //     };
-  //   }
-
-  //   return () => {
-  //     clearInterval(intervalId);
-  //   };
-  // }, [fileId]);
 
   const handleFileUpload = async () => {
     setLoading(true);
@@ -108,9 +64,6 @@ export const Dashboard = () => {
       setSelectedClass
     );
     console.log("id:", id);
-    // console.log("Uploaded loading:", uploadedLoading);
-    // setUploadedLoading((prev) => ({ ...prev, [id]: false }));
-    setFileId(id);
     setLoading(false);
   };
 
@@ -220,14 +173,6 @@ export const Dashboard = () => {
                     }}
                     className="py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
                   >
-                    {/* {uploadedLoading && (
-                      <ClipLoader
-                        className="mr-1"
-                        size={25}
-                        color={"#ffffff"}
-                        loading={true}
-                      />
-                    )} */}
                     <HiOutlineUpload className="mr-2" />
                     Upload File
                   </Button>
