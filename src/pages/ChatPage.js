@@ -24,7 +24,7 @@ export const ChatPage = () => {
 
 
   useEffect(() => {
-    client.get(`/${hashedFilename}`, {
+    client.get(`/download_pdf/${hashedFilename}`, {
       responseType: 'blob' // Force to receive data in a Blob Format
     })
     .then(response => {
