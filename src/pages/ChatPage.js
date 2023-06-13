@@ -46,7 +46,7 @@ export const ChatPage = () => {
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      style={{ height: "calc(100vh - (60px))" }}
+      style={{ height: "calc(80vh)" }}
       className="h-full"
     >
       <div className="flex flex-col sm:flex-row h-full">
