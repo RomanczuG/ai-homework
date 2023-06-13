@@ -46,7 +46,7 @@ export const ChatPage = () => {
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      style={{ height: "calc(100vh - 80px)" }}  // 80px is approximated navbar height
+      style={{ height: "calc(100vh - 80px)" }} // 80px is approximated navbar height
       className="h-full"
     >
       <div className="flex flex-col sm:flex-row h-full">
@@ -56,7 +56,7 @@ export const ChatPage = () => {
           {pdfUrl && (
             <div className="w-full flex-grow overflow-auto rounded-lg shadow-lg">
               <iframe
-                src={pdfUrl}
+                src={`${pdfUrl}#toolbar=0`}
                 title="PDF Document"
                 style={{
                   border: "none",
@@ -67,9 +67,14 @@ export const ChatPage = () => {
             </div>
           )}
           {pdfUrl && (
-            <Button onClick={() => window.open(pdfUrl, "_blank")} className="mt-4">
-              Open PDF in new tab
-            </Button>
+            <div className="mt-3">
+              <Button
+                onClick={() => window.open(pdfUrl, "_blank")}
+                className="mt-4"
+              >
+                Open PDF in new tab
+              </Button>
+            </div>
           )}
         </div>
 
