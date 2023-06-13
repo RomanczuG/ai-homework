@@ -139,7 +139,6 @@ export const handleFileUploadDashboard = async (
   formData.append("file", newFile);
   formData.append("hashedStudyNotesFilename", hashedStudyNotesFilename);
   formData.append("hashedFaissFilename", hashedFaissFilename);
-  console.log("Form data:", formData);
   const fileSize = file.size;
   const { data, error } = await supabase
     .from("files")
@@ -155,6 +154,7 @@ export const handleFileUploadDashboard = async (
     .select();
   console.log("File uploaded to supabase:", data);
   formData.append("file_id", data[0].id);
+  console.log("Form data:", formData);
   // console.log("Error:", error)
 
   if (error) {
