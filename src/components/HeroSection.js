@@ -28,7 +28,7 @@ export const HeroSection = () => {
         
           <div className="flex items-center">
             <HiCheckCircle className="text-[#FFC700] mr-2" size={24} />
-            <p className="font-semibold">Chat about textbooks with an AI bot (soon)</p>
+            <p className="font-semibold">Chat about textbooks with an AI bot</p>
           </div>
           <div className="flex items-center">
             <HiCheckCircle className="text-[#FFC700] mr-2" size={24} />
