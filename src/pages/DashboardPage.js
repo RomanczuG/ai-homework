@@ -240,6 +240,8 @@ export const Dashboard = () => {
                                   state: {
                                     hashedFaissFilename:
                                       file.hashedFaissFilename,
+                                    pdfFilename: file.file_name,
+                                    hashedFilename: file.hashed_file_name, 
                                   },
                                 });
                               }}
