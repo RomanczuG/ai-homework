@@ -87,9 +87,9 @@ export const Dashboard = () => {
 
   return (
     <div className="flex min-h-screen bg-[#F0FFE0] flex flex-col items-center py-12 px-6 sm:px-8 lg:px-10">
-      {filesGenerated && ( 
+      {/* {filesGenerated && ( 
         <div> generated </div>
-      )}
+      )} */}
       <Modal isOpen={isOpenClass} setIsOpen={setIsOpenClass}>
         <div className="flex flex-col items-center justify-center">
           <div className="bg-white rounded-lg shadow-lg p-5 text-center">
