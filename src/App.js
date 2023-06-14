@@ -33,7 +33,7 @@ function App() {
         <p className="mt-4 text-center">
           We are currently in beta. Create an account and take advantage of our platform for free!
         </p>
-        <div className="mt-3">
+        <div className="mt-3 text-center">
         <Link to="/dashboard">
           <Button>Start</Button>
         </Link>
