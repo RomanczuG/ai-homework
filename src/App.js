@@ -22,7 +22,7 @@ function App() {
       </Helmet>
       <div className="bg-[#F0FFE0] min-h-screen">
         <HeroSection />
-
+        <div className="text-center justify-between">
         <h2 className="text-3xl md:text-4xl font-semibold text-center">
           Try it for{" "}
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
@@ -37,6 +37,7 @@ function App() {
         <Link to="/dashboard">
           <Button>Start</Button>
         </Link>
+        </div>
         </div>
         {/* <p className="mt-4 text-center">
           Simply upload your PDF hw or exam file below to see how to get better
