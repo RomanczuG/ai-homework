@@ -33,9 +33,11 @@ function App() {
         <p className="mt-4 text-center">
           We are currently in beta. Create an account and take advantage of our platform for free!
         </p>
+        <div className="mt-3">
         <Link to="/dashboard">
           <Button>Start</Button>
         </Link>
+        </div>
         {/* <p className="mt-4 text-center">
           Simply upload your PDF hw or exam file below to see how to get better
           grades and study better.
