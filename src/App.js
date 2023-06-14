@@ -30,8 +30,11 @@ function App() {
           </span>{" "}
           now!
         </h2>
+        <p className="mt-4 text-center">
+          We are currently in beta. Create an account and take advantage of our platform for free!
+        </p>
         <Link to="/dashboard">
-          <Button>Get Started</Button>
+          <Button>Start</Button>
         </Link>
         {/* <p className="mt-4 text-center">
           Simply upload your PDF hw or exam file below to see how to get better
