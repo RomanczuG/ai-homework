@@ -6,6 +6,7 @@ import { FeaturesSection } from "./components/FeaturesSection";
 import { AboutAuthorSection } from "./components/AboutAuthorSection";
 import { Helmet } from "react-helmet";
 import ToolBlock from "./components/ToolBlock";
+import { Button } from "./utils/ToolUtils";
 // import YouTubeVideo from "./components/YouTubeVideo";
 
 function App() {
@@ -21,18 +22,16 @@ function App() {
       </Helmet>
       <div className="bg-[#F0FFE0] min-h-screen">
         <HeroSection />
-        
+
         <h2 className="text-3xl md:text-4xl font-semibold text-center">
-          Try it for {" "}
+          Try it for{" "}
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
             FREE
           </span>{" "}
           now!
         </h2>
-        <Link to="/register">
-          <button className="bg-[#FF6E00] hover:bg-[#FFC700] text-white font-bold py-2 px-4 rounded-full mt-4">
-            Create an account
-          </button>
+        <Link to="/dashboard">
+          <Button>Get Started</Button>
         </Link>
         {/* <p className="mt-4 text-center">
           Simply upload your PDF hw or exam file below to see how to get better
