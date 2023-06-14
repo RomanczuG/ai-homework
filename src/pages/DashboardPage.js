@@ -137,7 +137,7 @@ export const Dashboard = () => {
                 Upload a new file
               </h1>
               <p className="text-gray-500">
-                Choose a class and upload your homework or textbook PDF file.
+                Choose a class and upload your homework or textbook PDF file. Study Notes are available for shorter files only.
               </p>
             </div>
             <select
