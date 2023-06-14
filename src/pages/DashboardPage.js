@@ -227,7 +227,7 @@ export const Dashboard = () => {
 
                       <div className="flex space-x-4 absolute right-0 mr-4">
                         <div className="group relative">
-                          {file.faiss_created ? (
+                          {file.faiss_created == "true" ? (
                             <motion.button
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
@@ -271,7 +271,7 @@ export const Dashboard = () => {
                         </div>
 
                         <div className="group relative">
-                          {file.study_notes_created ? (
+                          {file.study_notes_created == "true" ? (
                             <motion.button
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
