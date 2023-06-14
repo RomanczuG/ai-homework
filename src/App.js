@@ -35,7 +35,7 @@ function App() {
         </p>
         <div className="mt-3 text-center">
         <Link to="/dashboard">
-          <Button>Start</Button>
+          <Button>Start Now!</Button>
         </Link>
         </div>
         </div>
