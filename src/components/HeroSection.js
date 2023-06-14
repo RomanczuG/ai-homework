@@ -37,7 +37,7 @@ export const HeroSection = () => {
         </div>
         <a
           href="#features"
-          className="py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
+          className="py-2 text-white bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
         >
           Learn more
         </a>
