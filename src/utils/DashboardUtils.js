@@ -106,7 +106,9 @@ export const handleNewClass = async (
       console.error("Error creating class:", error);
     } else {
       setNewClass("");
+      window.sa_event("New class created", { class: newClass });
       fetchClassesWithFiles(setClasses, setSelectedClass);
+
     }
   } catch (error) {
     console.error("Error fetching classes:", error);
@@ -114,7 +116,6 @@ export const handleNewClass = async (
 };
 
 export const handleFileUploadDashboard = async (
-  // setUploadedLoading,
   file,
   selectedClass,
   setClasses,
@@ -125,10 +126,13 @@ export const handleFileUploadDashboard = async (
     alert("Please select a file to upload");
     return;
   }
-  
 
+  const maxSize = 10 * 1024 * 1024; // 10MB in bytes
+  if (file.size > maxSize) {
+    alert("File size exceeds 10MB limit. Please select a smaller file.");
+    return;
+  }
   // Upload file to supabase
-
   const fileName = file.name; // This is the original filename
   const classId = selectedClass; // selectedClass is already an id
   const formData = new FormData();
@@ -173,26 +177,16 @@ export const handleFileUploadDashboard = async (
         fileSize,
       });
       console.log("File uploaded to flask server "); // Store the filename in the state
-      const { error } = await supabase.from("study_notes").insert([
-        {
-          file_id: data[0].id,
-          hashed_note_name: hashedStudyNotesFilename,
-        },
-      ]);
-      if (error) {
-        console.error("Error inserting record:", error);
-      }
-      const { errorFaiss } = await supabase.from("faiss").insert([
-        {
-          file_id: data[0].id,
-          hashed_faiss_name: hashedFaissFilename,
-        },
-      ]);
-      if (errorFaiss) {
-        console.error("Error inserting record:", error);
-      }
     } else {
+      const { data, error } = await supabase.from("files").delete().match({
+        id: data[0].id,
+      });
+      if (error) {
+        console.error("Error deleting record:", error);
+      }
+      window.sa_event("PDF failed upload", { error: response.data.error });
       alert("File upload failed");
+      
       console.error(
         "File upload failed. Check internet connection and try again."
       );

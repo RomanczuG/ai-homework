@@ -41,6 +41,7 @@ export const RegisterPage = () => {
           { user_id: user.id, subscription_type: 'free' },
         ]);
     }
+    window.sa_event('Register', { email: email });
 
     setLoading(false);
     alert('Check your email for the confirmation link!');

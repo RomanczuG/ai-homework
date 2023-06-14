@@ -52,8 +52,8 @@ const Router = () => {
     <Layout>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/tool" element={<Tool />} />
-        <Route path="/tool-testing" element={<ToolTesting />} />
+        {/* <Route path="/tool" element={<Tool />} /> */}
+        {/* <Route path="/tool-testing" element={<ToolTesting />} /> */}
         {/* <Route path="/blog" element={<Blog />} /> */}
         <Route path="/faq" element={<FAQ />} />
         <Route path="/how-it-works" element={<HowItWorks />} />

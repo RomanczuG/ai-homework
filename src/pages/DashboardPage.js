@@ -37,22 +37,20 @@ export const Dashboard = () => {
     setPdfSrc(URL.createObjectURL(e.target.files[0]));
   };
 
-
   useEffect(() => {
     // Immediately fetch on component mount
     fetchClassesWithFiles(setClasses, setSelectedClass);
 
     console.log("classes:", classes);
-  
+
     // Then set up an interval to fetch every minute
     const intervalId = setInterval(() => {
       fetchClassesWithFiles(setClasses, setSelectedClass);
     }, 60 * 1000); // 60,000 milliseconds = 1 minute
-  
+
     // Return a cleanup function to clear the interval when the component is unmounted
     return () => clearInterval(intervalId);
   }, []); // Empty dependency array so this runs once on mount and not on every render
-
 
   const handleFileUpload = async () => {
     setLoading(true);
@@ -63,6 +61,7 @@ export const Dashboard = () => {
       setClasses,
       setSelectedClass
     );
+    window.sa_event("File Upload", { file_id: id });
     console.log("id:", id);
     setLoading(false);
   };
@@ -77,11 +76,10 @@ export const Dashboard = () => {
           <div className="flex bg-white items-center justify-center rounded-lg shadow-lg p-5 text-center">
             <div className="mb-4">
               <h1 className="text-xl font-bold mb-2 text-black bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700] ">
-                Proccesing your file
+                Uploading your file
               </h1>
               <p className="text-gray-500">
-                Please wait while we process your file. It may take a few
-                minutes.
+                Please wait while we upload your file.
               </p>
               <ClipLoader
                 className="mt-4"
@@ -236,12 +234,13 @@ export const Dashboard = () => {
                               transition={{ duration: 0.1 }}
                               onClick={() => {
                                 console.log(file);
+                                window.sa_event("Chat", { file_id: file.id });
                                 navigate("/dashboard/chat", {
                                   state: {
                                     hashedFaissFilename:
                                       file.hashedFaissFilename,
                                     pdfFilename: file.file_name,
-                                    hashedFilename: file.hashed_file_name, 
+                                    hashedFilename: file.hashed_file_name,
                                   },
                                 });
                               }}
@@ -257,14 +256,6 @@ export const Dashboard = () => {
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
                               transition={{ duration: 0.1 }}
-                              // onClick={() => {
-                              //   console.log(file);
-                              //   navigate("/dashboard/chat", {
-                              //     state: {
-                              //       hashedFaissFilename: file.hashedFaissFilename,
-                              //     },
-                              //   });
-                              // }}
                               className="flex items-center p-1 hover:py-1 hover:px-2 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00]"
                             >
                               <ClipLoader
@@ -285,12 +276,17 @@ export const Dashboard = () => {
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
                               transition={{ duration: 0.1 }}
-                              onClick={() =>
-                                downloadStudyNote(file.hashedStudyNotesFilename)
-                              }
+                              onClick={() => {
+                                window.sa_event("Study Notes", {
+                                  file_id: file.id,
+                                });
+                                downloadStudyNote(
+                                  file.hashedStudyNotesFilename
+                                );
+                              }}
                               className="flex items-center p-1 hover:py-1 hover:px-2 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00]"
                             >
-                              <HiOutlineDocumentDownload size={20}/>
+                              <HiOutlineDocumentDownload size={20} />
                               <span className="text-xs transition-all ease-in duration-200 text-transparent group-hover:text-white whitespace-nowrap  py-1 ml-1 rounded-sm absolute group-hover:static">
                                 Download study notes
                               </span>
