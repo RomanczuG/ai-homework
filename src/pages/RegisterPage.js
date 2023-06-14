@@ -35,7 +35,11 @@ export const RegisterPage = () => {
     } else if (user) {
       console.log(user);
       console.log("user created");
-      // navigate('/login');
+      const { data, error } = await supabase
+        .from('subscriptions')
+        .insert([
+          { user_id: user.id, subscription_type: 'free' },
+        ]);
     }
 
     setLoading(false);
