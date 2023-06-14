@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback } from "react";
-
+import { Link } from "react-router-dom";
 // import { Navbar } from "./components/Navbar";
 import { HeroSection } from "./components/HeroSection";
 import { FeaturesSection } from "./components/FeaturesSection";
@@ -29,11 +29,16 @@ function App() {
           </span>{" "}
           now!
         </h2>
-        <p className="mt-4 text-center">
+        <Link to="/register">
+          <button className="bg-[#FF6E00] hover:bg-[#FFC700] text-white font-bold py-2 px-4 rounded-full mt-4">
+            Create an account
+          </button>
+        </Link>
+        {/* <p className="mt-4 text-center">
           Simply upload your PDF hw or exam file below to see how to get better
           grades and study better.
         </p>
-        <ToolBlock />
+        <ToolBlock /> */}
         {/* <div>
           <h2 className="text-3xl md:text-4xl font-semibold text-center">
             This is a {" "}
