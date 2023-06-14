@@ -271,7 +271,9 @@ export const Dashboard = () => {
                         </div>
 
                         <div className="group relative">
-                          {file.study_notes_created == "true" ? (
+                          {file.study_notes_created == "true" || file.study_notes_created == "impossible" ? (
+
+                            file.study_notes_created == "true" ? (
                             <motion.button
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
@@ -291,6 +293,20 @@ export const Dashboard = () => {
                                 Download study notes
                               </span>
                             </motion.button>
+                            ) : (
+                              <motion.button
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                              transition={{ duration: 0.1 }}
+                             
+                              className="flex items-center p-1 hover:py-1 hover:px-2 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00]"
+                            >
+                              <HiOutlineDocumentDownload size={20} />
+                              <span className="text-xs transition-all ease-in duration-200 text-transparent group-hover:text-white whitespace-nowrap  py-1 ml-1 rounded-sm absolute group-hover:static">
+                                No study notes available
+                              </span>
+                            </motion.button>
+                            ) 
                           ) : (
                             <motion.button
                               whileHover={{ scale: 1.05 }}
