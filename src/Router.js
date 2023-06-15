@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "./App";
 import Tool from "./pages/Tool";
 import ToolTesting from "./pages/ToolTesting";
+import Blog from "./pages/Blog";
+import BlogPost from "./components/BlogPost";
 import { Navbar } from "./components/Navbar";
 import { FAQ } from "./pages/FAQ";
 import { HowItWorks } from "./pages/HowItWorks";
@@ -54,7 +56,9 @@ const Router = () => {
         <Route path="/" element={<App />} />
         {/* <Route path="/tool" element={<Tool />} /> */}
         {/* <Route path="/tool-testing" element={<ToolTesting />} /> */}
-        {/* <Route path="/blog" element={<Blog />} /> */}
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:id" element={<BlogPost />} />
+
         <Route path="/faq" element={<FAQ />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />

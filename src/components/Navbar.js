@@ -76,6 +76,14 @@ export const Navbar = () => {
                   </li>
                   <li>
                     <Link
+                      to="/Blog"
+                      className="text-[#212529] hover:text-[#FF6E00] transition-all duration-200"
+                    >
+                      Blog
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
                       to="/dashboard"
                       className={`text-white bg-[#FFC700] hover:bg-[#FF6E00] px-4 py-2 border text-md border-[#FFC700] rounded-md transition-all duration-200`}
                     >
