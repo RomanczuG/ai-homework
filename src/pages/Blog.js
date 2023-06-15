@@ -78,7 +78,15 @@ In conclusion, AI-powered tools are revolutionizing the educational landscape, m
   };
 
   return (
-    <div className="flex flex-col w-full space-y-6 bg-[#F0FFE0]">
+    <div className="flex flex-col items-center p-6 w-full space-y-6 bg-[#F0FFE0]">
+        <h1 className="text-5xl font-bold mt-10 mb-10 text-gray-900 bg-clip-text  ">
+        Here is our 
+        <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
+          {" "}
+          blog about learning!
+        </span>
+
+      </h1>
       {/* <Button onClick={addArticle}>New</Button> */}
       <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         <Suspense fallback={<div>Loading...</div>}>

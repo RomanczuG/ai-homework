@@ -69,8 +69,9 @@ const Router = () => {
           <Route path="/auth" element={<AuthenticatedPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dashboard/account" element={<Account />} />
+          <Route path="/dashboard/chat" element={<ChatPage />} />
         </Route>
-        <Route path="/dashboard/chat" element={<ChatPage />} />
+        
       </Routes>
       </Layout>
     </BrowserRouter>

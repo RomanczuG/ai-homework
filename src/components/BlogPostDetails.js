@@ -27,8 +27,9 @@ const BlogPostDetail = () => {
   if (!post || !post.content) return <div>Loading...</div>;
 
   return (
+    <div className="bg-[#F0FFE0] p-6">
     <motion.div
-      className="max-w-3xl mx-auto mt-16 p-5 bg-white rounded-lg shadow-lg bg-[#F0FFE0]"
+      className="max-w-3xl mx-auto  p-5 bg-white rounded-lg shadow-lg "
       initial={{ y: -50, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -46,6 +47,7 @@ const BlogPostDetail = () => {
         </Link>
       </div>
     </motion.div>
+    </div>
   );
 };
 
