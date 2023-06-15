@@ -76,7 +76,7 @@ export const Navbar = () => {
                   </li>
                   <li>
                     <Link
-                      to="/Blog"
+                      to="/blog"
                       className="text-[#212529] hover:text-[#FF6E00] transition-all duration-200"
                     >
                       Blog
