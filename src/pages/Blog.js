@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 import { Button } from "../utils/ToolUtils";
-import ReactMarkdown from 'react-markdown'
 
+const BlogPost = React.lazy(() => import("../components/BlogPost"));
 
 const Blog = () => {
   // Here is where you would fetch your blog posts from your client and save them to state
@@ -22,7 +22,7 @@ const Blog = () => {
   };
 
   const addPost = async () => {
-    const {  error } = await supabase.from("posts").insert([
+    const { error } = await supabase.from("posts").insert([
       {
         title: "The Ultimate Guide to Studying Smarter, Not Harder",
         content: `
@@ -48,7 +48,7 @@ Studying smarter, not harder, is the key to academic success. By using these str
       `,
       },
     ]);
-    
+
     console.log(error);
   };
 
@@ -56,32 +56,14 @@ Studying smarter, not harder, is the key to academic success. By using these str
     <div className="flex flex-col w-full space-y-6">
       <Button onClick={addPost}>add post</Button>
       <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {blogPosts.map((post, index) => (
-          <motion.div
-            key={post.id}
-            className="p-5 min-h-[25vh] bg-white rounded-lg shadow-lg "
-            initial={{ y: -50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-          >
-            <h2 className="text-3xl font-bold mb-3 text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700] ">
-              {post.title}
-            </h2>
-            <div className="space-y-3">
-              <ReactMarkdown>{post.content}</ReactMarkdown>
-              <Link
-                to={`/blog/${post.id}`}
-                className="text-blue-500 hover:text-blue-700"
-              >
-                Read More
-              </Link>
-            </div>
-          </motion.div>
-        ))}
+      <Suspense fallback={<div>Loading...</div>}>
+  {blogPosts.map((post, index) => (
+    <BlogPost post={post} index={index} /> // index is passed as a prop here
+  ))}
+</Suspense>
       </div>
     </div>
   );
-
 };
 
 export default Blog;
