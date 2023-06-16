@@ -39,6 +39,7 @@ export const LoginPage = () => {
     } else if (user) {
       console.log(user);
       console.log("user logged in");
+      window.sa_event("login", {"email" : email});
       navigate('/dashboard');
     }
     else{
