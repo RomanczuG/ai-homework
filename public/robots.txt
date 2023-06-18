@@ -1,4 +1,6 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow: /tool-testing
+Disallow: /auth
+Disallow: /dashboard
+Disallow: /dashboard/account
+Disallow: /dashboard/chat
 Sitemap: https://studysmarternow.com/sitemap.xml

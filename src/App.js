@@ -14,10 +14,12 @@ function App() {
   const appContent = useMemo(() => (
     <>
       <Helmet>
-        <title>Study Smarter Now: Achieve academic success with AI</title>
+        <title>
+          Study Smarter Now: Boost Your Test-Taking Strategies with AI
+        </title>
         <meta
           name="description"
-          content="Boost your learning with StudyBoost, an AI-powered homework help tool that generates comprehensive study notes from your homework PDFs. Improve test-taking strategies, achieve academic success, and master learning strategies with ease."
+          content="Welcome to Study Smarter Now, an AI-powered platform designed to help you study smarter, not harder. Enhance your learning with our cutting-edge homework help tool. Whether you're looking to improve your test-taking strategies, need assistance with your homework, or want to enhance your overall learning strategy, our AI tool is here to support you on your academic journey."
         />
       </Helmet>
       <div className="bg-[#F0FFE0] min-h-screen">

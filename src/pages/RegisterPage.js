@@ -5,7 +5,7 @@ import { HiMail, HiLockClosed } from 'react-icons/hi';
 import { ClipLoader } from 'react-spinners';
 import { Button } from '../utils/ToolUtils';
 import { motion } from 'framer-motion';
-
+import { Helmet } from 'react-helmet';
 export const RegisterPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -54,6 +54,13 @@ export const RegisterPage = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
+      <Helmet>
+      <title>Register | Your Site</title>
+      <meta
+        name="description"
+        content="Join our amazing community and facilitate smarter studying and effective test taking. Sign up for homework help and other resources."
+      />
+    </Helmet>
       
 
       <form onSubmit={handleRegister} className="w-full max-w-md shadow-lg p-8 rounded-lg space-y-6 bg-white">
@@ -63,7 +70,7 @@ export const RegisterPage = () => {
         </span>
       </h1>
       <p className="text-lg md:text-xl xl:text-2xl mb-8 text-center">
-        Join our amazing community and facilitate your learning!
+        Join our amazing community and access powerful tools for smarter studying, effective test taking strategies, and comprehensive homework help.
       </p>
         <div className="relative">
           <HiMail className="absolute text-[#FF6E00] left-3 top-1/2 transform -translate-y-1/2" />

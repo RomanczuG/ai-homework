@@ -5,6 +5,7 @@ import { ClipLoader } from 'react-spinners';
 import { HiMail, HiLockClosed } from 'react-icons/hi';
 import { Button } from '../utils/ToolUtils';
 import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet';
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -58,7 +59,13 @@ export const LoginPage = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      
+      <Helmet>
+      <title>Login | Your Site</title>
+      <meta
+        name="description"
+        content="Login to your account and unlock powerful tools for smarter studying and effective test taking strategies."
+      />
+    </Helmet>
 
       <form onSubmit={handleLogin} className="w-full max-w-md shadow-lg p-8 rounded-lg space-y-6 bg-white">
       <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-8">
@@ -67,7 +74,7 @@ export const LoginPage = () => {
         </span>
       </h1>
       <p className="text-lg md:text-xl xl:text-2xl mb-8 text-center">
-        Log in to your account and facilitate your learning
+        Log in to your account and unlock powerful tools for smarter studying, effective test taking strategies, and comprehensive homework help.
       </p>
         <div className="relative">
           <HiMail className="absolute text-[#FF6E00] left-3 top-1/2 transform -translate-y-1/2" />
