@@ -19,7 +19,7 @@ export const HeroSection = () => {
           Upload your homework or textbook and allow our AI to provide comprehensive
           study notes, or interact with the AI bot for further insight. Improve
           your test-taking strategies, study smarter, achieve academic success,
-          and master learning strategies with ease.
+          and improve learning strategies with ease.
         </h2>
         <p className="text-3xl mb-4 font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
             Study Tools:
