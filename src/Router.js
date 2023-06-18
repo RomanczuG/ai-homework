@@ -23,7 +23,8 @@ import { Account } from "./pages/AccountPage";
 import { Modal } from "./utils/DashboardUtils";
 import { useState } from "react";
 import { Upgrade } from "./components/Upgrade";
-const Layout = ({children}) => {
+import Redirector from "./utils/Redirector";
+const Layout = ({ children }) => {
   const location = useLocation();
   const isDashboard = location.pathname.includes("/dashboard");
 
@@ -32,13 +33,13 @@ const Layout = ({children}) => {
   const toggleModal = () => setUpgradeModal(!upgradeModal);
   return (
     <>
-      {isDashboard ? <DashboardNavbar onUpgradeClick={toggleModal}/> : <Navbar />}
+      {isDashboard ? (
+        <DashboardNavbar onUpgradeClick={toggleModal} />
+      ) : (
+        <Navbar />
+      )}
       <Modal isOpen={upgradeModal} setIsOpen={setUpgradeModal}>
-        
-         
-             <Upgrade />
-             
-        
+        <Upgrade />
       </Modal>
 
       {children}
@@ -48,31 +49,30 @@ const Layout = ({children}) => {
 };
 
 const Router = () => {
-
   return (
     <BrowserRouter>
-    <Layout>
-      <Routes>
-        <Route path="/" element={<App />} />
-        {/* <Route path="/tool" element={<Tool />} /> */}
-        {/* <Route path="/tool-testing" element={<ToolTesting />} /> */}
-        <Route exact path="/blog" element={<Blog />} />
-        <Route path="/blog/:id" element={<BlogPostDetail />} />
+      <Layout>
+        <Routes>
+          <Route path="*" element={<Redirector />} />
+          <Route path="/" element={<App />} />
+          {/* <Route path="/tool" element={<Tool />} /> */}
+          {/* <Route path="/tool-testing" element={<ToolTesting />} /> */}
+          <Route exact path="/blog" element={<Blog />} />
+          <Route path="/blog/:id" element={<BlogPostDetail />} />
 
-        <Route path="/faq" element={<FAQ />} />
-        <Route path="/how-it-works" element={<HowItWorks />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/terms-of-service" element={<TermsOfService />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route element={<PrivateRoutes />}>
-          <Route path="/auth" element={<AuthenticatedPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/dashboard/account" element={<Account />} />
-          <Route path="/dashboard/chat" element={<ChatPage />} />
-        </Route>
-        
-      </Routes>
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/how-it-works" element={<HowItWorks />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path="/auth" element={<AuthenticatedPage />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/account" element={<Account />} />
+            <Route path="/dashboard/chat" element={<ChatPage />} />
+          </Route>
+        </Routes>
       </Layout>
     </BrowserRouter>
   );
