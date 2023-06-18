@@ -5,14 +5,16 @@ import { motion } from "framer-motion";
 import { IoSendSharp } from "react-icons/io5";
 import { ClipLoader } from "react-spinners";
 
+const client = axios.create({
+  // baseURL: "http://127.0.0.1:5000",
+  baseURL: "https://studyboost.uc.r.appspot.com",
+});
+const [messages, setMessages] = useState([]);
+const [newMessage, setNewMessage] = useState("");
+
 const ChatWindow = ({ hashedFaissFilename }) => {
   
-  const client = axios.create({
-    // baseURL: "http://127.0.0.1:5000",
-    baseURL: "https://studyboost.uc.r.appspot.com",
-  });
-  const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState("");
+  
   const [waiting, setWaiting] = useState(false);
 
   // Mock send message function

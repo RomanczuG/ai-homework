@@ -10,6 +10,7 @@ const client = axios.create({
   // baseURL: "http://127.0.0.1:5000",
   baseURL: "https://studyboost.uc.r.appspot.com",
 });
+const [pdfUrl, setPdfUrl] = useState(null);
 
 export const ChatPage = () => {
   const location = useLocation();
@@ -17,7 +18,7 @@ export const ChatPage = () => {
   const pdfFilename = location.state.pdfFilename;
   const hashedFilename = location.state.hashedFilename;
   const [numPages, setNumPages] = useState(null);
-  const [pdfUrl, setPdfUrl] = useState(null);
+  
   console.log("In ChatPage, hashedFaissFilename:", hashedFaissFilename);
   console.log("In ChatPage, pdfFilename:", pdfFilename);
   console.log("In ChatPage, hashedFilename:", hashedFilename);
