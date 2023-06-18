@@ -9,40 +9,47 @@ const client = axios.create({
   // baseURL: "http://127.0.0.1:5000",
   baseURL: "https://studyboost.uc.r.appspot.com",
 });
-const [messages, setMessages] = useState([]);
-const [newMessage, setNewMessage] = useState("");
 
 const ChatWindow = ({ hashedFaissFilename }) => {
-  
-  
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+
   const [waiting, setWaiting] = useState(false);
 
   // Mock send message function
   const sendMessage = (e) => {
     e.preventDefault();
-    if (newMessage !== '') {
+    if (newMessage !== "") {
       setWaiting(true);
-      setMessages([...messages, { text: newMessage, sender: 'you' }]);
-      const dataToSend = { question: newMessage, hashedFaissFilename: hashedFaissFilename };
-      console.log('Sending:', dataToSend);
-      client.post('/chat', dataToSend)
-        .then(response => {
+      setMessages([...messages, { text: newMessage, sender: "you" }]);
+      const dataToSend = {
+        question: newMessage,
+        hashedFaissFilename: hashedFaissFilename,
+      };
+      console.log("Sending:", dataToSend);
+      client
+        .post("/chat", dataToSend)
+        .then((response) => {
           const data = response.data;
-          setMessages(prevMessages => [...prevMessages, { text: data.message, sender: 'bot' }]);
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            { text: data.message, sender: "bot" },
+          ]);
           setWaiting(false);
         })
-        .catch(e => {
-          console.error('Error:', e);
+        .catch((e) => {
+          console.error("Error:", e);
           setWaiting(false);
         });
-      setNewMessage('');
+      setNewMessage("");
     }
   };
 
   useEffect(() => {
     setWaiting(true);
     // Initial question
-    const initialQuestion = "You are an AI tutor. Please tell me who are you? How can you help me? Can you give me example questions I can ask you related to the terms, problems, questions, definitions provided as context?";
+    const initialQuestion =
+      "You are an AI tutor. Please tell me who are you? How can you help me? Can you give me example questions I can ask you related to the terms, problems, questions, definitions provided as context?";
     const dataToSend = {
       question: initialQuestion,
       hashedFaissFilename: hashedFaissFilename,
@@ -77,7 +84,11 @@ const ChatWindow = ({ hashedFaissFilename }) => {
           <motion.div
             key={i}
             className={`my-2 px-4 py-2 rounded-lg 
-              ${message.sender === "you" ? "bg-[#FF6E00] text-white ml-auto" : "bg-gray-200 mr-auto"}`}
+              ${
+                message.sender === "you"
+                  ? "bg-[#FF6E00] text-white ml-auto"
+                  : "bg-gray-200 mr-auto"
+              }`}
             variants={messageVariants}
             initial="hidden"
             animate="visible"
@@ -96,7 +107,10 @@ const ChatWindow = ({ hashedFaissFilename }) => {
       </div>
 
       {/* Send message form */}
-      <form onSubmit={sendMessage} className="mt-auto flex rounded-lg overflow-hidden shadow-lg">
+      <form
+        onSubmit={sendMessage}
+        className="mt-auto flex rounded-lg overflow-hidden shadow-lg"
+      >
         <input
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
@@ -104,16 +118,18 @@ const ChatWindow = ({ hashedFaissFilename }) => {
           placeholder="Type your message here..."
           disabled={waiting}
         />
-        
-          <button onClick={sendMessage} className="flex bg-[#FF6E00] px-4 py-2 items-center justify-between" disabled={waiting}>
-          {!waiting ? ( 
-          <IoSendSharp className="text-white"/>
+
+        <button
+          onClick={sendMessage}
+          className="flex bg-[#FF6E00] px-4 py-2 items-center justify-between"
+          disabled={waiting}
+        >
+          {!waiting ? (
+            <IoSendSharp className="text-white" />
           ) : (
             <ClipLoader color="white" size={20} />
           )}
         </button>
-      
-        
       </form>
     </div>
   );

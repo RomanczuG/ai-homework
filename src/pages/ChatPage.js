@@ -10,9 +10,10 @@ const client = axios.create({
   // baseURL: "http://127.0.0.1:5000",
   baseURL: "https://studyboost.uc.r.appspot.com",
 });
-const [pdfUrl, setPdfUrl] = useState(null);
+
 
 export const ChatPage = () => {
+  const [pdfUrl, setPdfUrl] = useState(null);
   const location = useLocation();
   const hashedFaissFilename = location.state.hashedFaissFilename;
   const pdfFilename = location.state.pdfFilename;
