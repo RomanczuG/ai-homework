@@ -15,12 +15,12 @@ export const HeroSection = () => {
             Strategies
           </span>
         </h1>
-        <p className="text-base md:text-lg xl:text-xl mb-6">
+        <h2 className="text-base md:text-lg xl:text-xl mb-6">
           Upload your homework or textbook and allow our AI to provide comprehensive
           study notes, or interact with the AI bot for further insight. Improve
           your test-taking strategies, study smarter, achieve academic success,
           and master learning strategies with ease.
-        </p>
+        </h2>
         <p className="text-3xl mb-4 font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
             Study Tools:
           </p>

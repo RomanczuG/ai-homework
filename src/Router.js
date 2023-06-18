@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "./App";
-import Tool from "./pages/Tool";
-import ToolTesting from "./pages/ToolTesting";
+// import Tool from "./pages/Tool";
+// import ToolTesting from "./pages/ToolTesting";
 import Blog from "./pages/Blog";
 import BlogPostDetail from "./components/BlogPostDetails";
 import { Navbar } from "./components/Navbar";
@@ -24,6 +24,7 @@ import { Modal } from "./utils/DashboardUtils";
 import { useState } from "react";
 import { Upgrade } from "./components/Upgrade";
 import Redirector from "./utils/Redirector";
+import NotFoundPage from "./pages/NotFoundPage";
 const Layout = ({ children }) => {
   const location = useLocation();
   const isDashboard = location.pathname.includes("/dashboard");
@@ -72,6 +73,7 @@ const Router = () => {
             <Route path="/dashboard/account" element={<Account />} />
             <Route path="/dashboard/chat" element={<ChatPage />} />
           </Route>
+          
         </Routes>
       </Layout>
     </BrowserRouter>
