@@ -60,6 +60,7 @@ export const RegisterPage = () => {
         name="description"
         content="Join our amazing community and facilitate smarter studying and effective test taking. Sign up for homework help and other resources."
       />
+      <link rel="canonical" href="https://www.studysmarternow.com/register" />
     </Helmet>
       
 

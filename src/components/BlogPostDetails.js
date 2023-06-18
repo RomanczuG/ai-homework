@@ -35,6 +35,11 @@ const BlogPostDetail = () => {
           name="description"
           content={post.content.slice(0, 155)}
         />
+        <meta
+          name="keywords"
+          content="study smarter, test taking strategies, homework help websites"
+        />
+        <link rel="canonical" href={`https://www.studysmarternow.com/blog/${id}`} />
       </Helmet>
       <motion.div
         className="max-w-3xl mx-auto  p-5 bg-white rounded-lg shadow-lg "

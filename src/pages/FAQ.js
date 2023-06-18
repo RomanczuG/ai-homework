@@ -6,6 +6,7 @@ export const FAQ = () => {
       <Helmet>
         <title>Frequently Asked Questions | Study Smarter Now</title>
         <meta name="description" content="Get answers to frequently asked questions about Study Smarter Now, a platform that offers effective study tips, test-taking strategies, and personalized recommendations to help students achieve academic success." />
+        <link rel="canonical" href="https://www.studysmarternow.com/faq" />
       </Helmet>
       <div className="container mx-auto px-4 py-6">
         <h1 className="text-3xl font-bold mb-4">Frequently Asked Questions</h1>
