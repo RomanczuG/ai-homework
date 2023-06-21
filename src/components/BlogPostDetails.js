@@ -51,7 +51,7 @@ const BlogPostDetail = () => {
           {post.title}
         </h2>
         <div className="space-y-3">
-          <ReactMarkdown>{post.content}</ReactMarkdown>
+          <ReactMarkdown className="prose">{post.content}</ReactMarkdown>
           <Link
             to="/blog"
             className="text-blue-500 hover:text-blue-400 transition"
