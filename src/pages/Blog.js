@@ -43,7 +43,7 @@ const Blog = () => {
 
       </h1>
       {/* <Button onClick={addArticle}>New</Button> */}
-      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
         <Suspense fallback={<div>Loading...</div>}>
           {blogPosts.map((post, index) => (
             <BlogPost post={post} index={index} />

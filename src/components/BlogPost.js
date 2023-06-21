@@ -8,7 +8,7 @@ const BlogPost = ({ post }) => {
     return <div>Loading...</div>;
   }
 
-  const limitedContent = post.content.slice(0, 200) + "...";
+  const limitedContent = post.content.slice(0, 100) + "...";
 
   return (
     <motion.div
@@ -18,10 +18,10 @@ const BlogPost = ({ post }) => {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <h2 className="text-3xl font-bold mb-3 text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
+      <h2 className="text-2xl font-bold mb-3 text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
         {post.title}
       </h2>
-      <div className="space-y-3">
+      <div className="space-y-3 text-md">
         <ReactMarkdown>{limitedContent}</ReactMarkdown>
         <Link
           to={`/blog/${post.id}`}
