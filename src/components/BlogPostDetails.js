@@ -47,11 +47,11 @@ const BlogPostDetail = () => {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <h2 className="text-3xl font-bold mb-3 text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
+        <h1 className="text-4xl font-bold mb-3 text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
           {post.title}
-        </h2>
+        </h1>
         <div className="space-y-3">
-          <ReactMarkdown className="prose">{post.content}</ReactMarkdown>
+          <ReactMarkdown className="prose ">{post.content}</ReactMarkdown>
           <Link
             to="/blog"
             className="text-blue-500 hover:text-blue-400 transition"
