@@ -59,8 +59,8 @@ const Router = () => {
           {/* <Route path="/tool" element={<Tool />} /> */}
           {/* <Route path="/tool-testing" element={<ToolTesting />} /> */}
           <Route exact path="/blog" element={<Blog />} />
-          <Route path="/blog/:id" element={<BlogPostDetail />} />
-
+          {/* <Route path="/blog/:id" element={<BlogPostDetail />} /> */}
+          <Route path="/blog/:slug" element={<BlogPostDetail />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />

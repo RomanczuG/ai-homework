@@ -23,8 +23,14 @@ const BlogPost = ({ post }) => {
       </h2>
       <div className="space-y-3 text-md">
         <ReactMarkdown>{limitedContent}</ReactMarkdown>
-        <Link
+        {/* <Link
           to={`/blog/${post.id}`}
+          className="text-blue-500 hover:text-blue-400 transition"
+        >
+          Read More
+        </Link> */}
+        <Link
+          to={`/blog/${post.slug}`}
           className="text-blue-500 hover:text-blue-400 transition"
         >
           Read More

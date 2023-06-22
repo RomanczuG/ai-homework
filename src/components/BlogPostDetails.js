@@ -7,20 +7,34 @@ import { Helmet } from "react-helmet";
 
 const BlogPostDetail = () => {
   const [post, setPost] = useState();
-  const { id } = useParams();
+  // const { id } = useParams();
+  const { slug } = useParams();
 
   useEffect(() => {
     fetchPost();
   }, []);
 
+
+
+  // const fetchPost = async () => {
+  //   console.log(id);
+  //   let { data: post, error } = await supabase
+  //     .from("posts")
+  //     .select("*")
+  //     .eq("id", id)
+  //     .single();
+
+  //   if (error) console.log("Error: ", error);
+  //   else setPost(post);
+  // };
+
   const fetchPost = async () => {
-    console.log(id);
     let { data: post, error } = await supabase
       .from("posts")
       .select("*")
-      .eq("id", id)
+      .eq("slug", slug)
       .single();
-
+  
     if (error) console.log("Error: ", error);
     else setPost(post);
   };
@@ -29,6 +43,7 @@ const BlogPostDetail = () => {
 
   return (
     <div className="bg-[#F0FFE0] p-6">
+    
       <Helmet>
         <title>{post.title}</title>
         <meta
@@ -39,7 +54,8 @@ const BlogPostDetail = () => {
           name="keywords"
           content="study smarter, test taking strategies, homework help websites"
         />
-        <link rel="canonical" href={`https://www.studysmarternow.com/blog/${id}`} />
+        {/* <link rel="canonical" href={`https://www.studysmarternow.com/blog/${id}`} /> */}
+        <link rel="canonical" href={`https://www.studysmarternow.com/blog/${slug}`} />
       </Helmet>
       <motion.div
         className="max-w-3xl mx-auto  p-5 bg-white rounded-lg shadow-lg "

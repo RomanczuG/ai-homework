@@ -20,6 +20,8 @@ const Blog = () => {
     else setBlogPosts(posts);
   };
 
+
+
   return (
     <div className="flex flex-col items-center p-6 w-full space-y-6 bg-[#F0FFE0]">
       <Helmet>
@@ -34,6 +36,7 @@ const Blog = () => {
         />
         <link rel="canonical" href="https://www.studysmarternow.com/blog" />
       </Helmet>
+      {/* <button onClick={()=>generateSitemap}>Generate Sitemap</button> */}
         <h1 className="text-5xl font-bold mt-10 mb-10 text-gray-900 bg-clip-text  ">
         Here is our 
         <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
