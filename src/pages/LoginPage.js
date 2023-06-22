@@ -60,7 +60,7 @@ export const LoginPage = () => {
       transition={{ duration: 0.5 }}
     >
       <Helmet>
-      <title>Login | Your Site</title>
+      <title>Login | Study Smarter Now!</title>
       <meta
         name="description"
         content="Login to your account and unlock powerful tools for smarter studying and effective test taking strategies."

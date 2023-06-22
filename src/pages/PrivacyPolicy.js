@@ -1,8 +1,20 @@
 import React from 'react';
-
+import { Helmet } from 'react-helmet';
 export const PrivacyPolicy = () => {
   return (
     <div className="bg-[#252D62] min-h-screen text-white">
+      <Helmet>
+        <title>Privacy Policy | Study Smarter Now!</title>
+        <meta
+          name="description"
+          content="StudySmarterNow.com is designed to help college students study smarter with personalized study tips, test-taking strategies, and AI-powered analysis of study materials."
+        />
+        <meta
+          name="keywords"
+          content="study smarter, test taking strategies, homework help websites"
+        />
+        <link rel="canonical" href="https://www.studysmarternow.com/privacy-policy" />
+      </Helmet>
       <div className="container mx-auto px-4 py-6">
         <h1 className="text-3xl font-bold mb-4">Privacy Policy</h1>
         <p className="mb-4">

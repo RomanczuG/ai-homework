@@ -5,7 +5,7 @@ export const HowItWorks = () => {
   return (
     <div className="bg-[#F0FFE0] min-h-screen text-black">
       <Helmet>
-        <title>How It Works | StudySmarterNow.com</title>
+        <title>How It Works | Study Smarter Now!</title>
         <meta
           name="description"
           content="StudySmarterNow.com is designed to help college students study smarter with personalized study tips, test-taking strategies, and AI-powered analysis of study materials."

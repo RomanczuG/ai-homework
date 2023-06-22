@@ -1,8 +1,21 @@
 import React from 'react';
-
+import { Helmet } from 'react-helmet';
 export const TermsOfService = () => {
   return (
     <div className="bg-[#F0FFE0] min-h-screen text-black">
+      <Helmet>
+        <title>Terms of Service | Study Smarter Now!</title>
+        <meta
+          name="description"
+          content="StudySmarterNow.com is designed to help college students study smarter with personalized study tips, test-taking strategies, and AI-powered analysis of study materials."
+          
+        />
+        <meta
+          name="keywords"
+          content="study smarter, test taking strategies, homework help websites"
+        />
+        <link rel="canonical" href="https://www.studysmarternow.com/terms-of-service" />
+      </Helmet>
       <div className="container mx-auto px-4 py-6">
         <h1 className="text-3xl font-bold mb-4">Terms of Service</h1>
         <p className="mb-4">

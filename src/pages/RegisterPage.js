@@ -55,7 +55,7 @@ export const RegisterPage = () => {
       transition={{ duration: 0.5 }}
     >
       <Helmet>
-      <title>Register | Your Site</title>
+      <title>Register | Study Smarter Now!</title>
       <meta
         name="description"
         content="Join our amazing community and facilitate smarter studying and effective test taking. Sign up for homework help and other resources."

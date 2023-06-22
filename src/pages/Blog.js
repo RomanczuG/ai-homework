@@ -25,7 +25,7 @@ const Blog = () => {
   return (
     <div className="flex flex-col items-center p-6 w-full space-y-6 bg-[#F0FFE0]">
       <Helmet>
-        <title>Blog | StudySmarterNow.com</title>
+        <title>Blog | Study Smarter Now!</title>
         <meta
           name="description"
           content="StudySmarterNow.com is designed to help college students study smarter with personalized study tips, test-taking strategies, and AI-powered analysis of study materials."
