@@ -22,7 +22,7 @@ export const FeaturesSection = () => {
         <FeatureCard
           icon={<HiOutlineUpload className="text-6xl mb-4 text-[#FF6E00]" />}
           title="Easy Homework and Test Upload"
-          description="Upload your homework or test PDF with a simple drag-and-drop or file selection. StudyBoost's user-friendly interface makes it easy to start the AI-driven note generation process."
+          description="Upload your homework or test PDF with a simple drag-and-drop or file selection. StudySmarter's user-friendly interface makes it easy to start the AI-driven note generation process."
         />
         {/* Feature 3 */}
         <FeatureCard
@@ -34,7 +34,7 @@ export const FeaturesSection = () => {
         <FeatureCard
           icon={<HiOutlineCheckCircle className="text-6xl mb-4 text-[#FF6E00]" />}
           title="Improved Test-Taking Skills"
-          description="Learn effective test-taking strategies and boost your confidence during exams. StudyBoost provides valuable tips and resources to help you manage time, handle difficult questions, and prepare for various test formats."
+          description="Learn effective test-taking strategies and boost your confidence during exams. StudySmarter provides valuable tips and resources to help you manage time, handle difficult questions, and prepare for various test formats."
         />
       </div>
     </motion.section>
