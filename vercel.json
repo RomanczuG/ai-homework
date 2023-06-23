@@ -1,0 +1,17 @@
+
+{
+    "version": 2,
+    "name": "Study Smarter Now!",
+    "builds": [
+       { "src": "App.js", "use": "@vercel/node" }
+    ],
+    "routes": [
+       { "src": "/(.*)", "dest": "/App.js" }
+    ],
+    "redirects": [
+        { "source": "http://www.(.*)", "destination": "https://$1", "statusCode": 308 },
+        { "source": "http://(.*)", "destination": "https://$1", "statusCode": 308 },
+        { "source": "https://www.(.*)", "destination": "https://$1", "statusCode": 308 }
+      ]
+ }
+  
