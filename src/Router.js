@@ -54,7 +54,7 @@ const Router = () => {
     <BrowserRouter>
       <Layout>
         <Routes>
-          <Route path="*" element={<NotFoundPage />} />
+          <Route path="*" element={<NotFoundPage />} /> 
           <Route path="/" element={<App />} />
           {/* <Route path="/tool" element={<Tool />} /> */}
           {/* <Route path="/tool-testing" element={<ToolTesting />} /> */}
