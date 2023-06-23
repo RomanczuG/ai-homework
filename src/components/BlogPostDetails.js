@@ -54,7 +54,7 @@ const BlogPostDetail = () => {
           name="keywords"
           content="study smarter, test taking strategies, homework help websites"
         />
-        <meta name="robots" content="index, follow"/>
+        {/* <meta name="robots" content="index, follow"/> */}
         <link rel="canonical" href={`https://studysmarternow.com/blog/${slug}`} />
       </Helmet>
       <motion.div
