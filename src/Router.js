@@ -23,7 +23,7 @@ import { Account } from "./pages/AccountPage";
 import { Modal } from "./utils/DashboardUtils";
 import { useState } from "react";
 import { Upgrade } from "./components/Upgrade";
-import Redirector from "./utils/Redirector";
+// import Redirector from "./utils/Redirector";
 import NotFoundPage from "./pages/NotFoundPage";
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -54,7 +54,7 @@ const Router = () => {
     <BrowserRouter>
       <Layout>
         <Routes>
-          <Route path="*" element={<Redirector />} />
+          <Route path="*" element={<NotFoundPage />} />
           <Route path="/" element={<App />} />
           {/* <Route path="/tool" element={<Tool />} /> */}
           {/* <Route path="/tool-testing" element={<ToolTesting />} /> */}
