@@ -193,6 +193,9 @@ export const handleFileUploadDashboard = async (
     }
   } catch (error) {
     alert("File upload failed. Check internet connection and try again.");
+    const { data } = await supabase.from("files").delete().match({
+      id: data[0].id,
+    });
     window.sa_event("PDF failed upload", { error: error.message });
     console.error("Error during file upload:", error);
   }
