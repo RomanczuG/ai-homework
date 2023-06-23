@@ -54,7 +54,6 @@ const BlogPostDetail = () => {
           name="keywords"
           content="study smarter, test taking strategies, homework help websites"
         />
-        {/* <link rel="canonical" href={`https://www.studysmarternow.com/blog/${id}`} /> */}
         <link rel="canonical" href={`https://studysmarternow.com/blog/${slug}`} />
       </Helmet>
       <motion.div
