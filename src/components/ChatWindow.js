@@ -92,6 +92,7 @@ const ChatWindow = ({ hashedFaissFilename }) => {
     };
 
     loadChatHistory();
+    console.log("messages.length:", messages.length)
     if (messages.length === 0) {
       // Initial question
       const initialQuestion =
