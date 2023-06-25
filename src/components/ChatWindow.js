@@ -85,11 +85,12 @@ const ChatWindow = ({ hashedFaissFilename }) => {
   };
 
   useEffect(() => {
-    setWaiting(true);
+    
     const loadChatHistory = async () => {
       const chatHistory = await fetchChatHistory(hashedFaissFilename);
       setMessages(chatHistory);
       if (chatHistory.length == 0) {
+        setWaiting(true);
         // Initial question
         const initialQuestion =
           "You are an AI tutor. Please tell me who are you? How can you help me? Can you give me example questions I can ask you related to the terms, problems, questions, definitions provided as context?";
