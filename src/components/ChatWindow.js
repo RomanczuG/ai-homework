@@ -89,35 +89,36 @@ const ChatWindow = ({ hashedFaissFilename }) => {
     const loadChatHistory = async () => {
       const chatHistory = await fetchChatHistory(hashedFaissFilename);
       setMessages(chatHistory);
+      if (chatHistory.length == 0) {
+        // Initial question
+        const initialQuestion =
+          "You are an AI tutor. Please tell me who are you? How can you help me? Can you give me example questions I can ask you related to the terms, problems, questions, definitions provided as context?";
+        const dataToSend = {
+          question: initialQuestion,
+          hashedFaissFilename: hashedFaissFilename,
+        };
+        // console.log("Sending:", dataToSend);
+        client
+          .post("/chat", dataToSend)
+          .then((response) => {
+            const data = response.data;
+            setMessages((prevMessages) => [
+              ...prevMessages,
+              { text: data.message, sender: "bot" },
+            ]);
+            saveMessage(hashedFaissFilename, data.message, 'bot');
+            setWaiting(false);
+          })
+          .catch((e) => {
+            console.error("Error:", e);
+            setWaiting(false);
+          });
+      }
     };
 
     loadChatHistory();
     console.log("messages.length:", messages.length)
-    if (messages.length == 0) {
-      // Initial question
-      const initialQuestion =
-        "You are an AI tutor. Please tell me who are you? How can you help me? Can you give me example questions I can ask you related to the terms, problems, questions, definitions provided as context?";
-      const dataToSend = {
-        question: initialQuestion,
-        hashedFaissFilename: hashedFaissFilename,
-      };
-      // console.log("Sending:", dataToSend);
-      client
-        .post("/chat", dataToSend)
-        .then((response) => {
-          const data = response.data;
-          setMessages((prevMessages) => [
-            ...prevMessages,
-            { text: data.message, sender: "bot" },
-          ]);
-          saveMessage(hashedFaissFilename, data.message, 'bot');
-          setWaiting(false);
-        })
-        .catch((e) => {
-          console.error("Error:", e);
-          setWaiting(false);
-        });
-    }
+    
   }, []);
 
   const messageVariants = {
