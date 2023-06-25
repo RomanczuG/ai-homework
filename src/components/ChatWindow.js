@@ -35,12 +35,14 @@ const ChatWindow = ({ hashedFaissFilename }) => {
 
   const fetchChatHistory = async (hashedFaissFilename) => {
     try {
+      console.log("In fetchChatHistory, hashedFaissFilename:", hashedFaissFilename);
       const { data, error } = await supabase
         .from("chats")
         .select("*")
         .eq("hashedFaissFilename", hashedFaissFilename)
         .order("timestamp", { ascending: true });
 
+      console.log("In fetchChatHistory, data:", data);
       if (error) {
         console.log(error);
       }
@@ -139,7 +141,7 @@ const ChatWindow = ({ hashedFaissFilename }) => {
             animate="visible"
           >
             <b>{message.sender === "bot" ? "AI Tutor" : "You"}:</b>{" "}
-            {message.text.split("\n").map((line, i) => (
+            {message.text?.split("\n").map((line, i) => (
               <div key={i}>{line}</div>
             ))}
           </motion.div>
