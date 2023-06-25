@@ -4,6 +4,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { IoSendSharp } from "react-icons/io5";
 import { ClipLoader } from "react-spinners";
+import { supabase } from "../supabaseClient";
 
 const client = axios.create({
   // baseURL: "http://127.0.0.1:5000",
@@ -13,8 +14,42 @@ const client = axios.create({
 const ChatWindow = ({ hashedFaissFilename }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-
   const [waiting, setWaiting] = useState(false);
+  const saveMessage = async (hashedFaissFilename, message, sender) => {
+    try {
+      const { data, error } = await supabase
+        .from("chats")
+        .insert([
+          { hashedFaissFilename, message, sender, timestamp: new Date() },
+        ]);
+
+      if (error) {
+        console.log(error);
+      }
+
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchChatHistory = async (hashedFaissFilename) => {
+    try {
+      const { data, error } = await supabase
+        .from("chats")
+        .select("*")
+        .eq("hashedFaissFilename", hashedFaissFilename)
+        .order("timestamp", { ascending: true });
+
+      if (error) {
+        console.log(error);
+      }
+
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // Mock send message function
   const sendMessage = (e) => {
@@ -22,8 +57,45 @@ const ChatWindow = ({ hashedFaissFilename }) => {
     if (newMessage !== "") {
       setWaiting(true);
       setMessages([...messages, { text: newMessage, sender: "you" }]);
+      saveMessage(hashedFaissFilename, newMessage, 'you');
       const dataToSend = {
         question: newMessage,
+        hashedFaissFilename: hashedFaissFilename,
+      };
+      console.log("Sending:", dataToSend);
+      client
+        .post("/chat", dataToSend)
+        .then((response) => {
+          const data = response.data;
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            { text: data.message, sender: "bot" },
+          ]);
+          saveMessage(hashedFaissFilename, data.message, 'bot');
+          setWaiting(false);
+        })
+        .catch((e) => {
+          console.error("Error:", e);
+          setWaiting(false);
+        });
+      setNewMessage("");
+    }
+  };
+
+  useEffect(() => {
+    setWaiting(true);
+    const loadChatHistory = async () => {
+      const chatHistory = await fetchChatHistory(hashedFaissFilename);
+      setMessages(chatHistory);
+    };
+
+    loadChatHistory();
+    if (messages.length === 0) {
+      // Initial question
+      const initialQuestion =
+        "You are an AI tutor. Please tell me who are you? How can you help me? Can you give me example questions I can ask you related to the terms, problems, questions, definitions provided as context?";
+      const dataToSend = {
+        question: initialQuestion,
         hashedFaissFilename: hashedFaissFilename,
       };
       console.log("Sending:", dataToSend);
@@ -41,34 +113,7 @@ const ChatWindow = ({ hashedFaissFilename }) => {
           console.error("Error:", e);
           setWaiting(false);
         });
-      setNewMessage("");
     }
-  };
-
-  useEffect(() => {
-    setWaiting(true);
-    // Initial question
-    const initialQuestion =
-      "You are an AI tutor. Please tell me who are you? How can you help me? Can you give me example questions I can ask you related to the terms, problems, questions, definitions provided as context?";
-    const dataToSend = {
-      question: initialQuestion,
-      hashedFaissFilename: hashedFaissFilename,
-    };
-    console.log("Sending:", dataToSend);
-    client
-      .post("/chat", dataToSend)
-      .then((response) => {
-        const data = response.data;
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { text: data.message, sender: "bot" },
-        ]);
-        setWaiting(false);
-      })
-      .catch((e) => {
-        console.error("Error:", e);
-        setWaiting(false);
-      });
   }, []);
 
   const messageVariants = {
