@@ -64,7 +64,7 @@ const ChatWindow = ({ hashedFaissFilename }) => {
         question: newMessage,
         hashedFaissFilename: hashedFaissFilename,
       };
-      console.log("Sending:", dataToSend);
+      // console.log("Sending:", dataToSend);
       client
         .post("/chat", dataToSend)
         .then((response) => {
@@ -100,7 +100,7 @@ const ChatWindow = ({ hashedFaissFilename }) => {
         question: initialQuestion,
         hashedFaissFilename: hashedFaissFilename,
       };
-      console.log("Sending:", dataToSend);
+      // console.log("Sending:", dataToSend);
       client
         .post("/chat", dataToSend)
         .then((response) => {

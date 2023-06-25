@@ -20,9 +20,9 @@ export const ChatPage = () => {
   const hashedFilename = location.state.hashedFilename;
   const [numPages, setNumPages] = useState(null);
   
-  console.log("In ChatPage, hashedFaissFilename:", hashedFaissFilename);
-  console.log("In ChatPage, pdfFilename:", pdfFilename);
-  console.log("In ChatPage, hashedFilename:", hashedFilename);
+  // console.log("In ChatPage, hashedFaissFilename:", hashedFaissFilename);
+  // console.log("In ChatPage, pdfFilename:", pdfFilename);
+  // console.log("In ChatPage, hashedFilename:", hashedFilename);
 
   useEffect(() => {
     client
@@ -30,12 +30,12 @@ export const ChatPage = () => {
         responseType: "blob", // Force to receive data in a Blob Format
       })
       .then((response) => {
-        console.log("In ChatPage, response:", response);
+        // console.log("In ChatPage, response:", response);
         //Create a Blob from the PDF Stream
         const file = new Blob([response.data], { type: "application/pdf" });
         //Build a URL from the file
         const fileURL = URL.createObjectURL(file);
-        console.log("In ChatPage, fileURL:", fileURL);
+        // console.log("In ChatPage, fileURL:", fileURL);
         //Open the URL on new Window
         setPdfUrl(fileURL);
       })
