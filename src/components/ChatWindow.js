@@ -15,12 +15,12 @@ const ChatWindow = ({ hashedFaissFilename }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [waiting, setWaiting] = useState(false);
-  const saveMessage = async (hashedFaissFilename, message, sender) => {
+  const saveMessage = async (hashedFaissFilename, text, sender) => {
     try {
       const { data, error } = await supabase
         .from("chats")
         .insert([
-          { hashedFaissFilename, message, sender, timestamp: new Date() },
+          { hashedFaissFilename, text, sender, timestamp: new Date() },
         ]);
 
       if (error) {
