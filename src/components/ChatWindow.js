@@ -109,6 +109,7 @@ const ChatWindow = ({ hashedFaissFilename }) => {
             ...prevMessages,
             { text: data.message, sender: "bot" },
           ]);
+          saveMessage(hashedFaissFilename, data.message, 'bot');
           setWaiting(false);
         })
         .catch((e) => {
