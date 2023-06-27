@@ -137,7 +137,8 @@ export const Dashboard = () => {
                 Upload a new file
               </h1>
               <p className="text-gray-500">
-                Choose a class and upload your homework or textbook PDF file. Study Notes are available for shorter files only.
+                Choose a class and upload your homework or textbook PDF file.
+                Study Notes are available for shorter files only.
               </p>
             </div>
             <select
@@ -271,29 +272,29 @@ export const Dashboard = () => {
                         </div>
 
                         <div className="group relative">
-                          {file.study_notes_created == "true" || file.study_notes_created == "impossible" ? (
-
+                          {file.study_notes_created == "true" ||
+                          file.study_notes_created == "impossible" ? (
                             file.study_notes_created == "true" && (
-                            <motion.button
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              transition={{ duration: 0.1 }}
-                              onClick={() => {
-                                window.sa_event("Study Notes", {
-                                  file_id: file.id,
-                                });
-                                downloadStudyNote(
-                                  file.hashedStudyNotesFilename
-                                );
-                              }}
-                              className="flex items-center p-1 hover:py-1 hover:px-2 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00]"
-                            >
-                              <HiOutlineDocumentDownload size={20} />
-                              <span className="text-xs transition-all ease-in duration-200 text-transparent group-hover:text-white whitespace-nowrap  py-1 ml-1 rounded-sm absolute group-hover:static">
-                                Download study notes
-                              </span>
-                            </motion.button>
-                            ) 
+                              <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                transition={{ duration: 0.1 }}
+                                onClick={() => {
+                                  window.sa_event("Study Notes", {
+                                    file_id: file.id,
+                                  });
+                                  downloadStudyNote(
+                                    file.hashedStudyNotesFilename
+                                  );
+                                }}
+                                className="flex items-center p-1 hover:py-1 hover:px-2 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00]"
+                              >
+                                <HiOutlineDocumentDownload size={20} />
+                                <span className="text-xs transition-all ease-in duration-200 text-transparent group-hover:text-white whitespace-nowrap  py-1 ml-1 rounded-sm absolute group-hover:static">
+                                  Download study notes
+                                </span>
+                              </motion.button>
+                            )
                           ) : (
                             <motion.button
                               whileHover={{ scale: 1.05 }}
