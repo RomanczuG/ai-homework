@@ -65,7 +65,7 @@ export const LoginPage = () => {
         name="description"
         content="Login to your account and unlock powerful tools for smarter studying and effective test taking strategies."
       />
-      <link rel="canonical" href="https://www.studysmarternow.com/login" />
+      <link rel="canonical" href="https://studysmarternow.com/login" />
     </Helmet>
 
       <form onSubmit={handleLogin} className="w-full max-w-md shadow-lg p-8 rounded-lg space-y-6 bg-white">

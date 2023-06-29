@@ -55,7 +55,7 @@ const BlogPostDetail = () => {
           content="study smarter, test taking strategies, homework help websites"
         />
         {/* <meta name="robots" content="index, follow"/> */}
-        <link rel="canonical" href={`https://www.studysmarternow.com/blog/${slug}`} />
+        <link rel="canonical" href={`https://studysmarternow.com/blog/${slug}`} />
       </Helmet>
       <motion.div
         className="max-w-3xl mx-auto  p-5 bg-white rounded-lg shadow-lg "

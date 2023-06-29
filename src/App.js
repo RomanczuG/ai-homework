@@ -21,7 +21,7 @@ function App() {
           name="description"
           content="Welcome to Study Smarter Now, an AI-powered platform designed to help you study smarter, not harder. Enhance your learning with our cutting-edge homework help tool. Whether you're looking to improve your test-taking strategies, need assistance with your homework, or want to enhance your overall learning strategy, our AI tool is here to support you on your academic journey."
         />
-        <link rel="canonical" href="https://www.studysmarternow.com/" />
+        <link rel="canonical" href="https://studysmarternow.com/" />
       </Helmet>
       <div className="bg-[#F0FFE0] min-h-screen">
         <HeroSection />

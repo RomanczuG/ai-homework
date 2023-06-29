@@ -14,7 +14,7 @@ export const TermsOfService = () => {
           name="keywords"
           content="study smarter, test taking strategies, homework help websites"
         />
-        <link rel="canonical" href="https://www.studysmarternow.com/terms-of-service" />
+        <link rel="canonical" href="https://studysmarternow.com/terms-of-service" />
       </Helmet>
       <div className="container mx-auto px-4 py-6">
         <h1 className="text-3xl font-bold mb-4">Terms of Service</h1>
