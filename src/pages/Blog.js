@@ -34,7 +34,7 @@ const Blog = () => {
           name="keywords"
           content="study smarter, test taking strategies, homework help websites"
         />
-        <link rel="canonical" href="https://studysmarternow.com/blog" />
+        <link rel="canonical" href="https://www.studysmarternow.com/blog" />
       </Helmet>
       {/* <button onClick={()=>generateSitemap}>Generate Sitemap</button> */}
         <h1 className="text-5xl font-bold mt-10 mb-10 text-gray-900 bg-clip-text  ">

@@ -8,7 +8,7 @@ const NotFoundPage = () => {
       <Helmet>
         <title>404 Page Not Found | Study Smarter Now</title>
         <meta name="description" content="The page you are looking for might have been removed, had its name changed, or is temporarily unavailable." />
-        <link rel="canonical" href="https://studysmarternow.com/404" />
+        <link rel="canonical" href="https://www.studysmarternow.com/404" />
       </Helmet>
       <h1>404 Page Not Found</h1>
       <p>We're sorry, but the page you were looking for doesn't exist.</p>
