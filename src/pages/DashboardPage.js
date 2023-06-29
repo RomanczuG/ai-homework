@@ -54,15 +54,15 @@ export const Dashboard = () => {
 
   const handleFileUpload = async () => {
     setLoading(true);
-    const id = await handleFileUploadDashboard(
+    await handleFileUploadDashboard(
       // setUploadedLoading,
       file,
       selectedClass,
       setClasses,
       setSelectedClass
     );
-    window.sa_event("File Upload", { file_id: id });
-    console.log("id:", id);
+    window.sa_event("File Upload");
+    // console.log("id:", id);
     setLoading(false);
   };
 
