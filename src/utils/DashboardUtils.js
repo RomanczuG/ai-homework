@@ -2,7 +2,6 @@ import { hashFilename } from "./ToolUtils";
 import { supabase } from "../supabaseClient";
 import axios from "axios";
 
-
 const client = axios.create({
   // baseURL: "http://127.0.0.1:5000",
   baseURL: "https://studyboost.uc.r.appspot.com",
@@ -18,27 +17,31 @@ async function getUserId() {
   return data["session"]["user"]["id"];
 }
 
-export const downloadStudyNote = async (hashedStudyNotesFilename) => 
-  {
-    const filename = hashedStudyNotesFilename;
-    console.log('In downloadStudyNote, filename:', filename);
-    // Send a POST request to the backend with the filename to download the file
-    client.post('/download_dashboard', { filename:filename }, { responseType: 'blob' })  // Add 'blob' responseType
-      .then(response => {
-        console.log('Download response:', response);
-        // Create a blob from the response data and download it
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'document.docx');
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      })
-      .catch(error => {
-        console.error('Download failed:', error);
-      });
-  }
+export const downloadStudyNote = async (hashedStudyNotesFilename) => {
+  const filename = hashedStudyNotesFilename;
+  console.log("In downloadStudyNote, filename:", filename);
+  // Send a POST request to the backend with the filename to download the file
+  client
+    .post(
+      "/download_dashboard",
+      { filename: filename },
+      { responseType: "blob" }
+    ) // Add 'blob' responseType
+    .then((response) => {
+      console.log("Download response:", response);
+      // Create a blob from the response data and download it
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "document.docx");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    })
+    .catch((error) => {
+      console.error("Download failed:", error);
+    });
+};
 
 export const handleLogout = async (navigate) => {
   const { error } = await supabase.auth.signOut();
@@ -108,7 +111,6 @@ export const handleNewClass = async (
       setNewClass("");
       window.sa_event("New class created", { class: newClass });
       fetchClassesWithFiles(setClasses, setSelectedClass);
-
     }
   } catch (error) {
     console.error("Error fetching classes:", error);
@@ -143,6 +145,7 @@ export const handleFileUploadDashboard = async (
   formData.append("file", newFile);
   formData.append("hashedStudyNotesFilename", hashedStudyNotesFilename);
   formData.append("hashedFaissFilename", hashedFaissFilename);
+  formData.append("user_id", await getUserId());
   const fileSize = file.size;
   const { data, error } = await supabase
     .from("files")
@@ -171,25 +174,29 @@ export const handleFileUploadDashboard = async (
     const response = await client.post("/gen_upload", formData);
     console.log("File uploaded and generated notes response:", response);
 
-    if (response.status === 200) {
-      window.sa_event("PDF successfull upload", {
-        filename: file.name,
-        fileSize,
-      });
-      console.log("File uploaded to flask server "); // Store the filename in the state
+    if (response.status === 400) {
+      alert(error.response.data.message);
     } else {
-      const { data, error } = await supabase.from("files").delete().match({
-        id: data[0].id,
-      });
-      if (error) {
-        console.error("Error deleting record:", error);
+      if (response.status === 200) {
+        window.sa_event("PDF successfull upload", {
+          filename: file.name,
+          fileSize,
+        });
+        console.log("File uploaded to flask server "); // Store the filename in the state
+      } else {
+        const { data, error } = await supabase.from("files").delete().match({
+          id: data[0].id,
+        });
+        if (error) {
+          console.error("Error deleting record:", error);
+        }
+        window.sa_event("PDF failed upload", { error: response.data.error });
+        alert("File upload failed");
+
+        console.error(
+          "File upload failed. Check internet connection and try again."
+        );
       }
-      window.sa_event("PDF failed upload", { error: response.data.error });
-      alert("File upload failed");
-      
-      console.error(
-        "File upload failed. Check internet connection and try again."
-      );
     }
   } catch (error) {
     alert("File upload failed. Check internet connection and try again.");
@@ -201,8 +208,7 @@ export const handleFileUploadDashboard = async (
   }
 
   fetchClassesWithFiles(setClasses, setSelectedClass);
-  
+
   // lets return file id from data
   return data[0].id;
 };
-

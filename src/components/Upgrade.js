@@ -34,7 +34,7 @@ async function getUserId() {
 
 export const Upgrade = () => {
   const [loading, setLoading] = useState(false);
-  const [plan , setPlan] = useState("monthly_plan");
+  const [plan, setPlan] = useState("monthly_plan");
   const [userID, setUserID] = useState("");
   const [email, setEmail] = useState("");
 
@@ -47,34 +47,6 @@ export const Upgrade = () => {
     };
     getUser();
   }, []);
-  
-
-  // const handleUpgrade = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const user_access_token = await getUserId();
-  //     console.log(user_access_token);
-  //     const result = await client.post(
-  //       "/api/upgrade",
-  //       { plan },
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${user_access_token}`,
-  //         },
-  //       }
-  //     );
-  //     if (result.data.error) {
-  //       console.error(result.data.error);
-  //     } else {
-  //       console.log("Subscription updated:", result.data.subscription);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
   const handleMonthly = () => {
     console.log("monthly");
     setPlan("monthly_plan");
@@ -142,27 +114,41 @@ export const Upgrade = () => {
       </ul>
       <div className="flex space-x-2">
         <h3 className="text-5xl font-bold mb-2 text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
-          {plan == "monthly" ? <span> $10 </span> : <span>$100</span>}
+          {plan == "monthly_plan" ? <span> $10 </span> : <span>$100</span>}
         </h3>
         <div className="flex flex-col justify-center">
           <span className="text-gray-500">per</span>
           <span className="text-gray-500">
-            {plan == "monthly" ? <span> month </span> : <span>year</span>}
+            {plan == "monthly_plan" ? <span> month </span> : <span>year</span>}
           </span>
         </div>
       </div>
       <div className="mt-4">
-      <form action="https://studyboost.uc.r.appspot.com/create-checkout-session" method="POST">
-      {/* Add a hidden field with the lookup_key of your Price */}
-      <input type="hidden" name="lookup_key" value={plan} />
-      <input type="hidden" name="email" value={email} />
-      <input type="hidden" name="user_id" value={userID} />
-      <Button type="submit" disabled={loading}
-      onClick={()=> setLoading(true)}>
-        {loading ? "Loading..." : "Subscribe"}
-      </Button>
-    </form>
-        
+        <form
+          action="https://studyboost.uc.r.appspot.com/create-checkout-session"
+          method="POST"
+        >
+          {/* Add a hidden field with the lookup_key of your Price */}
+          <input type="hidden" name="lookup_key" value={plan} />
+          <input type="hidden" name="email" value={email} />
+          <input type="hidden" name="user_id" value={userID} />
+          <Button
+            type="submit"
+            disabled={loading}
+            onClick={() => setLoading(true)}
+          >
+            {loading ? "Loading..." : "Subscribe"}
+          </Button>
+        </form>
+        <form
+          action="https://studyboost.uc.r.appspot.com/create-customer-portal-session"
+          method="POST"
+        >
+          <input type="hidden" name="user_id" value={userID} />
+          <div className="mt-4">
+            <Button>Manage Subscription</Button>
+          </div>
+        </form>
       </div>
     </motion.div>
   );
