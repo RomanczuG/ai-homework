@@ -72,6 +72,7 @@ export const Modal = ({ children, isOpen, setIsOpen }) => {
 
 export const fetchClassesWithFiles = async (setClasses, setSelectedClass) => {
   try {
+    client.get('/warmup-endpoint').then((response) => console.log(response.data)).catch((error) => console.log(error));
     const userID = await getUserId();
     const { data: classes, error } = await supabase
       .from("classes")
@@ -191,12 +192,17 @@ const uploadFileToFlaskServer = async (formData) => {
 
 const handleUploadFailure = async (error) => {
   let errorMessage = error.message;
+  console.log("Error response:", error.response);
+  console.log("Error response data:", error.response.data);
 
-  if (error.response && error.response.data && error.response.data.message) {
-    errorMessage = error.response.data.message;
+  if (error.response && error.response.data) {
+    const serverResponse = error.response.data;
+    if (serverResponse && serverResponse.message) {
+      errorMessage = serverResponse.message;
+    }
   }
 
-  alert("File upload failed. " + error.message );
+  alert("File upload failed. " + errorMessage );
   
   window.sa_event("PDF failed upload", { error: errorMessage });
 
