@@ -7,9 +7,14 @@ const client = axios.create({
   baseURL: "https://studyboost.uc.r.appspot.com",
 });
 
-export const getAuthToken = () => {
-  const session = supabase.auth.getSession();
-  return session ? session.access_token : null;
+export const getAuthToken = async () => {
+  const {data, error} = await supabase.auth.getSession();
+  if (error) {
+    console.error("Error getting user session:", error);
+    throw error;
+  }
+  // console.log("Session:", data["session"]["access_token"]);
+  return data ? data.session.access_token : null;
 };
 
 async function getUserId() {
@@ -182,7 +187,7 @@ const prepareFormData = async (file, selectedClass) => {
 }
 
 const uploadFileToFlaskServer = async (formData) => {
-  const token = getAuthToken();
+  const token = await getAuthToken();
   if (!token) {
     alert("No token found. Please log in again.");
     return;
