@@ -176,7 +176,7 @@ const prepareFormData = async (file, selectedClass) => {
 }
 
 const uploadFileToFlaskServer = async (formData) => {
-  const response = await client.post("/gen_upload_dev", formData);
+  const response = await client.post("/gen_upload", formData);
 
   if (response.status !== 200) {
     throw new Error(response.data.message);
