@@ -97,7 +97,7 @@ export const Account = () => {
             <p className="bg-gray-200 p-2 rounded-md">****************</p>
           </div>
         </Card>
-        <Upgrade />
+        {/* <Upgrade /> */}
       </div>
       {/* Log out button */}
       <div className="mt-4 ">
