@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { ActionButtons } from "../utils/ToolUtils"; // assuming you've this component defined
 import { Button } from "../utils/ToolUtils";
@@ -6,6 +6,16 @@ import { useState } from "react";
 import { AiFillCheckCircle } from "react-icons/ai"; // add this
 import { supabase } from "../supabaseClient";
 import axios from "axios";
+
+async function getUserEmail() {
+  const { data, error } = await supabase.auth.getSession();
+  if (error) {
+    console.error("Error getting user session:", error);
+    throw error;
+  }
+
+  return data["session"]["user"]["email"];
+}
 
 const client = axios.create({
   // baseURL: "http://127.0.0.1:5000",
@@ -19,50 +29,32 @@ async function getUserId() {
     throw error;
   }
 
-  return data["session"]["access_token"];
+  return data["session"]["user"]["id"];
 }
-
-
 
 export const Upgrade = () => {
   const [loading, setLoading] = useState(false);
-  const [plan , setPlan] = useState("monthly");
-  
+  const [plan, setPlan] = useState("monthly_plan");
+  const [userID, setUserID] = useState("");
+  const [email, setEmail] = useState("");
 
-  const handleUpgrade = async () => {
-    setLoading(true);
-    try {
-      const user_access_token = await getUserId();
-      console.log(user_access_token);
-      const result = await client.post(
-        "/api/upgrade",
-        { plan },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user_access_token}`,
-          },
-        }
-      );
-      if (result.data.error) {
-        console.error(result.data.error);
-      } else {
-        console.log("Subscription updated:", result.data.subscription);
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  useEffect(() => {
+    const getUser = async () => {
+      const user_id = await getUserId();
+      const user_email = await getUserEmail();
+      setUserID(user_id);
+      setEmail(user_email);
+    };
+    getUser();
+  }, []);
   const handleMonthly = () => {
     console.log("monthly");
-    setPlan("monthly");
+    setPlan("monthly_plan");
   };
 
   const handleYearly = () => {
     console.log("yearly");
-    setPlan("yearly");
+    setPlan("yearly_plan");
   };
 
   const features = [
@@ -122,17 +114,41 @@ export const Upgrade = () => {
       </ul>
       <div className="flex space-x-2">
         <h3 className="text-5xl font-bold mb-2 text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
-          {plan == "monthly" ? <span> $10 </span> : <span>$100</span>}
+          {plan == "monthly_plan" ? <span> $10 </span> : <span>$100</span>}
         </h3>
         <div className="flex flex-col justify-center">
           <span className="text-gray-500">per</span>
           <span className="text-gray-500">
-            {plan == "monthly" ? <span> month </span> : <span>year</span>}
+            {plan == "monthly_plan" ? <span> month </span> : <span>year</span>}
           </span>
         </div>
       </div>
       <div className="mt-4">
-        <Button>Upgrade</Button>
+        <form
+          action="https://studyboost.uc.r.appspot.com/create-checkout-session"
+          method="POST"
+        >
+          {/* Add a hidden field with the lookup_key of your Price */}
+          <input type="hidden" name="lookup_key" value={plan} />
+          <input type="hidden" name="email" value={email} />
+          <input type="hidden" name="user_id" value={userID} />
+          <Button
+            type="submit"
+            disabled={loading}
+            onClick={() => setLoading(true)}
+          >
+            {loading ? "Loading..." : "Subscribe"}
+          </Button>
+        </form>
+        <form
+          action="https://studyboost.uc.r.appspot.com/create-customer-portal-session"
+          method="POST"
+        >
+          <input type="hidden" name="user_id" value={userID} />
+          <div className="mt-4">
+            <Button>Manage Subscription</Button>
+          </div>
+        </form>
       </div>
     </motion.div>
   );
