@@ -7,6 +7,11 @@ const client = axios.create({
   baseURL: "https://studyboost.uc.r.appspot.com",
 });
 
+export const getAuthToken = () => {
+  const session = supabase.auth.getSession();
+  return session ? session.access_token : null;
+};
+
 async function getUserId() {
   const { data, error } = await supabase.auth.getSession();
   if (error) {
@@ -124,6 +129,7 @@ export const handleFileUploadDashboard = async (
   setClasses,
   setSelectedClass
 ) => {
+  
   console.log("In handleFileUploadDashboard");
   validateFile(file);
   console.log("File validated");
@@ -176,7 +182,17 @@ const prepareFormData = async (file, selectedClass) => {
 }
 
 const uploadFileToFlaskServer = async (formData) => {
-  const response = await client.post("/gen_upload_dev", formData);
+  const token = getAuthToken();
+  if (!token) {
+    alert("No token found. Please log in again.");
+    return;
+  }
+  const response = await client.post("/gen_upload_dev", formData,{
+    headers: {
+      
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   if (response.status !== 200) {
     throw new Error(response.data.message);
