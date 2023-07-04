@@ -8,7 +8,7 @@ const client = axios.create({
 });
 
 export const getAuthToken = async () => {
-  const {data, error} = await supabase.auth.getSession();
+  const { data, error } = await supabase.auth.getSession();
   if (error) {
     console.error("Error getting user session:", error);
     throw error;
@@ -42,12 +42,12 @@ export const downloadStudyNote = async (hashedStudyNotesFilename) => {
       "/download_dashboard",
 
       { filename: filename },
-      { 
+      {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        responseType: "blob" },
-      
+        responseType: "blob",
+      }
     ) // Add 'blob' responseType
     .then((response) => {
       console.log("Download response:", response);
@@ -94,7 +94,10 @@ export const Modal = ({ children, isOpen, setIsOpen }) => {
 
 export const fetchClassesWithFiles = async (setClasses, setSelectedClass) => {
   try {
-    client.get('/warmup-endpoint').then((response) => console.log(response.data)).catch((error) => console.log(error));
+    client
+      .get("/warmup-endpoint")
+      .then((response) => console.log(response.data))
+      .catch((error) => console.log(error));
     const userID = await getUserId();
     const { data: classes, error } = await supabase
       .from("classes")
@@ -146,20 +149,17 @@ export const handleFileUploadDashboard = async (
   setClasses,
   setSelectedClass
 ) => {
-  
   console.log("In handleFileUploadDashboard");
   validateFile(file);
   console.log("File validated");
   const formData = await prepareFormData(file, selectedClass);
   console.log("Form data prepared");
-  
+
   // console.log("File uploaded to supabase:", fileId);
-  
+
   try {
     // await uploadFileToSupabase(formData);
     await uploadFileToFlaskServer(formData);
-
-    
   } catch (error) {
     handleUploadFailure(error);
   }
@@ -181,7 +181,7 @@ const validateFile = (file) => {
     alert("File size exceeds 15MB limit. Please select a smaller file.");
     throw new Error("File size limit exceeded");
   }
-}
+};
 
 const prepareFormData = async (file, selectedClass) => {
   const hashedFilename = hashFilename(file.name); // This is the hashed filename
@@ -190,16 +190,32 @@ const prepareFormData = async (file, selectedClass) => {
   formData.append("file", newFile);
   formData.append("filename", file.name);
   formData.append("hashedFilename", hashedFilename);
-  formData.append("hashedStudyNotesFilename", hashFilename(file.name + "_help.docx"));
-  formData.append("hashedFaissFilename", hashFilename(file.name + "_faiss.json"));
+  formData.append(
+    "hashedStudyNotesFilename",
+    hashFilename(file.name + "_help.docx")
+  );
+  formData.append(
+    "hashedFaissFilename",
+    hashFilename(file.name + "_faiss.json")
+  );
   formData.append("user_id", await getUserId());
   formData.append("classId", selectedClass);
 
   return formData;
-}
+};
 
 const uploadFileToFlaskServer = async (formData) => {
-  const response = await client.post("/gen_upload", formData);
+  const token = await getAuthToken();
+  if (!token) {
+    alert("No token found. Please log in again.");
+    return;
+  }
+
+  const response = await client.post("/gen_upload", formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   if (response.status !== 200) {
     throw new Error(response.data.message);
@@ -211,7 +227,7 @@ const uploadFileToFlaskServer = async (formData) => {
   });
 
   console.log("File uploaded to flask server");
-}
+};
 
 const handleUploadFailure = async (error) => {
   let errorMessage = error.message;
@@ -225,9 +241,9 @@ const handleUploadFailure = async (error) => {
     }
   }
 
-  alert("File upload failed. " + errorMessage );
-  
+  alert("File upload failed. " + errorMessage);
+
   window.sa_event("PDF failed upload", { error: errorMessage });
 
   console.error("Error during file upload:", error);
-}
+};
