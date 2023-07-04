@@ -105,6 +105,7 @@ const ChatWindow = ({ hashedFaissFilename }) => {
       const chatHistory = await fetchChatHistory(hashedFaissFilename);
       setMessages(chatHistory);
       if (chatHistory.length == 0) {
+        const token = await getAuthToken();
         setWaiting(true);
         // Initial question
         const initialQuestion =
@@ -115,7 +116,11 @@ const ChatWindow = ({ hashedFaissFilename }) => {
         };
         // console.log("Sending:", dataToSend);
         client
-          .post("/chat", dataToSend)
+          .post("/chat", dataToSend, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
           .then((response) => {
             const data = response.data;
             setMessages((prevMessages) => [
