@@ -21,6 +21,8 @@ import {
 } from "../utils/DashboardUtils";
 import { Button } from "../utils/ToolUtils";
 
+import { RiPencilLine } from "react-icons/ri";
+
 export const Dashboard = () => {
   const [classes, setClasses] = useState([]);
   const [selectedClass, setSelectedClass] = useState("");
@@ -199,9 +201,14 @@ export const Dashboard = () => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <h2 className="text-3xl font-bold mb-3 text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700] ">
-                {item.name}
-              </h2>
+              <div className="flex items-center space-x-3 mr-4">
+                <h2 className="text-3xl font-bold mb-3 text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700] ">
+                  {item.name}
+                </h2>
+                <button className="flex items-center p-1 hover:py-2 hover:px-2 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00]">
+                  <RiPencilLine size={20} />
+                  </button>
+              </div>
               <div className="space-y-3">
                 {item.files &&
                 Array.isArray(item.files) &&

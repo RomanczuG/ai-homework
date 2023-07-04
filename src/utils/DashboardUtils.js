@@ -7,6 +7,16 @@ const client = axios.create({
   baseURL: "https://studyboost.uc.r.appspot.com",
 });
 
+export const getAuthToken = async () => {
+  const {data, error} = await supabase.auth.getSession();
+  if (error) {
+    console.error("Error getting user session:", error);
+    throw error;
+  }
+  // console.log("Session:", data["session"]["access_token"]);
+  return data ? data.session.access_token : null;
+};
+
 async function getUserId() {
   const { data, error } = await supabase.auth.getSession();
   if (error) {
@@ -19,13 +29,25 @@ async function getUserId() {
 
 export const downloadStudyNote = async (hashedStudyNotesFilename) => {
   const filename = hashedStudyNotesFilename;
+  const token = await getAuthToken();
+  if (!token) {
+    alert("No token found. Please log in again.");
+    return;
+  }
+
   console.log("In downloadStudyNote, filename:", filename);
   // Send a POST request to the backend with the filename to download the file
   client
     .post(
-      "/download_dashboard",
+      "/download_dashboard_dev",
+
       { filename: filename },
-      { responseType: "blob" }
+      { 
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        responseType: "blob" },
+      
     ) // Add 'blob' responseType
     .then((response) => {
       console.log("Download response:", response);
@@ -124,6 +146,7 @@ export const handleFileUploadDashboard = async (
   setClasses,
   setSelectedClass
 ) => {
+  
   console.log("In handleFileUploadDashboard");
   validateFile(file);
   console.log("File validated");
