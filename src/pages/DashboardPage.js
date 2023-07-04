@@ -205,9 +205,9 @@ export const Dashboard = () => {
                 <h2 className="text-3xl font-bold mb-3 text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700] ">
                   {item.name}
                 </h2>
-                <button className="flex items-center p-1 hover:py-2 hover:px-2 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00]">
+                {/* <button className="flex items-center p-1 hover:py-2 hover:px-2 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00]">
                   <RiPencilLine size={20} />
-                  </button>
+                  </button> */}
               </div>
               <div className="space-y-3">
                 {item.files &&
