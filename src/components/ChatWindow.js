@@ -6,6 +6,16 @@ import { IoSendSharp } from "react-icons/io5";
 import { ClipLoader } from "react-spinners";
 import { supabase } from "../supabaseClient";
 
+export const getAuthToken = async () => {
+  const { data, error } = await supabase.auth.getSession();
+  if (error) {
+    console.error("Error getting user session:", error);
+    throw error;
+  }
+  // console.log("Session:", data["session"]["access_token"]);
+  return data ? data.session.access_token : null;
+};
+
 const client = axios.create({
   // baseURL: "http://127.0.0.1:5000",
   baseURL: "https://studyboost.uc.r.appspot.com",
@@ -19,9 +29,7 @@ const ChatWindow = ({ hashedFaissFilename }) => {
     try {
       const { data, error } = await supabase
         .from("chats")
-        .insert([
-          { hashedFaissFilename, text, sender, timestamp: new Date() },
-        ]);
+        .insert([{ hashedFaissFilename, text, sender, timestamp: new Date() }]);
 
       if (error) {
         console.log(error);
@@ -35,7 +43,10 @@ const ChatWindow = ({ hashedFaissFilename }) => {
 
   const fetchChatHistory = async (hashedFaissFilename) => {
     try {
-      console.log("In fetchChatHistory, hashedFaissFilename:", hashedFaissFilename);
+      console.log(
+        "In fetchChatHistory, hashedFaissFilename:",
+        hashedFaissFilename
+      );
       const { data, error } = await supabase
         .from("chats")
         .select("*")
@@ -54,26 +65,31 @@ const ChatWindow = ({ hashedFaissFilename }) => {
   };
 
   // Mock send message function
-  const sendMessage = (e) => {
+  const sendMessage = async (e) => {
     e.preventDefault();
+    const token = await getAuthToken();
     if (newMessage !== "") {
       setWaiting(true);
       setMessages([...messages, { text: newMessage, sender: "you" }]);
-      saveMessage(hashedFaissFilename, newMessage, 'you');
+      saveMessage(hashedFaissFilename, newMessage, "you");
       const dataToSend = {
         question: newMessage,
         hashedFaissFilename: hashedFaissFilename,
       };
       // console.log("Sending:", dataToSend);
       client
-        .post("/chat", dataToSend)
+        .post("/chat_dev", dataToSend, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((response) => {
           const data = response.data;
           setMessages((prevMessages) => [
             ...prevMessages,
             { text: data.message, sender: "bot" },
           ]);
-          saveMessage(hashedFaissFilename, data.message, 'bot');
+          saveMessage(hashedFaissFilename, data.message, "bot");
           setWaiting(false);
         })
         .catch((e) => {
@@ -85,7 +101,6 @@ const ChatWindow = ({ hashedFaissFilename }) => {
   };
 
   useEffect(() => {
-    
     const loadChatHistory = async () => {
       const chatHistory = await fetchChatHistory(hashedFaissFilename);
       setMessages(chatHistory);
@@ -107,7 +122,7 @@ const ChatWindow = ({ hashedFaissFilename }) => {
               ...prevMessages,
               { text: data.message, sender: "bot" },
             ]);
-            saveMessage(hashedFaissFilename, data.message, 'bot');
+            saveMessage(hashedFaissFilename, data.message, "bot");
             setWaiting(false);
           })
           .catch((e) => {
@@ -118,8 +133,7 @@ const ChatWindow = ({ hashedFaissFilename }) => {
     };
 
     loadChatHistory();
-    console.log("messages.length:", messages.length)
-    
+    console.log("messages.length:", messages.length);
   }, []);
 
   const messageVariants = {

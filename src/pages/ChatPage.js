@@ -5,11 +5,22 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button } from "../utils/ToolUtils";
 import { ClipLoader } from 'react-spinners';
+import { supabase } from "../supabaseClient";
 
 const client = axios.create({
   // baseURL: "http://127.0.0.1:5000",
   baseURL: "https://studyboost.uc.r.appspot.com",
 });
+
+export const getAuthToken = async () => {
+  const { data, error } = await supabase.auth.getSession();
+  if (error) {
+    console.error("Error getting user session:", error);
+    throw error;
+  }
+  // console.log("Session:", data["session"]["access_token"]);
+  return data ? data.session.access_token : null;
+};
 
 
 export const ChatPage = () => {
@@ -20,14 +31,23 @@ export const ChatPage = () => {
   const hashedFilename = location.state.hashedFilename;
   const [numPages, setNumPages] = useState(null);
   
+  
   // console.log("In ChatPage, hashedFaissFilename:", hashedFaissFilename);
   // console.log("In ChatPage, pdfFilename:", pdfFilename);
   // console.log("In ChatPage, hashedFilename:", hashedFilename);
 
   useEffect(() => {
+    const token = getAuthToken();
+    if (!token) {
+      alert("No token found. Please log in again.");
+      return;
+    }
     client
-      .get(`/download_pdf/${hashedFilename}`, {
-        responseType: "blob", // Force to receive data in a Blob Format
+      .get(`/download_pdf_dev/${hashedFilename}`, {
+        responseType: "blob",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
       .then((response) => {
         // console.log("In ChatPage, response:", response);
