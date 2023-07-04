@@ -94,7 +94,7 @@ export const Modal = ({ children, isOpen, setIsOpen }) => {
 
 export const fetchClassesWithFiles = async (setClasses, setSelectedClass) => {
   try {
-    // client.get('/warmup-endpoint').then((response) => console.log(response.data)).catch((error) => console.log(error));
+    client.get('/warmup-endpoint').then((response) => console.log(response.data)).catch((error) => console.log(error));
     const userID = await getUserId();
     const { data: classes, error } = await supabase
       .from("classes")
