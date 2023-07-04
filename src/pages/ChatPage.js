@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button } from "../utils/ToolUtils";
-import { ClipLoader } from 'react-spinners';
+import { ClipLoader } from "react-spinners";
 import { supabase } from "../supabaseClient";
 
 const client = axios.create({
@@ -22,6 +22,32 @@ export const getAuthToken = async () => {
   return data ? data.session.access_token : null;
 };
 
+const getPDFUrl = async (hashedFilename) => {
+  const token = await getAuthToken();
+  if (!token) {
+    alert("No token found. Please log in again.");
+    return;
+  }
+
+  return client
+    .get(`/download_pdf_dev/${hashedFilename}`, {
+      responseType: "blob",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => {
+      // Create a Blob from the PDF Stream
+      const file = new Blob([response.data], { type: "application/pdf" });
+      // Build a URL from the file
+      const fileURL = URL.createObjectURL(file);
+      // Return the fileURL
+      return fileURL;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 export const ChatPage = () => {
   const [pdfUrl, setPdfUrl] = useState(null);
@@ -29,39 +55,14 @@ export const ChatPage = () => {
   const hashedFaissFilename = location.state.hashedFaissFilename;
   const pdfFilename = location.state.pdfFilename;
   const hashedFilename = location.state.hashedFilename;
-  const [numPages, setNumPages] = useState(null);
-  
-  
-  // console.log("In ChatPage, hashedFaissFilename:", hashedFaissFilename);
-  // console.log("In ChatPage, pdfFilename:", pdfFilename);
-  // console.log("In ChatPage, hashedFilename:", hashedFilename);
 
   useEffect(() => {
-    const token = getAuthToken();
-    if (!token) {
-      alert("No token found. Please log in again.");
-      return;
-    }
-    client
-      .get(`/download_pdf_dev/${hashedFilename}`, {
-        responseType: "blob",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        // console.log("In ChatPage, response:", response);
-        //Create a Blob from the PDF Stream
-        const file = new Blob([response.data], { type: "application/pdf" });
-        //Build a URL from the file
-        const fileURL = URL.createObjectURL(file);
-        // console.log("In ChatPage, fileURL:", fileURL);
-        //Open the URL on new Window
-        setPdfUrl(fileURL);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const fetchPDFUrl = async () => {
+      const url = await getPDFUrl(hashedFilename);
+      setPdfUrl(url);
+    };
+    fetchPDFUrl();
+    console.log("In ChatPage, pdfUrl:", pdfUrl);
   }, [hashedFilename]);
 
   return (
@@ -88,15 +89,8 @@ export const ChatPage = () => {
                 }}
               />
             </div>
-          ):(
-
-
-            <ClipLoader
-            size={20}
-            color={"#FF6E00"}
-            
-            loading={true}
-          />
+          ) : (
+            <ClipLoader size={20} color={"#FF6E00"} loading={true} />
           )}
           {pdfUrl && (
             <div className="mt-3">
