@@ -23,13 +23,13 @@ export const getAuthToken = async () => {
 };
 
 const getPDFUrl = async (hashedFilename) => {
-  console.log("In getPDFUrl, hashedFilename:", hashedFilename);
+  
   const token = await getAuthToken();
   if (!token) {
     alert("No token found. Please log in again.");
     return;
   }
-  console.log("In getPDFUrl, token:", token);
+  
   return client
     .get(`/download_pdf/${hashedFilename}`, {
       responseType: "blob",
@@ -63,7 +63,7 @@ export const ChatPage = () => {
       setPdfUrl(url);
     };
     fetchPDFUrl();
-    console.log("In ChatPage, pdfUrl:", pdfUrl);
+    
   }, [hashedFilename]);
 
   return (
