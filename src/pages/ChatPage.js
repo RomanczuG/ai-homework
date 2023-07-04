@@ -31,7 +31,7 @@ const getPDFUrl = async (hashedFilename) => {
   }
   console.log("In getPDFUrl, token:", token);
   return client
-    .get(`/download_pdf/${hashedFilename}`, {
+    .get(`/download_pdf_dev/${hashedFilename}`, {
       responseType: "blob",
       headers: {
         Authorization: `Bearer ${token}`,
