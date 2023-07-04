@@ -78,7 +78,7 @@ const ChatWindow = ({ hashedFaissFilename }) => {
       };
       // console.log("Sending:", dataToSend);
       client
-        .post("/chat_dev", dataToSend, {
+        .post("/chat", dataToSend, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -39,7 +39,7 @@ export const downloadStudyNote = async (hashedStudyNotesFilename) => {
   // Send a POST request to the backend with the filename to download the file
   client
     .post(
-      "/download_dashboard_dev",
+      "/download_dashboard",
 
       { filename: filename },
       { 
