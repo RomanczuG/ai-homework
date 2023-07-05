@@ -39,33 +39,6 @@ export const Upgrade = () => {
   const [userID, setUserID] = useState("");
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
-
-  const checkSubscription = async() => {
-    const user_id = await getUserId();
-    console.log("checkSubscription user_id:", user_id);
-    const formData = new FormData();
-    formData.append("user_id", user_id);
-    
-    client.post("/check-subscription", formData)
-      .then((response) => {
-        console.log("checkSubscription response:", response);
-        if (response.status === 200) {
-          console.log("checkSubscription response:", response.data);
-          setSubscribed(response.data["subscribed_status"]);
-          // return response.data;
-        } else {
-          console.log("checkSubscription error");
-          setSubscribed(false);
-          // throw new Error(`Request failed with status code ${response.status}`);
-        }
-      })
-      .catch((error) => {
-        console.log("checkSubscription error:", error);
-        
-        // throw error; // re-throw the error so it can be caught in the checkSub function
-      });
-      console.log("checkSubscription end");
-  }
   
   useEffect(() => {
     const getUser = async () => {
@@ -73,20 +46,27 @@ export const Upgrade = () => {
       const user_email = await getUserEmail();
       setUserID(user_id);
       setEmail(user_email);
-    };
-    
-    const checkSub = async () => {
-      console.log("checkSub");
-      try {
-        console.log("checkSub try");
-       await checkSubscription();
-      } catch (error) {
-        console.error('Failed to check subscription:', error);
-      }
-    };  
-    checkSub();
+    }; 
     getUser();
   }, []);
+
+  useEffect(() => {
+    const checkSubscription = async () => {
+      try {
+        const response = await client.post('/check-subscription', {user_id: userID});
+        if (response.data.subscription_status === "active") {
+          setSubscribed(true);
+        } else {
+          setSubscribed(false);
+        }
+      } catch (error) {
+        console.error('Error checking subscription:', error);
+      }
+    };
+    if (userID) {
+      checkSubscription();
+    }
+  }, [userID]);
   
   const handleMonthly = () => {
     console.log("monthly");
