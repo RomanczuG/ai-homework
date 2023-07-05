@@ -45,14 +45,14 @@ export const DashboardNavbar = ({ onUpgradeClick }) => {
                       My Classes
                     </Link>
                   </li>
-                  {/* <li>
+                  <li>
                     <div
                       className="text-[#212529] hover:text-[#FF6E00] transition-all duration-200 cursor-pointer"
                       onClick={onUpgradeClick}
                     >
                       Upgrade
                     </div>
-                  </li> */}
+                  </li>
                   <li>
                     <Link
                       to="/dashboard/account"
