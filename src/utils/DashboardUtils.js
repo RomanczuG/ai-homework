@@ -229,6 +229,26 @@ const uploadFileToFlaskServer = async (formData) => {
   console.log("File uploaded to flask server");
 };
 
+export const removeFile = async (hashed_file_name) => {
+  const token = await getAuthToken();
+  if (!token) {
+    alert("No token found. Please log in again.");
+    return;
+  }
+  const formData = new FormData();
+  formData.append("hashed_file_name", hashed_file_name);
+  const response = await client.post("/remove_file", formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (response.status !== 200) {
+    alert("Error removing file");
+    throw new Error(response.data.message);
+  }
+  console.log("File removed from flask server");
+};
+
 const handleUploadFailure = async (error) => {
   let errorMessage = error.message;
   console.log("Error response:", error.response);

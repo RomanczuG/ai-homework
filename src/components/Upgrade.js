@@ -208,7 +208,11 @@ export const Upgrade = () => {
           >
             <input type="hidden" name="user_id" value={userID} />
             <div className="mt-4">
-              <Button>Manage Subscription</Button>
+              <Button
+              type="submit"
+              disabled={loading}
+              onClick={() => setLoading(true)}
+              >Manage Subscription</Button>
             </div>
           </form>
         )}

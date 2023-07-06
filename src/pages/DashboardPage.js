@@ -10,6 +10,8 @@ import {
   HiOutlineChatAlt,
   HiOutlineDocumentDownload,
   HiOutlineDocumentText,
+  HiCheck,
+  HiOutlineDocumentRemove
 } from "react-icons/hi";
 import {
   Modal,
@@ -18,6 +20,7 @@ import {
   handleFileUploadDashboard,
   handleLogout,
   downloadStudyNote,
+  removeFile
 } from "../utils/DashboardUtils";
 import { Button } from "../utils/ToolUtils";
 
@@ -32,6 +35,7 @@ export const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [isOpenClass, setIsOpenClass] = useState(false);
   const [isOpenFile, setIsOpenFile] = useState(false);
+  const [edit, setEdit] = useState(false);
   const navigate = useNavigate();
 
   const handleFileChange = (e) => {
@@ -232,98 +236,124 @@ export const Dashboard = () => {
                           {file.file_name}
                         </a>
                       </div>
-
-                      <div className="flex space-x-4 absolute right-0 mr-4">
-                        <div className="group relative">
-                          {file.faiss_created == "true" ? (
-                            <motion.button
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              transition={{ duration: 0.1 }}
-                              onClick={() => {
-                                console.log(file);
-                                window.sa_event("Chat", { file_id: file.id });
-                                navigate("/dashboard/chat", {
-                                  state: {
-                                    hashedFaissFilename:
-                                      file.hashedFaissFilename,
-                                    pdfFilename: file.file_name,
-                                    hashedFilename: file.hashed_file_name,
-                                  },
-                                });
-                              }}
-                              className="flex items-center p-1 hover:py-1 hover:px-2 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00]"
-                            >
-                              <HiOutlineChatAlt size={20} />
-                              <span className="text-xs transition-all ease-in duration-200 text-transparent group-hover:text-white whitespace-nowrap  py-1 ml-1 rounded-sm absolute group-hover:static">
-                                Chat with the file
-                              </span>
-                            </motion.button>
-                          ) : (
-                            <motion.button
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              transition={{ duration: 0.1 }}
-                              className="flex items-center p-1 hover:py-1 hover:px-2 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00]"
-                            >
-                              <ClipLoader
-                                size={20}
-                                color={"#ffffff"}
-                                loading={true}
-                              />
-                              <span className="text-xs transition-all ease-in duration-200 text-transparent group-hover:text-white whitespace-nowrap  py-1 ml-1 rounded-sm absolute group-hover:static">
-                                Proccesing file for chat
-                              </span>
-                            </motion.button>
-                          )}
-                        </div>
-
-                        <div className="group relative">
-                          {file.study_notes_created == "true" ||
-                          file.study_notes_created == "impossible" ? (
-                            file.study_notes_created == "true" && (
+                      {!edit ? (
+                        <div className="flex space-x-4 absolute right-0 mr-4">
+                          <div className="group relative">
+                            {file.faiss_created == "true" ? (
                               <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 transition={{ duration: 0.1 }}
                                 onClick={() => {
-                                  window.sa_event("Study Notes", {
-                                    file_id: file.id,
+                                  console.log(file);
+                                  window.sa_event("Chat", { file_id: file.id });
+                                  navigate("/dashboard/chat", {
+                                    state: {
+                                      hashedFaissFilename:
+                                        file.hashedFaissFilename,
+                                      pdfFilename: file.file_name,
+                                      hashedFilename: file.hashed_file_name,
+                                    },
                                   });
-                                  downloadStudyNote(
-                                    file.hashedStudyNotesFilename
-                                  );
                                 }}
                                 className="flex items-center p-1 hover:py-1 hover:px-2 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00]"
                               >
-                                <HiOutlineDocumentDownload size={20} />
+                                <HiOutlineChatAlt size={20} />
                                 <span className="text-xs transition-all ease-in duration-200 text-transparent group-hover:text-white whitespace-nowrap  py-1 ml-1 rounded-sm absolute group-hover:static">
-                                  Download study notes
+                                  Chat with the file
                                 </span>
                               </motion.button>
-                            )
-                          ) : (
-                            <motion.button
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              transition={{ duration: 0.1 }}
-                              // onClick={() =>
-                              //   downloadStudyNote(file.hashedStudyNotesFilename)
-                              // }
-                              className="flex items-center p-1 hover:py-1 hover:px-2 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00]"
-                            >
-                              <ClipLoader
-                                size={20}
-                                color={"#ffffff"}
-                                loading={true}
-                              />
-                              <span className="text-xs transition-all ease-in duration-200 text-transparent group-hover:text-white whitespace-nowrap  py-1 ml-1 rounded-sm absolute group-hover:static">
-                                Generating study notes
-                              </span>
-                            </motion.button>
-                          )}
+                            ) : (
+                              <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                transition={{ duration: 0.1 }}
+                                className="flex items-center p-1 hover:py-1 hover:px-2 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00]"
+                              >
+                                <ClipLoader
+                                  size={20}
+                                  color={"#ffffff"}
+                                  loading={true}
+                                />
+                                <span className="text-xs transition-all ease-in duration-200 text-transparent group-hover:text-white whitespace-nowrap  py-1 ml-1 rounded-sm absolute group-hover:static">
+                                  Proccesing file for chat
+                                </span>
+                              </motion.button>
+                            )}
+                          </div>
+
+                          <div className="group relative">
+                            {file.study_notes_created == "true" ||
+                            file.study_notes_created == "impossible" ? (
+                              file.study_notes_created == "true" && (
+                                <motion.button
+                                  whileHover={{ scale: 1.05 }}
+                                  whileTap={{ scale: 0.95 }}
+                                  transition={{ duration: 0.1 }}
+                                  onClick={() => {
+                                    window.sa_event("Study Notes", {
+                                      file_id: file.id,
+                                    });
+                                    downloadStudyNote(
+                                      file.hashedStudyNotesFilename
+                                    );
+                                  }}
+                                  className="flex items-center p-1 hover:py-1 hover:px-2 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00]"
+                                >
+                                  <HiOutlineDocumentDownload size={20} />
+                                  <span className="text-xs transition-all ease-in duration-200 text-transparent group-hover:text-white whitespace-nowrap  py-1 ml-1 rounded-sm absolute group-hover:static">
+                                    Download study notes
+                                  </span>
+                                </motion.button>
+                              )
+                            ) : (
+                              <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                transition={{ duration: 0.1 }}
+                                // onClick={() =>
+                                //   downloadStudyNote(file.hashedStudyNotesFilename)
+                                // }
+                                className="flex items-center p-1 hover:py-1 hover:px-2 rounded-full text-white bg-[#FFC700] hover:bg-[#FF6E00]"
+                              >
+                                <ClipLoader
+                                  size={20}
+                                  color={"#ffffff"}
+                                  loading={true}
+                                />
+                                <span className="text-xs transition-all ease-in duration-200 text-transparent group-hover:text-white whitespace-nowrap  py-1 ml-1 rounded-sm absolute group-hover:static">
+                                  Generating study notes
+                                </span>
+                              </motion.button>
+                            )}
+                          </div>
                         </div>
-                      </div>
+                      ) : (
+
+                        <div className="flex space-x-4 absolute right-0 mr-4">
+                          <div className="group relative">
+                          
+                              <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                transition={{ duration: 0.1 }}
+                                onClick={async () => {
+                                  await removeFile(file.hashed_file_name)
+                                  window.sa_event("File Removed", { file_id: file.id });
+                                  fetchClassesWithFiles(setClasses, setSelectedClass);
+                                }}
+                                className="flex items-center p-1 hover:py-1 hover:px-2 rounded-full text-white bg-red-400 hover:bg-red-600"
+                              >
+                                <HiOutlineDocumentRemove size={20} />
+                                <span className="text-xs transition-all ease-in duration-200 text-transparent group-hover:text-white whitespace-nowrap  py-1 ml-1 rounded-sm absolute group-hover:static">
+                                  Remove file
+                                </span>
+                              </motion.button>
+
+                          </div>
+                        </div>
+
+                      )}
                     </motion.div>
                   ))
                 ) : (
@@ -355,7 +385,22 @@ export const Dashboard = () => {
         </div>
       </div>
       {/* Log out button */}
-      <div className="mt-4 ">
+      <div className="grid md:grid-cols-2 grid-rows-2 gap-4 mt-4">
+        {/* <div className="mt-4 "> */}
+        <Button
+          onClick={() => setEdit(!edit)}
+          className="mt-4 py-2 w-40 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
+        >
+          {edit ? (
+            <>
+              <HiCheck className="mr-2"/> Done
+            </>
+          ) : (
+            <>
+              <RiPencilLine className="mr-2" /> Edit
+            </>
+          )}
+        </Button>
         <Button
           onClick={() => handleLogout(navigate)}
           className="mt-4 py-2 w-40 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
@@ -363,6 +408,10 @@ export const Dashboard = () => {
           <HiOutlineLogout className="mr-2" />
           Log Out
         </Button>
+        {/* </div> */}
+        {/* <div className="mt-4 "> */}
+
+        {/* </div> */}
       </div>
     </div>
   );
