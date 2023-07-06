@@ -72,6 +72,7 @@ const Router = () => {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/dashboard/account" element={<Account />} />
             <Route path="/dashboard/chat" element={<ChatPage />} />
+            <Route path="/dashboard/upgrade" element={<Upgrade />} />
           </Route>
           
         </Routes>

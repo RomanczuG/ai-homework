@@ -7,6 +7,16 @@ import { AiFillCheckCircle } from "react-icons/ai"; // add this
 import { supabase } from "../supabaseClient";
 import axios from "axios";
 
+const getAuthToken = async () => {
+  const { data, error } = await supabase.auth.getSession();
+  if (error) {
+    console.error("Error getting user session:", error);
+    throw error;
+  }
+  // console.log("Session:", data["session"]["access_token"]);
+  return data ? data.session.access_token : null;
+};
+
 async function getUserEmail() {
   const { data, error } = await supabase.auth.getSession();
   if (error) {
@@ -16,6 +26,23 @@ async function getUserEmail() {
 
   return data["session"]["user"]["email"];
 }
+
+const checkUserSubscription = async () => {
+  const token = await getAuthToken();
+  // console.log("token:", token);
+  if (!token) {
+    alert("No token found. Please log in again.");
+    return;
+  }
+
+  return client.post(
+    `/check_sub`, {}, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
 
 const client = axios.create({
   // baseURL: "http://127.0.0.1:5000",
@@ -51,22 +78,34 @@ export const Upgrade = () => {
   }, []);
 
   useEffect(() => {
-    const checkSubscription = async () => {
+    (async () => {
       try {
-        const response = await client.post('/check-subscription', {user_id: userID});
-        if (response.data.subscription_status === "active") {
-          setSubscribed(true);
+        console.log("Checking subscription...");
+        const response = await checkUserSubscription();
+        console.log("response:", response);
+        
+        if (response.data) {
+          console.log("subscribed_status:", response.data["subscription_status"]);
+          // assuming the server sends true or false based on the user's subscription status
+          if (response.data["subscription_status"] == "active") {
+            console.log("User is subscribed");
+            setSubscribed(true);
+          } else {
+            console.log("User is not subscribed");
+            setSubscribed(false);
+          }
+
         } else {
-          setSubscribed(false);
+          console.error("Failed to check subscription:", response);
+          setSubscribed(false)
         }
       } catch (error) {
-        console.error('Error checking subscription:', error);
+        setSubscribed(false)
+        console.error("Failed to check subscription:", error);
       }
-    };
-    if (userID) {
-      checkSubscription();
-    }
-  }, [userID]);
+    })();
+  }, []);
+
   
   const handleMonthly = () => {
     console.log("monthly");
@@ -145,7 +184,7 @@ export const Upgrade = () => {
         </div>
       </div>
       <div className="mt-4">
-        {subscribed == "active" ? (
+        {subscribed == false ? (
           <form
             action="https://studyboost.uc.r.appspot.com/create-checkout-session"
             method="POST"
