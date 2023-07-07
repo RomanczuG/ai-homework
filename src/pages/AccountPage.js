@@ -7,6 +7,7 @@ import { Upgrade } from "../components/Upgrade";
 import { AiOutlineMail, AiOutlineLock} from 'react-icons/ai';
 import { HiOutlineLogout } from "react-icons/hi";
 import { motion } from 'framer-motion';
+import { Helmet } from "react-helmet";
 
 const fetchSession = async (setEmail) => {
   const { data, error } = await supabase.auth.getSession();
@@ -57,6 +58,14 @@ export const Account = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
+      <Helmet>
+        <title>Account | Study Smarter Now! </title>
+        <meta
+          name="description"
+          content="Study Smarter Now! is an AI-powered study tool that helps you study smarter, not harder. Upload your textbook or homework PDF files and get instant access to study notes, chat with your classmates, and more!"
+
+        />
+        </Helmet>
       <h1 className="text-3xl font-bold mb-10 text-gray-900">
         Your
         <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">

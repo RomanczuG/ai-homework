@@ -23,7 +23,7 @@ import {
   removeFile
 } from "../utils/DashboardUtils";
 import { Button } from "../utils/ToolUtils";
-
+import { Helmet } from "react-helmet";
 import { RiPencilLine } from "react-icons/ri";
 
 export const Dashboard = () => {
@@ -73,7 +73,20 @@ export const Dashboard = () => {
   };
 
   return (
+    
+     
+
+
+
     <div className="flex min-h-screen bg-[#F0FFE0] flex flex-col items-center py-12 px-6 sm:px-8 lg:px-10">
+       <Helmet>
+        <title>Dashboard | Study Smarter Now! </title>
+        <meta
+          name="description"
+          content="Study Smarter Now! is an AI-powered study tool that helps you study smarter, not harder. Upload your textbook or homework PDF files and get instant access to study notes, chat with your classmates, and more!"
+
+        />
+        </Helmet>
       {/* {filesGenerated && ( 
         <div> generated </div>
       )} */}
@@ -414,5 +427,6 @@ export const Dashboard = () => {
         {/* </div> */}
       </div>
     </div>
+
   );
 };

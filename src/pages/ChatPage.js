@@ -6,6 +6,7 @@ import axios from "axios";
 import { Button } from "../utils/ToolUtils";
 import { ClipLoader } from "react-spinners";
 import { supabase } from "../supabaseClient";
+import { Helmet } from "react-helmet";
 
 const client = axios.create({
   // baseURL: "http://127.0.0.1:5000",
@@ -74,6 +75,14 @@ export const ChatPage = () => {
       style={{ height: "calc(100vh - 80px)" }} // 80px is approximated navbar height
       className="h-full"
     >
+      <Helmet>
+        <title>Chats | Study Smarter Now! </title>
+        <meta
+          name="description"
+          content="Study Smarter Now! is an AI-powered study tool that helps you study smarter, not harder. Upload your textbook or homework PDF files and get instant access to study notes, chat with your classmates, and more!"
+
+        />
+        </Helmet>
       <div className="flex flex-col sm:flex-row h-full">
         {/* Sidebar */}
         <div className="w-full sm:w-1/2 bg-gray-200 p-4 flex flex-col">
