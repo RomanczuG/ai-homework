@@ -16,16 +16,15 @@ export const HeroSection = () => {
           </span>
         </h1>
         <h2 className="text-base md:text-lg xl:text-xl mb-6">
-          Upload your homework or textbook and allow our AI to provide comprehensive
-          study notes, or interact with the AI bot for further insight. Improve
-          your test-taking strategies, study smarter, achieve academic success,
-          and improve learning strategies with ease.
+          Upload your homework or textbook and allow our AI to provide
+          comprehensive study notes, or interact with the AI bot for further
+          insight. Improve your test-taking strategies, study smarter, achieve
+          academic success, and improve learning strategies with ease.
         </h2>
         <p className="text-3xl mb-4 font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
-            Study Tools:
-          </p>
+          Study Tools:
+        </p>
         <div className="space-y-4 mb-6 text-lg md:text-xl xl:text-2xl">
-        
           <div className="flex items-center">
             <HiCheckCircle className="text-[#FFC700] mr-2" size={24} />
             <p className="font-semibold">Chat about textbooks with an AI bot</p>
@@ -43,12 +42,27 @@ export const HeroSection = () => {
         </a>
       </div>
 
-      <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96">
+      <div className="relative space-y-4 w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96">
         <img
           className="w-full h-full object-cover rounded-lg shadow-md"
           src="/study-smarter-ai.png" // Replace with your preferred image URL
           alt="study smarter ai"
         />
+
+        <div>
+          <a
+            href="https://www.producthunt.com/products/free-ai-tool-study-smarter-now#study-smarter-now"
+            target="_blank"
+          >
+            <img
+              src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=393767&theme=light"
+              alt="Study&#0032;Smarter&#0032;Now - Unlock&#0032;your&#0032;study&#0032;potential&#0032;&#0045;&#0032;AI&#0045;powered&#0032;help&#0032;for&#0032;students | Product Hunt"
+              style={{ width: "250px", height: "54px" }}
+              width="250"
+              height="54"
+            />
+          </a>
+        </div>
       </div>
     </section>
   );
