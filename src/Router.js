@@ -25,6 +25,8 @@ import { useState } from "react";
 import { Upgrade } from "./components/Upgrade";
 // import Redirector from "./utils/Redirector";
 import NotFoundPage from "./pages/NotFoundPage";
+import 'react-toastify/dist/ReactToastify.css';
+
 const Layout = ({ children }) => {
   const location = useLocation();
   const isDashboard = location.pathname.includes("/dashboard");

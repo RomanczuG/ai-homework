@@ -1,6 +1,7 @@
 import { hashFilename } from "./ToolUtils";
 import { supabase } from "../supabaseClient";
 import axios from "axios";
+import { toast } from 'react-toastify';
 
 const client = axios.create({
   // baseURL: "http://127.0.0.1:5000",
@@ -160,6 +161,7 @@ export const handleFileUploadDashboard = async (
   try {
     // await uploadFileToSupabase(formData);
     await uploadFileToFlaskServer(formData);
+    
   } catch (error) {
     handleUploadFailure(error);
   }
@@ -227,6 +229,7 @@ const uploadFileToFlaskServer = async (formData) => {
   });
 
   console.log("File uploaded to flask server");
+  // toast.success("File uploaded successfully. Please wait a few minutes for the file to be processed.");
 };
 
 export const removeFile = async (hashed_file_name) => {
@@ -247,6 +250,7 @@ export const removeFile = async (hashed_file_name) => {
     throw new Error(response.data.message);
   }
   console.log("File removed from flask server");
+  toast.success("File removed successfully");
 };
 
 const handleUploadFailure = async (error) => {
@@ -261,7 +265,8 @@ const handleUploadFailure = async (error) => {
     }
   }
 
-  alert("File upload failed. " + errorMessage);
+  // alert("File upload failed. " + errorMessage);
+  toast.error("File upload failed. " + errorMessage);
 
   window.sa_event("PDF failed upload", { error: errorMessage });
 

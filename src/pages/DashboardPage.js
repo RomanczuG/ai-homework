@@ -11,7 +11,7 @@ import {
   HiOutlineDocumentDownload,
   HiOutlineDocumentText,
   HiCheck,
-  HiOutlineDocumentRemove
+  HiOutlineDocumentRemove,
 } from "react-icons/hi";
 import {
   Modal,
@@ -20,12 +20,12 @@ import {
   handleFileUploadDashboard,
   handleLogout,
   downloadStudyNote,
-  removeFile
+  removeFile,
 } from "../utils/DashboardUtils";
 import { Button } from "../utils/ToolUtils";
 import { Helmet } from "react-helmet";
 import { RiPencilLine } from "react-icons/ri";
-
+import { ToastContainer } from 'react-toastify';
 export const Dashboard = () => {
   const [classes, setClasses] = useState([]);
   const [selectedClass, setSelectedClass] = useState("");
@@ -73,20 +73,14 @@ export const Dashboard = () => {
   };
 
   return (
-    
-     
-
-
-
     <div className="flex min-h-screen bg-[#F0FFE0] flex flex-col items-center py-12 px-6 sm:px-8 lg:px-10">
-       <Helmet>
+      <Helmet>
         <title>Dashboard | Study Smarter Now! </title>
         <meta
           name="description"
           content="Study Smarter Now! is an AI-powered study tool that helps you study smarter, not harder. Upload your textbook or homework PDF files and get instant access to study notes, chat with your classmates, and more!"
-
         />
-        </Helmet>
+      </Helmet>
       {/* {filesGenerated && ( 
         <div> generated </div>
       )} */}
@@ -187,6 +181,7 @@ export const Dashboard = () => {
                   <Button
                     onClick={() => {
                       handleFileUpload();
+
                       setIsOpenFile(false);
                     }}
                     className="py-2 text-[#252D62] bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
@@ -200,6 +195,7 @@ export const Dashboard = () => {
           </div>
         </div>
       </Modal>
+  
       <h1 className="text-5xl font-bold mb-10 text-gray-900 bg-clip-text  ">
         Welcome to the center of your
         <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
@@ -342,30 +338,31 @@ export const Dashboard = () => {
                           </div>
                         </div>
                       ) : (
-
                         <div className="flex space-x-4 absolute right-0 mr-4">
                           <div className="group relative">
-                          
-                              <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                transition={{ duration: 0.1 }}
-                                onClick={async () => {
-                                  await removeFile(file.hashed_file_name)
-                                  window.sa_event("File Removed", { file_id: file.id });
-                                  fetchClassesWithFiles(setClasses, setSelectedClass);
-                                }}
-                                className="flex items-center p-1 hover:py-1 hover:px-2 rounded-full text-white bg-red-400 hover:bg-red-600"
-                              >
-                                <HiOutlineDocumentRemove size={20} />
-                                <span className="text-xs transition-all ease-in duration-200 text-transparent group-hover:text-white whitespace-nowrap  py-1 ml-1 rounded-sm absolute group-hover:static">
-                                  Remove file
-                                </span>
-                              </motion.button>
-
+                            <motion.button
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                              transition={{ duration: 0.1 }}
+                              onClick={async () => {
+                                await removeFile(file.hashed_file_name);
+                                window.sa_event("File Removed", {
+                                  file_id: file.id,
+                                });
+                                fetchClassesWithFiles(
+                                  setClasses,
+                                  setSelectedClass
+                                );
+                              }}
+                              className="flex items-center p-1 hover:py-1 hover:px-2 rounded-full text-white bg-red-400 hover:bg-red-600"
+                            >
+                              <HiOutlineDocumentRemove size={20} />
+                              <span className="text-xs transition-all ease-in duration-200 text-transparent group-hover:text-white whitespace-nowrap  py-1 ml-1 rounded-sm absolute group-hover:static">
+                                Remove file
+                              </span>
+                            </motion.button>
                           </div>
                         </div>
-
                       )}
                     </motion.div>
                   ))
@@ -406,7 +403,7 @@ export const Dashboard = () => {
         >
           {edit ? (
             <>
-              <HiCheck className="mr-2"/> Done
+              <HiCheck className="mr-2" /> Done
             </>
           ) : (
             <>
@@ -426,7 +423,7 @@ export const Dashboard = () => {
 
         {/* </div> */}
       </div>
+      <ToastContainer />
     </div>
-
   );
 };
