@@ -68,6 +68,7 @@ export const Dashboard = () => {
       setSelectedClass
     );
     window.sa_event("File Upload");
+    console.log("Setting loading to false");
     // console.log("id:", id);
     setLoading(false);
   };

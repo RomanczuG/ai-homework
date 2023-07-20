@@ -161,11 +161,13 @@ export const handleFileUploadDashboard = async (
   try {
     // await uploadFileToSupabase(formData);
     await uploadFileToFlaskServer(formData);
+    toast.success("Wait a few minutes for the file to process.");
     
   } catch (error) {
     handleUploadFailure(error);
   }
 
+  
   fetchClassesWithFiles(setClasses, setSelectedClass);
 
   // return fileId;
