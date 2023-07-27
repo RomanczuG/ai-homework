@@ -33,10 +33,10 @@ function App() {
           </span>{" "}
           now!
         </h2>
-        <p className="mt-4 text-center">
+        {/* <p className="mt-4 text-center">
           We are currently in beta. Create an account and take advantage of our
           platform for free!
-        </p>
+        </p> */}
         <div className="flex justify-center items-center mt-3">
           <Link to="/dashboard">
             <Button>Start Now!</Button>

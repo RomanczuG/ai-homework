@@ -1,7 +1,7 @@
 import React from "react";
 import { HiCheckCircle } from "react-icons/hi";
-import YouTubeVideo from "./YouTubeVideo";
-
+import { Button } from "../utils/DashboardUtils";
+import { Link } from "react-router-dom";
 export const HeroSection = () => {
   return (
     <section className="relative flex flex-col md:flex-row items-center justify-around px-6 md:px-20 py-16 min-h-[55vh] bg-[#F0FFE0]">
@@ -10,14 +10,14 @@ export const HeroSection = () => {
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
             Study Smarter
           </span>{" "}
-          with AI-Powered{" "}
+          with the power of  {" "}
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FF6E00] to-[#FFC700]">
-            Strategies
+          AI
           </span>
         </h1>
         <h2 className="text-base md:text-lg xl:text-xl mb-6">
-          Upload your homework or textbook and allow our AI to provide
-          comprehensive study notes, or interact with the AI bot for further
+          Upload homework, textbook, or lecture notes and harness power of AI. Enhance your study sessions with
+          study guide, and AI tutor for further
           insight. Improve your test-taking strategies, study smarter, achieve
           academic success, and improve learning strategies with ease.
         </h2>
@@ -27,19 +27,20 @@ export const HeroSection = () => {
         <div className="space-y-4 mb-6 text-lg md:text-xl xl:text-2xl">
           <div className="flex items-center">
             <HiCheckCircle className="text-[#FFC700] mr-2" size={24} />
-            <p className="font-semibold">Chat about textbooks with an AI bot</p>
+            <p className="font-semibold">Ask AI tutor about context of your notes, hw or textbook</p>
           </div>
           <div className="flex items-center">
             <HiCheckCircle className="text-[#FFC700] mr-2" size={24} />
-            <p className="font-semibold">Get easy-to-understand study notes</p>
+            <p className="font-semibold">Generate study guide from your HW </p>
           </div>
         </div>
-        <a
-          href="#features"
-          className="py-2 text-white bg-[#FFC700] hover:bg-[#FF6E00] px-4  border text-md border-[#FFC700] rounded-md transition-all duration-200"
-        >
-          Learn more
-        </a>
+        
+        {/* <Link to="/dashboard">
+          <div className="py-2 max-w-fit text-white bg-[#FFC700] font-bold hover:bg-[#FF6E00] px-4  border text-xl border-[#FFC700] rounded-md transition-all duration-200">
+          START FOR FREE!
+          </div>
+        </Link> */}
+        
       </div>
 
       <div className="relative space-y-4 w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96">
